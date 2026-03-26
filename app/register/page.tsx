@@ -10,9 +10,17 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 
 const RegisterPage = async () => {
-  await dbConnect();
-  const settings = await Settings.findOne();
-  const allowRegistration = settings?.allowRegistration !== false;
+  let allowRegistration = true;
+  
+  try {
+    const db = await dbConnect();
+    if (db) {
+      const settings = await Settings.findOne();
+      allowRegistration = settings?.allowRegistration !== false;
+    }
+  } catch (error) {
+    console.warn("Could not fetch settings, allowing registration by default:", error);
+  }
 
   return (
     <div className="min-h-screen w-full flex flex-col lg:flex-row bg-background">

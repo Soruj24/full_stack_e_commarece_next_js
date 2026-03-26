@@ -136,18 +136,22 @@ export default async function RootLayout({
     if (!isMaintenancePage && !isAdminRoute && !isApiRoute && !isAuthRoute) {
       let shouldRedirect = false;
       try {
-        await dbConnect();
-        const settings = await Settings.findOne();
-        
-        if (settings?.googleAnalyticsId) {
-          gaId = settings.googleAnalyticsId;
-        }
-
-        if (settings?.maintenanceMode) {
-          const session = await auth();
-          if (session?.user?.role !== "admin") {
-            shouldRedirect = true;
+        const db = await dbConnect();
+        if (db) {
+          const settings = await Settings.findOne();
+          
+          if (settings?.googleAnalyticsId) {
+            gaId = settings.googleAnalyticsId;
           }
+
+          if (settings?.maintenanceMode) {
+            const session = await auth();
+            if (session?.user?.role !== "admin") {
+              shouldRedirect = true;
+            }
+          }
+        } else {
+          console.warn("MongoDB not connected, skipping maintenance check");
         }
       } catch (error) {
         console.error("Maintenance check error:", error);

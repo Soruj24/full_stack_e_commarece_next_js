@@ -19,28 +19,28 @@ if (!cached) {
   cached = (global as GlobalMongoose).mongoose = { conn: null, promise: null };
 }
 
-export async function dbConnect() {
-  if (cached && cached.conn) {
-    return cached.conn;
+export async function dbConnect(): Promise<mongoose.Mongoose> {
+  if (cached!.conn) {
+    return cached!.conn;
   }
 
-  if (!cached || !cached.promise) {
+  if (!cached!.promise) {
     const opts = {
-      bufferCommands: false, // Disable buffering to surface connection issues early
+      bufferCommands: true,
+      serverSelectionTimeoutMS: 10000,
+      socketTimeoutMS: 45000,
     };
 
     cached!.promise = mongoose.connect(MONGODB_URI!, opts).then((mongoose) => {
       console.log("MongoDB connected");
       return mongoose;
+    }).catch((error) => {
+      console.error("MongoDB connection error:", error);
+      cached!.promise = null;
+      throw error;
     });
   }
 
-  try {
-    cached!.conn = await cached!.promise;
-  } catch (e) {
-    cached!.promise = null;
-    throw e;
-  }
-
+  cached!.conn = await cached!.promise;
   return cached!.conn;
 }
