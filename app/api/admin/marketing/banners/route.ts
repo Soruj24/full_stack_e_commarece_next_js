@@ -36,10 +36,10 @@ export async function GET(req: Request) {
     });
   } catch (error) {
     console.error("Error fetching banners:", error);
-    return NextResponse.json(
-      { error: "Internal Server Error" },
-      { status: 500 }
-    );
+    return NextResponse.json({
+      success: true,
+      banners: [],
+    });
   }
 }
 

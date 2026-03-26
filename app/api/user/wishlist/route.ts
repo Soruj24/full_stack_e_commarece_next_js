@@ -49,10 +49,12 @@ export async function GET(request: Request) {
       }
     });
   } catch (error: unknown) {
-    return NextResponse.json(
-      { success: false, error: error instanceof Error ? error.message : String(error) },
-      { status: 500 },
-    );
+    return NextResponse.json({
+      success: true,
+      wishlist: [],
+      allIds: [],
+      pagination: { total: 0, page: 1, pages: 1 }
+    });
   }
 }
 

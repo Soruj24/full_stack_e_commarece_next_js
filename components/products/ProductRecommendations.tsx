@@ -17,9 +17,20 @@ export function ProductRecommendations() {
       try {
         const res = await fetch("/api/products/recommendations");
         const data = await res.json();
-        setProducts(data);
+        if (!res.ok) {
+          throw new Error(
+            (data && data.error) || "Failed to fetch recommendations",
+          );
+        }
+        const list = Array.isArray(data)
+          ? data
+          : Array.isArray((data as { products?: IProduct[] }).products)
+            ? (data as { products: IProduct[] }).products
+            : [];
+        setProducts(list);
       } catch (err) {
         console.error("Failed to fetch recommendations", err);
+        setProducts([]);
       } finally {
         setLoading(false);
       }
@@ -53,8 +64,8 @@ export function ProductRecommendations() {
               Recommended <span className="text-primary">Products</span>
             </h2>
             <p className="text-muted-foreground font-medium text-lg max-w-xl">
-              Based on your interests and browsing history, we think you&apos;ll love
-              these.
+              Based on your interests and browsing history, we think you&apos;ll
+              love these.
             </p>
           </div>
           <Button

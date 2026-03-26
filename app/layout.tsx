@@ -7,7 +7,7 @@ import { LocalizationProvider } from "@/context/LocalizationContext";
 import { LiveChat } from "@/components/support/LiveChat";
 import { CookieConsent } from "@/components/legal/CookieConsent";
 import { ThemeProvider } from "@/components/theme-provider";
-import { PageTransition } from "@/components/layout/PageTransition";
+import { PageTransitionClient } from "@/components/layout/PageTransitionWrapper";
 import { ScrollToTop } from "@/components/ui/ScrollToTop";
 import { ScrollProgressBar } from "@/components/ui/ScrollProgressBar";
 import { headers } from "next/headers";
@@ -130,7 +130,8 @@ export default async function RootLayout({
     const isApiRoute = pathname.startsWith("/api") || 
                       acceptHeader.includes("application/json") || 
                       pathname.startsWith("/_next") ||
-                      pathname.includes("favicon.ico");
+                      pathname.includes("favicon.ico") ||
+                      pathname.startsWith("/offline");
 
     if (!isMaintenancePage && !isAdminRoute && !isApiRoute && !isAuthRoute) {
       let shouldRedirect = false;
@@ -179,7 +180,7 @@ export default async function RootLayout({
 
                     <Header />
                     <main className="flex-grow relative z-10">
-                      <PageTransition>{children}</PageTransition>
+                      <PageTransitionClient>{children}</PageTransitionClient>
                     </main>
                     <LiveChat />
                     <CookieConsent />

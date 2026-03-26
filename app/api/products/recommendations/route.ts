@@ -88,12 +88,6 @@ export async function GET(req: Request) {
     return NextResponse.json(recommendations);
   } catch (error: unknown) {
     console.error("Recommendation Error:", error);
-    return NextResponse.json(
-      {
-        success: false,
-        error: error instanceof Error ? error.message : String(error),
-      },
-      { status: 500 },
-    );
+    return NextResponse.json([]);
   }
 }

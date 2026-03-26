@@ -1,6 +1,7 @@
+"use client";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Home, ArrowLeft, Search } from "lucide-react";
+import { Home,  Search } from "lucide-react";
 import { motion } from "framer-motion";
 
 export default function NotFound() {

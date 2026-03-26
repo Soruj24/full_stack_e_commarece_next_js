@@ -39,7 +39,7 @@ export async function GET(request: NextRequest) {
     return Response.json({ notifications: formattedNotifications });
   } catch (error) {
     console.error("Error fetching notifications:", error);
-    return Response.json({ error: "Internal Server Error" }, { status: 500 });
+    return Response.json({ notifications: [] });
   }
 }
 

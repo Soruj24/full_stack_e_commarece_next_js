@@ -41,8 +41,6 @@ const SessionSchema = new Schema<ISession>(
   }
 );
 
-// Create index for faster session lookups
-SessionSchema.index({ sessionToken: 1, revoked: 1 });
 SessionSchema.index({ userId: 1, revoked: 1 });
 
 export default mongoose.models.Session ||
