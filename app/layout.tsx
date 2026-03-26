@@ -23,8 +23,6 @@ import { SaveForLaterWidget } from "@/components/products/SaveForLater";
 import { PWAProvider } from "@/components/pwa";
 import { InstallPromptBanner } from "@/components/pwa";
 import { OfflineIndicator } from "@/components/pwa";
-import { FloatingContactWidget } from "@/components/common/FloatingContactWidget";
-import { QuickViewProvider } from "@/context/QuickViewContext";
 
 // Use a system font stack instead of downloading from Google Fonts to avoid connection issues
 const fontSans = {
@@ -33,13 +31,26 @@ const fontSans = {
 };
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"),
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000",
+  ),
   title: {
     default: "Shop | Premium Online Store",
-    template: "%s | Shop"
+    template: "%s | Shop",
   },
-  description: "Discover premium products at Shop. Fast shipping, secure payments, 30-day returns, and exceptional customer service. Shop thousands of products today.",
-  keywords: ["online shopping", "ecommerce", "premium products", "best deals", "shop online", "free shipping", "buy electronics", "buy fashion", "best prices"],
+  description:
+    "Discover premium products at Shop. Fast shipping, secure payments, 30-day returns, and exceptional customer service. Shop thousands of products today.",
+  keywords: [
+    "online shopping",
+    "ecommerce",
+    "premium products",
+    "best deals",
+    "shop online",
+    "free shipping",
+    "buy electronics",
+    "buy fashion",
+    "best prices",
+  ],
   authors: [{ name: "Shop" }],
   creator: "Shop",
   publisher: "Shop",
@@ -57,7 +68,8 @@ export const metadata: Metadata = {
     url: "/",
     siteName: "Shop",
     title: "Shop | Premium Online Store",
-    description: "Discover premium products at Shop. Fast shipping, secure payments, 30-day returns, and exceptional customer service.",
+    description:
+      "Discover premium products at Shop. Fast shipping, secure payments, 30-day returns, and exceptional customer service.",
     images: [
       {
         url: "/og-image.jpg",
@@ -70,7 +82,8 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Shop | Premium Online Store",
-    description: "Discover premium products at Shop. Fast shipping, secure payments, 30-day returns, and exceptional customer service.",
+    description:
+      "Discover premium products at Shop. Fast shipping, secure payments, 30-day returns, and exceptional customer service.",
     images: ["/og-image.jpg"],
     creator: "@shop",
   },
@@ -92,9 +105,7 @@ export const metadata: Metadata = {
       { url: "/icon-192.png", sizes: "192x192", type: "image/png" },
       { url: "/icon-512.png", sizes: "512x512", type: "image/png" },
     ],
-    apple: [
-      { url: "/apple-touch-icon.png" },
-    ],
+    apple: [{ url: "/apple-touch-icon.png" }],
   },
   appleWebApp: {
     capable: true,
@@ -118,7 +129,7 @@ export default async function RootLayout({
   const headerList = await headers();
   const pathname = headerList.get("x-pathname");
   const acceptHeader = headerList.get("accept") || "";
-  
+
   // If pathname is missing, it means proxy.ts didn't run (likely API or static)
   // We should skip maintenance check in this case to avoid loops or 404 issues
   let gaId = process.env.NEXT_PUBLIC_GA_ID;
@@ -126,12 +137,16 @@ export default async function RootLayout({
   if (pathname) {
     const isMaintenancePage = pathname === "/maintenance";
     const isAdminRoute = pathname.startsWith("/admin");
-    const isAuthRoute = pathname.startsWith("/login") || pathname.startsWith("/register") || pathname.startsWith("/auth");
-    const isApiRoute = pathname.startsWith("/api") || 
-                      acceptHeader.includes("application/json") || 
-                      pathname.startsWith("/_next") ||
-                      pathname.includes("favicon.ico") ||
-                      pathname.startsWith("/offline");
+    const isAuthRoute =
+      pathname.startsWith("/login") ||
+      pathname.startsWith("/register") ||
+      pathname.startsWith("/auth");
+    const isApiRoute =
+      pathname.startsWith("/api") ||
+      acceptHeader.includes("application/json") ||
+      pathname.startsWith("/_next") ||
+      pathname.includes("favicon.ico") ||
+      pathname.startsWith("/offline");
 
     if (!isMaintenancePage && !isAdminRoute && !isApiRoute && !isAuthRoute) {
       let shouldRedirect = false;
@@ -139,7 +154,7 @@ export default async function RootLayout({
         const db = await dbConnect();
         if (db) {
           const settings = await Settings.findOne();
-          
+
           if (settings?.googleAnalyticsId) {
             gaId = settings.googleAnalyticsId;
           }
@@ -179,7 +194,10 @@ export default async function RootLayout({
                   <div className="min-h-screen flex flex-col bg-background text-foreground selection:bg-primary/30 selection:text-primary relative overflow-x-hidden">
                     <div className="fixed inset-0 pointer-events-none z-0">
                       <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-primary/5 rounded-full blur-[120px] animate-pulse" />
-                      <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-primary/5 rounded-full blur-[120px] animate-pulse" style={{ animationDelay: '2s' }} />
+                      <div
+                        className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-primary/5 rounded-full blur-[120px] animate-pulse"
+                        style={{ animationDelay: "2s" }}
+                      />
                     </div>
 
                     <Header />
@@ -196,16 +214,13 @@ export default async function RootLayout({
                     <SaveForLaterWidget />
                     <InstallPromptBanner />
                     <OfflineIndicator />
-                    <FloatingContactWidget />
                   </div>
                 </NotificationLayout>
               </ThemeProvider>
             </LocalizationProvider>
           </PWAProvider>
         </Providers>
-        {gaId && (
-          <GoogleAnalytics gaId={gaId} />
-        )}
+        {gaId && <GoogleAnalytics gaId={gaId} />}
       </body>
     </html>
   );

@@ -29,7 +29,7 @@ export default async function HomePage() {
       <BrandsSection />
       <CategoryGrid />
       <StatsSection />
-      
+
       <div className="container mx-auto px-2 py-5">
         <FlashSale endTime={saleEndTime} />
       </div>
