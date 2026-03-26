@@ -5,28 +5,46 @@ import * as TabsPrimitive from "@radix-ui/react-tabs"
 
 import { cn } from "@/lib/utils"
 
+interface TabsProps extends React.ComponentProps<typeof TabsPrimitive.Root> {
+  variant?: "default" | "pills" | "underline"
+}
+
 function Tabs({
   className,
+  variant = "default",
   ...props
-}: React.ComponentProps<typeof TabsPrimitive.Root>) {
+}: TabsProps) {
   return (
     <TabsPrimitive.Root
       data-slot="tabs"
-      className={cn("flex flex-col gap-2", className)}
+      data-variant={variant}
+      className={cn("flex flex-col gap-4", className)}
       {...props}
     />
   )
 }
 
+interface TabsListProps extends React.ComponentProps<typeof TabsPrimitive.List> {
+  size?: "sm" | "md" | "lg"
+}
+
 function TabsList({
   className,
+  size = "md",
   ...props
-}: React.ComponentProps<typeof TabsPrimitive.List>) {
+}: TabsListProps) {
+  const sizeClasses = {
+    sm: "h-8 text-xs",
+    md: "h-10 text-sm",
+    lg: "h-12 text-base",
+  }
+
   return (
     <TabsPrimitive.List
       data-slot="tabs-list"
       className={cn(
-        "bg-muted text-muted-foreground inline-flex h-9 w-fit items-center justify-center rounded-lg p-[3px]",
+        "inline-flex items-center justify-center gap-1 p-1 rounded-xl bg-muted/50 border border-border/50",
+        sizeClasses[size],
         className
       )}
       {...props}
@@ -42,7 +60,7 @@ function TabsTrigger({
     <TabsPrimitive.Trigger
       data-slot="tabs-trigger"
       className={cn(
-        "data-[state=active]:bg-background dark:data-[state=active]:text-foreground focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:outline-ring dark:data-[state=active]:border-input dark:data-[state=active]:bg-input/30 text-foreground dark:text-muted-foreground inline-flex h-[calc(100%-1px)] flex-1 items-center justify-center gap-1.5 rounded-md border border-transparent px-2 py-1 text-sm font-medium whitespace-nowrap transition-[color,box-shadow] focus-visible:ring-[3px] focus-visible:outline-1 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:shadow-sm [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+        "data-[state=active]:bg-background dark:data-[state=active]:text-foreground focus-visible:ring-ring/50 focus-visible:outline-ring text-muted-foreground dark:text-muted-foreground inline-flex h-[calc(100%-4px)] flex-1 items-center justify-center gap-2 rounded-lg px-4 py-2 font-semibold whitespace-nowrap transition-all duration-200 focus-visible:ring-2 focus-visible:outline-1 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:shadow-sm data-[state=active]:text-foreground hover:text-foreground [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
         className
       )}
       {...props}
@@ -57,7 +75,10 @@ function TabsContent({
   return (
     <TabsPrimitive.Content
       data-slot="tabs-content"
-      className={cn("flex-1 outline-none", className)}
+      className={cn(
+        "flex-1 outline-none animate-in fade-in-0 duration-200",
+        className
+      )}
       {...props}
     />
   )

@@ -55,9 +55,11 @@ function PaginationLink({
       data-active={isActive}
       className={cn(
         buttonVariants({
-          variant: isActive ? "outline" : "ghost",
+          variant: isActive ? "secondary" : "ghost",
           size,
         }),
+        "rounded-xl transition-all duration-200",
+        isActive && "shadow-sm font-semibold",
         className
       )}
       {...props}
@@ -73,10 +75,10 @@ function PaginationPrevious({
     <PaginationLink
       aria-label="Go to previous page"
       size="default"
-      className={cn("gap-1 px-2.5 sm:pl-2.5", className)}
+      className={cn("gap-1 px-3 sm:pl-3", className)}
       {...props}
     >
-      <ChevronLeftIcon />
+      <ChevronLeftIcon className="size-4" />
       <span className="hidden sm:block">Previous</span>
     </PaginationLink>
   )
@@ -90,11 +92,11 @@ function PaginationNext({
     <PaginationLink
       aria-label="Go to next page"
       size="default"
-      className={cn("gap-1 px-2.5 sm:pr-2.5", className)}
+      className={cn("gap-1 px-3 sm:pr-3", className)}
       {...props}
     >
       <span className="hidden sm:block">Next</span>
-      <ChevronRightIcon />
+      <ChevronRightIcon className="size-4" />
     </PaginationLink>
   )
 }
