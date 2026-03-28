@@ -87,7 +87,7 @@ export async function GET(req: Request) {
 
     return NextResponse.json(recommendations);
   } catch (error: unknown) {
-    console.error("Recommendation Error:", error);
+    console.warn("Recommendation Error:", error);
     return NextResponse.json([]);
   }
 }

@@ -91,7 +91,7 @@ const RegistrationForm = () => {
       });
 
       const data = await response.json();
-
+      console.log(data);
       if (response.ok) {
         if (data.email) {
           setUserEmail(data.email as string);

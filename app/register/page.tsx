@@ -18,8 +18,8 @@ const RegisterPage = async () => {
       const settings = await Settings.findOne();
       allowRegistration = settings?.allowRegistration !== false;
     }
-  } catch (error) {
-    console.warn("Could not fetch settings, allowing registration by default:", error);
+  } catch {
+    console.warn("Could not fetch settings, allowing registration by default");
   }
 
   return (

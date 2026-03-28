@@ -24,7 +24,17 @@ export async function GET() {
       },
     });
   } catch (error) {
-    console.error("Public settings fetch error:", error);
-    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
+    console.warn("Public settings fetch error:", error);
+    return NextResponse.json({
+      success: true,
+      settings: {
+        siteName: "Shop",
+        allowRegistration: true,
+        maintenanceMode: false,
+        currency: "USD",
+        stripeEnabled: false,
+        paypalEnabled: false,
+      },
+    });
   }
 }

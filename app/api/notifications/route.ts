@@ -38,7 +38,7 @@ export async function GET(request: NextRequest) {
 
     return Response.json({ notifications: formattedNotifications });
   } catch (error) {
-    console.error("Error fetching notifications:", error);
+    console.warn("Error fetching notifications:", error);
     return Response.json({ notifications: [] });
   }
 }
@@ -64,7 +64,7 @@ export async function PATCH(request: Request) {
 
     return Response.json({ success: true });
   } catch (error) {
-    console.error("Error updating notification:", error);
+    console.warn("Error updating notification:", error);
     return Response.json({ error: "Internal Server Error" }, { status: 500 });
   }
 }
@@ -112,7 +112,7 @@ export async function POST(request: Request) {
 
     return Response.json({ success: true });
   } catch (error) {
-    console.error("Error marking all as read:", error);
+    console.warn("Error marking all as read:", error);
     return Response.json({ error: "Internal Server Error" }, { status: 500 });
   }
 }

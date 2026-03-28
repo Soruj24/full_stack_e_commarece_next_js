@@ -61,7 +61,6 @@ const bundleSchema = new Schema<IBundle>(
 
 bundleSchema.index({ isActive: 1, validFrom: 1, validUntil: 1 });
 bundleSchema.index({ category: 1 });
-bundleSchema.index({ slug: 1 });
 
 export const Bundle =
   mongoose.models.Bundle || mongoose.model<IBundle>("Bundle", bundleSchema);

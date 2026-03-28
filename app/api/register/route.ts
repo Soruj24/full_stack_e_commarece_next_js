@@ -8,7 +8,6 @@ import { headers } from "next/headers";
 import { registerSchema } from "@/lib/validations";
 import { redisRateLimit } from "@/lib/redis";
 import { logAction } from "@/lib/audit";
-
 export async function POST(request: Request) {
   try {
     const headersList = await headers();
@@ -26,19 +25,31 @@ export async function POST(request: Request) {
       );
     }
 
-    await dbConnect();
+    try {
+      await dbConnect();
+    } catch (e) {
+      return NextResponse.json(
+        { error: "Database unavailable. Please try again later." },
+        { status: 503 }
+      );
+    }
 
-    // Check if registration is allowed
-    const settings = await Settings.findOne();
-    if (settings && settings.allowRegistration === false) {
-      // Still allow the first user to register as admin
-      const userCount = await User.countDocuments();
-      if (userCount > 0) {
-        return Response.json(
-          { error: "Registration is currently disabled by administrator." },
-          { status: 403 }
-        );
+    try {
+      const settings = await Settings.findOne();
+      if (settings && settings.allowRegistration === false) {
+        const userCount = await User.countDocuments();
+        if (userCount > 0) {
+          return Response.json(
+            { error: "Registration is currently disabled by administrator." },
+            { status: 403 }
+          );
+        }
       }
+    } catch {
+      return NextResponse.json(
+        { error: "Database unavailable. Please try again later." },
+        { status: 503 }
+      );
     }
 
     const body = await request.json();
@@ -54,7 +65,6 @@ export async function POST(request: Request) {
 
     const { name, email, password, image } = validation.data;
 
-    await dbConnect();
     const existingUser = await User.findOne({ email });
 
     if (existingUser) {

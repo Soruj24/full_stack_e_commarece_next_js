@@ -98,7 +98,7 @@ export async function GET(request: Request) {
       },
     });
   } catch (error) {
-    console.error("Product API Error:", error);
+    console.warn("Product API Error:", error);
     return NextResponse.json({
       success: true,
       products: [],

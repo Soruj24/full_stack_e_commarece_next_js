@@ -111,7 +111,7 @@ export async function GET(request: Request) {
       },
     });
   } catch (error) {
-    console.error("Categories GET error:", error);
+    console.warn("Categories GET error:", error);
     return NextResponse.json({
       success: true,
       categories: [],

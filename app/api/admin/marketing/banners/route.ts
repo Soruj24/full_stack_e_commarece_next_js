@@ -35,7 +35,7 @@ export async function GET(req: Request) {
       banners,
     });
   } catch (error) {
-    console.error("Error fetching banners:", error);
+    console.warn("Error fetching banners:", error);
     return NextResponse.json({
       success: true,
       banners: [],
