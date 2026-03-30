@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import mongoose from "mongoose";
 import { dbConnect } from "@/config/db";
 import { Product } from "@/models/Product";
 import { PriceHistory } from "@/models/PriceHistory";
@@ -20,7 +21,7 @@ export async function GET(
     }
 
     let priceHistory = await PriceHistory.findOne({
-      productId: id,
+      productId: new mongoose.Types.ObjectId(id),
     }).lean();
 
     if (!priceHistory) {
@@ -34,7 +35,7 @@ export async function GET(
       );
 
       priceHistory = await PriceHistory.create({
-        productId: id,
+        productId: new mongoose.Types.ObjectId(id),
         pricePoints: generatedPricePoints,
       });
     }
@@ -155,12 +156,12 @@ export async function POST(
     }
 
     let priceHistory = await PriceHistory.findOne({
-      productId: id,
+      productId: new mongoose.Types.ObjectId(id),
     });
 
     if (!priceHistory) {
       priceHistory = new PriceHistory({
-        productId: id,
+        productId: new mongoose.Types.ObjectId(id),
         pricePoints: [],
       });
     }
