@@ -133,3 +133,32 @@ npm run lint
 5. Verify environment variables
 6. Check database migrations
 7. Test payment integrations
+
+## Commit Message Best Practices
+
+1. **Use Conventional Commits format:**
+   ```
+   <type>(<scope>): <description>
+   ```
+   Types: `feat`, `fix`, `docs`, `style`, `refactor`, `test`, `chore`, `perf`, `ci`, `build`
+
+2. **Keep subject line under 50 characters**
+
+3. **Use imperative mood** (e.g., "add feature" not "added feature")
+
+4. **Separate subject from body with a blank line**
+
+5. **Body should explain what and why, not how**
+
+6. **Reference issues: Fixes #123, Closes #456**
+
+7. **Example:**
+   ```
+   feat(cart): add wishlist functionality
+   
+   - Add wishlist button to product cards
+   - Store wishlist in localStorage
+   - Add wishlist page to view saved items
+   
+   Closes #42
+   ```
