@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { Search, Package, Tag, TrendingUp, Clock, ArrowRight, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { SuggestionItem } from "./SuggestionItem";
-import type { SearchSuggestion } from "@/context/SearchContext";
+import type { SearchSuggestion } from "@/types/search-context";
 
 interface SuggestionsDropdownProps {
   isOpen: boolean;

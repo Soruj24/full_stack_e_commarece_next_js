@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { useSearch, SearchSuggestion } from "@/context/SearchContext";
+import { useSearch } from "@/context/SearchContext";
+import type { SearchSuggestion } from "@/types/search-context";
 
 export function useSearchBar(autoFocus?: boolean, onClose?: () => void) {
   const router = useRouter();
