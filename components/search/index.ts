@@ -1,4 +1,5 @@
 export { SearchBar, SearchModal } from "./SearchBar";
+export { SuggestionItem } from "./search-bar/SuggestionItem";
 export { SearchPageHero } from "./SearchPageHero";
 export { SearchFiltersSidebar } from "./SearchFiltersSidebar";
 export type { FiltersState } from "./SearchFiltersSidebar";
