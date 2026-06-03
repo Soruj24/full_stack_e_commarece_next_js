@@ -2,12 +2,7 @@
 
 import { useState } from "react";
 import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
+  Table, TableBody, TableCell, TableHead, TableHeader, TableRow,
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
@@ -15,12 +10,9 @@ import { Search, Download, Filter, Calendar } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
+  Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
 } from "@/components/ui/select";
+import { exportToCSV } from "@/lib/export-utils";
 
 interface AuditLog {
   _id: string;
@@ -46,33 +38,17 @@ export function AuditLogsTable({ logs }: AuditLogsTableProps) {
       log.userEmail.toLowerCase().includes(search.toLowerCase()) ||
       log.action.toLowerCase().includes(search.toLowerCase()) ||
       log.entityType.toLowerCase().includes(search.toLowerCase());
-    
     const matchesFilter = filter === "ALL" || log.action === filter;
-    
     return matchesSearch && matchesFilter;
   });
 
-  const exportToCSV = () => {
-    const headers = ["Timestamp", "Admin Email", "Action", "Entity Type", "Entity ID", "IP Address"];
+  const handleExport = () => {
+    const headers = ["Timestamp","Admin Email","Action","Entity Type","Entity ID","IP Address"];
     const rows = filteredLogs.map(log => [
-      new Date(log.createdAt).toLocaleString(),
-      log.userEmail,
-      log.action,
-      log.entityType,
-      log.entityId,
-      log.ipAddress
+      new Date(log.createdAt).toLocaleString(), log.userEmail, log.action,
+      log.entityType, log.entityId, log.ipAddress,
     ]);
-
-    const csvContent = "data:text/csv;charset=utf-8," 
-      + [headers.join(","), ...rows.map(e => e.join(","))].join("\n");
-    
-    const encodedUri = encodeURI(csvContent);
-    const link = document.createElement("a");
-    link.setAttribute("href", encodedUri);
-    link.setAttribute("download", `audit_logs_${new Date().toISOString().split('T')[0]}.csv`);
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    exportToCSV(headers, rows, "audit_logs");
   };
 
   const actionTypes = ["ALL", ...Array.from(new Set(logs.map(l => l.action)))];
@@ -108,7 +84,7 @@ export function AuditLogsTable({ logs }: AuditLogsTableProps) {
           </Select>
 
           <Button 
-            onClick={exportToCSV}
+            onClick={handleExport}
             variant="outline"
             className="h-11 rounded-xl font-black gap-2 border-border hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all shadow-sm"
           >

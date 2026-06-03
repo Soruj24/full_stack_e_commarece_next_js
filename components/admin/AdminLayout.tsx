@@ -4,92 +4,17 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import {
-  LayoutDashboard,
-  Users,
-  Package,
-  ShoppingCart,
-  FolderTree,
-  Building2,
-  Ticket,
-  Megaphone,
-  Settings,
-  BarChart3,
-  MessageSquare,
-  FileText,
-  Shield,
   ChevronLeft,
   ChevronRight,
   X,
   Bell,
   Search,
+  LayoutDashboard,
 } from 'lucide-react';
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Badge } from '@/components/ui/badge';
-
-const sidebarLinks = [
-  {
-    title: 'Dashboard',
-    href: '/admin/dashboard',
-    icon: LayoutDashboard,
-  },
-  {
-    title: 'Users',
-    href: '/admin/users',
-    icon: Users,
-  },
-  {
-    title: 'Products',
-    href: '/admin/products',
-    icon: Package,
-  },
-  {
-    title: 'Orders',
-    href: '/admin/orders',
-    icon: ShoppingCart,
-  },
-  {
-    title: 'Categories',
-    href: '/admin/categories',
-    icon: FolderTree,
-  },
-  {
-    title: 'Brands',
-    href: '/admin/brands',
-    icon: Building2,
-  },
-  {
-    title: 'Coupons',
-    href: '/admin/coupons',
-    icon: Ticket,
-  },
-  {
-    title: 'Banners',
-    href: '/admin/banners',
-    icon: Megaphone,
-  },
-  {
-    title: 'Analytics',
-    href: '/admin/analytics',
-    icon: BarChart3,
-  },
-  {
-    title: 'Contact Messages',
-    href: '/admin/contact',
-    icon: MessageSquare,
-  },
-  {
-    title: 'Audit Logs',
-    href: '/admin/audit-logs',
-    icon: Shield,
-  },
-  {
-    title: 'Settings',
-    href: '/admin/settings',
-    icon: Settings,
-  },
-];
+import { sidebarLinks } from '@/lib/data/admin-sidebar';
 
 interface AdminLayoutProps {
   children: React.ReactNode;
