@@ -44,10 +44,6 @@ export function useCheckout() {
   useEffect(() => { if (cart.length === 0) router.push("/cart"); }, [cart, router]);
   useEffect(() => { fetchPaymentSettings().then(setPaymentEnabled); }, []);
 
-  useEffect(() => {
-    if (currentStep === 3 && paymentMethod === "stripe" && !pi.clientSecret) handleCreateIntent();
-  }, [currentStep, paymentMethod, pi.clientSecret, handleCreateIntent]);
-
   const shippingRates = useMemo(() => {
     if (validateAddressIntl(shippingAddress)) return getShippingRatesIntl(shippingAddress.zipCode, shippingAddress.country, subtotal);
     return [];
@@ -74,6 +70,10 @@ export function useCheckout() {
       else { const msg = data.error || "Failed to initialize payment"; setPi({ clientSecret: "", error: msg }); toast.error(msg); }
     } catch { const msg = "Failed to initialize payment gateway"; setPi({ clientSecret: "", error: msg }); toast.error(msg); }
   }, [totalForGateway, currency, cart.length]);
+
+  useEffect(() => {
+    if (currentStep === 3 && paymentMethod === "stripe" && !pi.clientSecret) handleCreateIntent();
+  }, [currentStep, paymentMethod, pi.clientSecret, handleCreateIntent]);
 
   const validateShipping = useCallback(() => {
     if (!shippingAddress.fullName.trim()) { toast.error("Please enter your full name"); return false; }
