@@ -19,11 +19,20 @@ import { CartDrawer } from "./CartDrawer";
 
 const Navbar = () => {
   const {
-    user, loading, mounted, isScrolled,
-    mobileMenuOpen, setMobileMenuOpen,
-    megaMenuOpen, setMegaMenuOpen,
-    cartDrawerOpen, setCartDrawerOpen,
-    categories, pathname, handleLogout, isAdmin,
+    user,
+    loading,
+    mounted,
+    isScrolled,
+    mobileMenuOpen,
+    setMobileMenuOpen,
+    megaMenuOpen,
+    setMegaMenuOpen,
+    cartDrawerOpen,
+    setCartDrawerOpen,
+    categories,
+    pathname,
+    handleLogout,
+    isAdmin,
   } = useNavbar();
   const { totalItems } = useCart() || { totalItems: 0 };
 
@@ -84,7 +93,11 @@ const Navbar = () => {
             {user ? (
               <div className="flex items-center gap-1 sm:gap-2">
                 <NotificationDropdown />
-                <UserMenu user={user} isAdmin={isAdmin} onLogout={handleLogout} />
+                <UserMenu
+                  user={user}
+                  isAdmin={isAdmin}
+                  onLogout={handleLogout}
+                />
               </div>
             ) : (
               <AuthButtons />
@@ -103,7 +116,10 @@ const Navbar = () => {
         </div>
       </div>
 
-      <CartDrawer isOpen={cartDrawerOpen} onClose={() => setCartDrawerOpen(false)} />
+      <CartDrawer
+        isOpen={cartDrawerOpen}
+        onClose={() => setCartDrawerOpen(false)}
+      />
       <MobileNav
         open={mobileMenuOpen}
         onOpenChange={setMobileMenuOpen}
