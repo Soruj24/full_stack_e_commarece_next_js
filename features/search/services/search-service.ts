@@ -1,4 +1,10 @@
 import type { SearchFilters } from "@/features/search/types/search-context";
+import { SearchSuggestions } from "@/features/search/types/product-search";
+
+interface SearchResponse {
+  success: boolean;
+  suggestions?: SearchSuggestions;
+}
 
 export async function fetchSuggestionsAPI(searchQuery: string) {
   const res = await fetch(`/api/search/suggestions?q=${encodeURIComponent(searchQuery)}`);
@@ -19,4 +25,17 @@ export async function performSearchAPI(query: string, filters: SearchFilters, pa
   params.set("limit", "20");
   const res = await fetch(`/api/search?${params.toString()}`);
   return res.json();
+}
+
+export async function fetchSearchSuggestions(query: string): Promise<SearchSuggestions | null> {
+  try {
+    const res = await fetch(`/api/products/search?q=${query}`);
+    const data: SearchResponse = await res.json();
+    if (data.success && data.suggestions) {
+      return data.suggestions;
+    }
+    return null;
+  } catch {
+    return null;
+  }
 }

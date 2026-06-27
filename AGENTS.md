@@ -2,15 +2,54 @@
 
 ## Project Overview
 
-Nexus is a comprehensive full-stack e-commerce platform built with Next.js 14, MongoDB, and TypeScript.
+Nexus is a comprehensive full-stack e-commerce platform built with Next.js 16, MongoDB, and TypeScript. It follows Clean Architecture with feature-based modular organization.
 
 ## Key Directories
 
-- `app/` - Next.js App Router pages and API routes
-- `components/` - React components organized by feature
-- `context/` - React Context providers
-- `models/` - Mongoose database models
-- `types/` - TypeScript type definitions
+```
+my-app/
+├── app/                    # Next.js App Router (pages, API routes, layouts)
+├── features/               # Domain-driven feature modules (business logic)
+│   ├── admin/              # Admin panel (hooks, services, types)
+│   ├── analytics/          # Analytics tracking
+│   ├── auth/               # Authentication & registration
+│   ├── bundles/            # Product bundles
+│   ├── cart/               # Shopping cart & stock management
+│   ├── categories/         # Category management
+│   ├── checkout/           # Checkout flow & payments
+│   ├── common/             # Shared hooks & utilities
+│   ├── compare/            # Product comparison
+│   ├── gift-cards/         # Gift card system
+│   ├── notifications/      # Real-time notifications
+│   ├── orders/             # Order management & tracking
+│   ├── products/           # Products, reviews, search
+│   ├── returns/            # Return requests
+│   ├── reviews/            # Product reviews
+│   ├── search/             # Search functionality
+│   ├── settings/           # Site settings
+│   ├── support/            # Support tickets & FAQ
+│   ├── user/               # User profile management
+│   ├── vendor/             # Vendor management
+│   └── wishlist/           # Wishlist
+├── components/             # Reusable UI components
+│   ├── ui/                 # shadcn/ui primitives (47 components)
+│   └── layout/             # Layout components (navbar, header, mega-menu)
+├── lib/                    # Shared utilities & infrastructure
+│   ├── data/               # Static data (menus, testimonials, etc.)
+│   ├── utils.ts            # cn(), formatDate, formatRole, etc.
+│   ├── validations.ts      # Zod schemas
+│   ├── rbac.ts             # Role-based access control
+│   ├── audit.ts            # Audit logging
+│   ├── stripe.ts           # Stripe client
+│   ├── email.ts            # Email sending (nodemailer)
+│   ├── redis.ts            # Upstash Redis client
+│   └── ...                 # Other utilities
+├── models/                 # Mongoose database models (23 models)
+├── controllers/            # API controllers (thin wrappers)
+├── config/                 # Database configuration
+├── types/                  # Global TypeScript types (index.ts only)
+└── server/                 # Standalone Express + Socket.io server
+```
 
 ## Important Commands
 
@@ -20,6 +59,14 @@ npm run build        # Production build
 npm run lint         # Run ESLint
 npm run typecheck    # TypeScript check
 ```
+
+## Architecture Principles
+
+1. **Feature-Based Organization**: Code is grouped by business domain, not file type
+2. **Separation of Concerns**: UI (components/) separated from logic (features/)
+3. **Single Responsibility**: Each feature module handles one domain
+4. **Barrel Exports**: Each feature has an `index.ts` for clean imports
+5. **Shared Utilities**: Cross-cutting concerns in `lib/`
 
 ## Code Style Guidelines
 
@@ -32,23 +79,28 @@ npm run typecheck    # TypeScript check
 2. **Naming Conventions**
    - Components: PascalCase (e.g., `ProductCard.tsx`)
    - Hooks: camelCase with `use` prefix (e.g., `useCart.ts`)
-   - Utilities: camelCase (e.g., `formatCurrency.ts`)
+   - Services: camelCase with `-service` suffix (e.g., `product-service.ts`)
    - Types: PascalCase (e.g., `Product.ts`)
 
 3. **File Organization**
-   - Components in feature folders
-   - Shared components in `components/common/`
+   - Components in `components/` organized by feature
+   - Business logic in `features/<domain>/`
    - UI components in `components/ui/`
    - Layout components in `components/layout/`
 
-4. **Styling**
+4. **Import Patterns**
+   - Use `@/` path alias for root imports
+   - Import from feature barrel exports: `import { useCart } from '@/features/cart'`
+   - Import types from feature types: `import type { IProduct } from '@/types'`
+
+5. **Styling**
    - Use Tailwind CSS classes
    - Follow shadcn/ui patterns
    - Support dark mode
    - Use `cn()` utility for class merging
 
-5. **State Management**
-   - Use React Context for global state
+6. **State Management**
+   - Use React Context for global state (contexts in feature modules)
    - Use local state for component-specific
    - Store cart/wishlist in localStorage
 
@@ -61,20 +113,20 @@ npm run typecheck    # TypeScript check
    - Enable timestamps
 
 2. **API Routes**
-   - RESTful naming
+   - RESTful naming in `app/api/`
    - Error handling with try/catch
-   - Return consistent response format
+   - Return consistent response format: `{ success, data?, error?, pagination? }`
    - Use proper HTTP status codes
 
-## Testing Guidelines
-
-Before running tests:
-```bash
-npm run typecheck
-npm run lint
-```
-
 ## Important Patterns
+
+### Adding New Features
+
+1. Create feature directory in `features/<domain>/`
+2. Add subdirectories: `hooks/`, `services/`, `types/`, `context/` (as needed)
+3. Create barrel export `index.ts`
+4. Add components in `components/<domain>/`
+5. Add API routes in `app/api/<domain>/`
 
 ### Adding New Components
 
@@ -141,6 +193,7 @@ npm run lint
    <type>(<scope>): <description>
    ```
    Types: `feat`, `fix`, `docs`, `style`, `refactor`, `test`, `chore`, `perf`, `ci`, `build`
+   Scopes: `auth`, `cart`, `checkout`, `products`, `orders`, `admin`, `search`, `user`, `vendor`, `ui`, `api`, `db`
 
 2. **Keep subject line under 50 characters**
 

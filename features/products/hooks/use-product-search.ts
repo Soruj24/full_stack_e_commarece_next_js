@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef, useCallback } from "react";
 import { useRouter } from "next/navigation";
-import { fetchSearchSuggestions } from "@/features/search/services/search-service-v2";
+import { fetchSearchSuggestions } from "@/features/search/services/search-service";
 import { SearchSuggestions, InteractiveItem } from "@/features/search/types/product-search";
 
 const RECENT_KEY = "recent_searches";
