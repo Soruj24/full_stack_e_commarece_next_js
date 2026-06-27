@@ -5,7 +5,7 @@ import { Check, MapPin } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { statusIcons, statusColors } from "@/lib/data/order-tracking";
 import { format } from "date-fns";
-import type { TrackingEvent } from "@/context/OrderTrackingContext";
+import type { TrackingEvent } from "@/features/orders/context/OrderTrackingContext";
 
 interface TimelineVerticalProps {
   events: TrackingEvent[];

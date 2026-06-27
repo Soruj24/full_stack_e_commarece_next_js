@@ -1,6 +1,6 @@
 import { Star, CheckCircle2, ThumbsUp } from "lucide-react";
 import { cn } from "@/lib/utils";
-import type { Review } from "@/types/review";
+import type { Review } from "@/features/reviews/types/review";
 
 interface ReviewCardProps {
   review: Review;

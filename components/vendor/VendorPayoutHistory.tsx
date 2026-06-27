@@ -4,7 +4,7 @@ import { Check, Clock, X } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
-import { Payout } from "@/types/vendor";
+import { Payout } from "@/features/vendor/types/vendor";
 
 interface VendorPayoutHistoryProps {
   payouts: Payout[];

@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { Check } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { GIFT_WRAPPING_OPTIONS } from "@/lib/data/gift-wrapping";
-import type { GiftWrappingOption } from "@/types/gift-wrapping";
+import type { GiftWrappingOption } from "@/features/cart/types/gift-wrapping";
 
 interface WrappingOptionsGridProps {
   selectedOption?: GiftWrappingOption;

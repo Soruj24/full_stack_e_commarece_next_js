@@ -14,7 +14,7 @@ import { Button } from "@/components/ui/button";
 import { formatPrice } from "@/lib/localization";
 import { cn } from "@/lib/utils";
 import { IProduct } from "@/types";
-import { useWishlist } from "@/context/WishlistContext";
+import { useWishlist } from "@/features/wishlist/hooks/WishlistContext";
 
 interface QuickViewInfoProps {
   product: IProduct;

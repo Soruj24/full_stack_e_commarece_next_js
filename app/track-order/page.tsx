@@ -5,7 +5,7 @@ import { Search, Package, Truck, CheckCircle, Clock, MapPin } from "lucide-react
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
-import { useTrackOrder } from "@/hooks/use-track-order";
+import { useTrackOrder } from "@/features/orders/hooks/use-track-order";
 
 export default function TrackOrderPage() {
   const { orderId, setOrderId, email, setEmail, searched, handleSearch, mockOrder } = useTrackOrder();

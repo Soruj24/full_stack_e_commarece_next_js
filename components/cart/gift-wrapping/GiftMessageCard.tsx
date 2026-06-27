@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { Gift } from "lucide-react";
-import type { GiftWrappingOption, GiftMessage } from "@/types/gift-wrapping";
+import type { GiftWrappingOption, GiftMessage } from "@/features/cart/types/gift-wrapping";
 
 interface GiftMessageCardProps {
   giftMessage: GiftMessage;

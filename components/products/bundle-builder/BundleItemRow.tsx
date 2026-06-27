@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { Plus, Minus, Trash2 } from "lucide-react";
-import type { BundleItem } from "@/types/bundle";
+import type { BundleItem } from "@/features/bundles/types/bundle";
 
 interface BundleItemRowProps {
   item: BundleItem;

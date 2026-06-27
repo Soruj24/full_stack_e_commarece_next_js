@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
-import { BundleProduct } from "@/context/BundleContext";
+import { BundleProduct } from "@/features/bundles/context/BundleContext";
 
 interface BundleDetailsImageGalleryProps {
   products: BundleProduct[];

@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { CheckCircle2, Package, Mail, ArrowRight, Copy, Truck, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useLocalization } from "@/context/LocalizationContext";
+import { useLocalization } from "@/features/common/hooks/LocalizationContext";
 import { formatPrice } from "@/lib/localization";
 
 interface OrderConfirmationProps {

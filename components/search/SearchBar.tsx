@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
-import { useSearchBar } from "@/hooks/use-search-bar";
+import { useSearchBar } from "@/features/search/hooks/use-search-bar";
 import { SuggestionsDropdown } from "./search-bar/SuggestionsDropdown";
 
 interface SearchBarProps {

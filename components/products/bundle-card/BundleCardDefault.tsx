@@ -7,7 +7,7 @@ import { ShoppingCart, CheckCircle2, Package } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
-import { Bundle } from "@/context/BundleContext";
+import { Bundle } from "@/features/bundles/context/BundleContext";
 
 interface BundleCardDefaultProps {
   bundle: Bundle;

@@ -3,7 +3,7 @@ import "./globals.css";
 import { Toaster } from "@/components/ui/sonner";
 import { Header } from "@/components/layout/Header";
 import Providers from "./providers";
-import { LocalizationProvider } from "@/context/LocalizationContext";
+import { LocalizationProvider } from "@/features/common/hooks/LocalizationContext";
 import { LiveChat } from "@/components/support/LiveChat";
 import { CookieConsent } from "@/components/legal/CookieConsent";
 import { ThemeProvider } from "@/components/theme-provider";

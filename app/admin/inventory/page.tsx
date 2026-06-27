@@ -8,7 +8,7 @@ import {
   InventorySearch,
   InventoryTable,
 } from "@/components/admin/inventory";
-import { useAdminInventory } from "@/hooks/use-admin-inventory";
+import { useAdminInventory } from "@/features/admin/hooks/use-admin-inventory";
 
 export default function InventoryPage() {
   const {

@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import { RefreshCw, Check, Loader2, AlertCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
-import { useCart, CartItem } from "@/context/CartContext";
+import { useCart, CartItem } from "@/features/cart/context/CartContext";
 
 interface OrderItem {
   _id: string;

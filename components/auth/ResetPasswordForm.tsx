@@ -1,6 +1,6 @@
 "use client";
 
-import { useResetPassword } from "@/hooks/use-reset-password";
+import { useResetPassword } from "@/features/auth/hooks/use-reset-password";
 import { TokenLoadingState } from "./reset-password/TokenLoadingState";
 import { TokenErrorState } from "./reset-password/TokenErrorState";
 import { PasswordForm } from "./reset-password/PasswordForm";

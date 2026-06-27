@@ -1,6 +1,6 @@
 "use client";
 
-import { useProductSearch } from "@/hooks/use-product-search";
+import { useProductSearch } from "@/features/products/hooks/use-product-search";
 import { SearchInput } from "./search/SearchInput";
 import { SearchDropdown } from "./search/SearchDropdown";
 

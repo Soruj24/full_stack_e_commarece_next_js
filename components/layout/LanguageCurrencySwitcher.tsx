@@ -1,7 +1,7 @@
 "use client";
 
 import { useSyncExternalStore } from "react";
-import { useLocalization } from "@/context/LocalizationContext";
+import { useLocalization } from "@/features/common/hooks/LocalizationContext";
 import { languages, currencies, countries } from "@/lib/localization";
 import {
   DropdownMenu,

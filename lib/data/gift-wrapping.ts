@@ -1,4 +1,4 @@
-import type { GiftWrappingOption } from "@/types/gift-wrapping";
+import type { GiftWrappingOption } from "@/features/cart/types/gift-wrapping";
 
 export const GIFT_WRAPPING_OPTIONS: GiftWrappingOption[] = [
   { id: "classic", name: "Classic Elegant", price: 4.99, description: "Premium gold paper with silk ribbon", color: "#D4AF37", pattern: "solid" },

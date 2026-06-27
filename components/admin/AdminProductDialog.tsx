@@ -8,7 +8,7 @@ import {
   DialogFooter,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { useProductDialog } from "@/hooks/use-product-dialog";
+import { useProductDialog } from "@/features/products/hooks/use-product-dialog";
 import { ProductBasicInfo } from "./product-form/ProductBasicInfo";
 import { ProductPricing } from "./product-form/ProductPricing";
 import { ProductAttributes } from "./product-form/ProductAttributes";

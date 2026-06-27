@@ -5,7 +5,7 @@ import { Trash2, Plus, Minus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { getSafeImageSrc } from "@/lib/utils";
 import { StockStatusBadge } from "@/components/products/StockStatus";
-import { CartItem as CartItemType } from "@/context/CartContext";
+import { CartItem as CartItemType } from "@/features/cart/context/CartContext";
 
 interface CartItemProps {
   item: CartItemType;

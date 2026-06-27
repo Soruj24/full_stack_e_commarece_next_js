@@ -1,6 +1,6 @@
 "use client";
 
-import { CompareProduct } from "@/context/CompareContext";
+import { CompareProduct } from "@/features/compare/context/CompareContext";
 import { formatPrice, convertPrice } from "@/lib/localization";
 import { getSafeImageSrc, getFallbackImage } from "@/lib/utils";
 import { cn } from "@/lib/utils";
@@ -9,7 +9,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { ShoppingCart, Trash2, BarChart3, Plus, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useCompareContent, ALL_SPECS } from "@/hooks/use-compare-content";
+import { useCompareContent, ALL_SPECS } from "@/features/compare/hooks/use-compare-content";
 
 export function CompareContent() {
   const { products, removeProduct, clearAll, canAddMore, addToCart, currency, getComparisonSpec } = useCompareContent();

@@ -7,7 +7,7 @@ import { useParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { generateInvoicePDF } from "@/lib/invoice";
 import { IOrder } from "@/types";
-import { useGuestCheckout } from "@/context/GuestCheckoutContext";
+import { useGuestCheckout } from "@/features/checkout/context/GuestCheckoutContext";
 import { useSession } from "next-auth/react";
 import { AccountCreationDialog } from "@/components/checkout/AccountCreationDialog";
 import {

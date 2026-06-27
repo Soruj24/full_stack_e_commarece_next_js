@@ -1,7 +1,7 @@
 "use client";
 
-import { Bundle } from "@/context/BundleContext";
-import { useBundleCard } from "@/hooks/use-bundle-card";
+import { Bundle } from "@/features/bundles/context/BundleContext";
+import { useBundleCard } from "@/features/bundles/hooks/use-bundle-card";
 import { BundleCardCompact } from "./bundle-card/BundleCardCompact";
 import { BundleCardFeatured } from "./bundle-card/BundleCardFeatured";
 import { BundleCardDefault } from "./bundle-card/BundleCardDefault";

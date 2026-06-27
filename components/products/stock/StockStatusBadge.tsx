@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import { CheckCircle2, AlertCircle, XCircle, Clock } from "lucide-react";
 import { motion } from "framer-motion";
-import { useStock } from "@/context/StockContext";
+import { useStock } from "@/features/cart/context/StockContext";
 
 interface StockStatusBadgeProps {
   stock: number;

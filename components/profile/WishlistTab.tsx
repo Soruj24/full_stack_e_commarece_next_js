@@ -1,6 +1,6 @@
 "use client";
 
-import { useWishlist } from "@/context/WishlistContext";
+import { useWishlist } from "@/features/wishlist/hooks/WishlistContext";
 import { ProductCard } from "@/components/products/ProductCard";
 import { Loader2, Heart } from "lucide-react";
 import { Button } from "@/components/ui/button";

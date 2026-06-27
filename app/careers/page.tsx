@@ -1,6 +1,6 @@
 "use client";
 
-import { useCareers } from "@/hooks/use-careers";
+import { useCareers } from "@/features/common/hooks/use-careers";
 import { CareersHero } from "@/components/careers/CareersHero";
 import { CareersValues } from "@/components/careers/CareersValues";
 import { CareersBenefits } from "@/components/careers/CareersBenefits";

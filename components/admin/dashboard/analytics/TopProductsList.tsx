@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { Package } from "lucide-react";
 import { getSafeImageSrc } from "@/lib/utils";
-import { AnalyticsData } from "@/types/analytics";
+import { AnalyticsData } from "@/features/analytics/types/analytics";
 
 interface TopProductsListProps {
   data: AnalyticsData["topProducts"];

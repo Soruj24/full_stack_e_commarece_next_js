@@ -4,7 +4,7 @@ import Link from "next/link";
 import { Store, Clock, X, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Vendor } from "@/types/vendor";
+import { Vendor } from "@/features/vendor/types/vendor";
 
 interface VendorStatusViewsProps {
   loading: boolean;

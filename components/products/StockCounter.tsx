@@ -1,6 +1,6 @@
 "use client";
 
-import { useStockCounter } from "@/hooks/use-stock-counter";
+import { useStockCounter } from "@/features/products/hooks/use-stock-counter";
 import { StockBadge } from "./stock-counter/StockBadge";
 import { StockMinimal } from "./stock-counter/StockMinimal";
 import { StockBar } from "./stock-counter/StockBar";

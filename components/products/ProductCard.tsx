@@ -7,9 +7,9 @@ import {
   ANALYTICS_CATEGORIES,
   ANALYTICS_ACTIONS,
 } from "@/lib/analytics";
-import { useLocalization } from "@/context/LocalizationContext";
-import { useCart } from "@/context/CartContext";
-import { useWishlist } from "@/context/WishlistContext";
+import { useLocalization } from "@/features/common/hooks/LocalizationContext";
+import { useCart } from "@/features/cart/context/CartContext";
+import { useWishlist } from "@/features/wishlist/hooks/WishlistContext";
 import { ProductCardImage } from "./product-card/ProductCardImage";
 import { ProductCardInfo } from "./product-card/ProductCardInfo";
 import { IProduct } from "@/types";

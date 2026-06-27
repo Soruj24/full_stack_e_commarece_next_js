@@ -3,8 +3,8 @@
 
 import { useState } from "react";
 import { toast } from "sonner";
-import { useCart } from "@/context/CartContext";
-import { useSaveForLater } from "@/context/SaveForLaterContext";
+import { useCart } from "@/features/cart/context/CartContext";
+import { useSaveForLater } from "@/features/cart/context/SaveForLaterContext";
 import {
   CartEmptyState,
   CartHeader,

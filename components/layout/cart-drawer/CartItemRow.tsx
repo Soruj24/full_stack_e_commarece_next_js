@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { Minus, Plus, Trash2, Heart } from "lucide-react";
-import type { CartItem } from "@/context/CartContext";
+import type { CartItem } from "@/features/cart/context/CartContext";
 
 interface CartItemRowProps {
   item: CartItem;

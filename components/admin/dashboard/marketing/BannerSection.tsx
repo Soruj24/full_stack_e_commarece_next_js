@@ -5,9 +5,9 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
-import { MarketingBanner } from "@/types/admin/marketing";
+import { MarketingBanner } from "@/features/admin/types/marketing";
 import { BannerForm } from "./BannerForm";
-import { NewBannerForm } from "@/types/admin/marketing";
+import { NewBannerForm } from "@/features/admin/types/marketing";
 
 interface BannerSectionProps {
   banners: MarketingBanner[];

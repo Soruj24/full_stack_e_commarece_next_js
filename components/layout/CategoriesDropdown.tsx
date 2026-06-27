@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { useCategoriesDropdown } from "@/hooks/use-categories-dropdown";
+import { useCategoriesDropdown } from "@/features/categories/hooks/use-categories-dropdown";
 import { CategoryMainList } from "./categories-dropdown/CategoryMainList";
 import { SubcategoriesPanel } from "./categories-dropdown/SubcategoriesPanel";
 import { QuickAccessPanel } from "./categories-dropdown/QuickAccessPanel";

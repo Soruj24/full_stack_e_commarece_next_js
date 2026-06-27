@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { Heart } from "lucide-react";
 import { motion } from "framer-motion";
-import { useSaveForLater } from "@/context/SaveForLaterContext";
+import { useSaveForLater } from "@/features/cart/context/SaveForLaterContext";
 
 export function SaveForLaterWidget() {
   const { getSavedCount } = useSaveForLater();

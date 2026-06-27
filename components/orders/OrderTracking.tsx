@@ -1,7 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import type { TrackingEvent } from "@/context/OrderTrackingContext";
+import type { TrackingEvent } from "@/features/orders/context/OrderTrackingContext";
 import { TimelineHorizontal } from "./order-tracking/TimelineHorizontal";
 import { TimelineCompact } from "./order-tracking/TimelineCompact";
 import { TimelineVertical } from "./order-tracking/TimelineVertical";

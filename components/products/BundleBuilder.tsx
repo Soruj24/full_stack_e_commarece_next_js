@@ -4,12 +4,12 @@ import { AnimatePresence } from "framer-motion";
 import { Gift, Check, ShoppingCart, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { IProduct } from "@/types";
-import { useBundleBuilder } from "@/hooks/use-bundle-builder";
+import { useBundleBuilder } from "@/features/bundles/hooks/use-bundle-builder";
 import { BundleBuilderHeader } from "./bundle-builder/BundleBuilderHeader";
 import { BundleItemRow } from "./bundle-builder/BundleItemRow";
 import { BundleSavingsSummary } from "./bundle-builder/BundleSavingsSummary";
 import { AvailableProductsGrid } from "./bundle-builder/AvailableProductsGrid";
-import type { BundleItem } from "@/types/bundle";
+import type { BundleItem } from "@/features/bundles/types/bundle";
 
 interface BundleBuilderProps {
   products: IProduct[];

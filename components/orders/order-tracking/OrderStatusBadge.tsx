@@ -2,7 +2,7 @@
 
 import { cn } from "@/lib/utils";
 import { statusIcons, statusColors, statusLabels } from "@/lib/data/order-tracking";
-import type { OrderStatus } from "@/context/OrderTrackingContext";
+import type { OrderStatus } from "@/features/orders/context/OrderTrackingContext";
 
 interface OrderStatusBadgeProps {
   status: OrderStatus;

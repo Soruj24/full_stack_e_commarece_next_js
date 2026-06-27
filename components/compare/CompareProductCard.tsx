@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { X, Star, Check, ShoppingCart } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useLocalization } from "@/context/LocalizationContext";
+import { useLocalization } from "@/features/common/hooks/LocalizationContext";
 import { formatPrice, convertPrice } from "@/lib/localization";
 import { getSafeImageSrc, getFallbackImage, cn } from "@/lib/utils";
 

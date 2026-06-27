@@ -5,7 +5,7 @@ import { Copy, ExternalLink } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { OrderStatusBadge, EstimatedDelivery } from "@/components/orders/OrderTracking";
-import { OrderStatus } from "@/context/OrderTrackingContext";
+import { OrderStatus } from "@/features/orders/context/OrderTrackingContext";
 import { Check, AlertTriangle, Truck } from "lucide-react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";

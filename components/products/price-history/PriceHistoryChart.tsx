@@ -6,9 +6,9 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
-import { usePriceHistoryChart } from "@/hooks/use-price-history-chart";
+import { usePriceHistoryChart } from "@/features/products/hooks/use-price-history-chart";
 import { PriceStat } from "./PriceStat";
-import type { TimeRange } from "@/hooks/use-price-history-chart";
+import type { TimeRange } from "@/features/products/hooks/use-price-history-chart";
 
 interface PriceHistoryChartProps {
   productId: string;

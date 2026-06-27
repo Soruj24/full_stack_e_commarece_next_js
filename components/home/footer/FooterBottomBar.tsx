@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { LEGAL_LINKS } from "@/lib/data/footer";
-import { useSettings } from "@/context/SettingsContext";
+import { useSettings } from "@/features/settings/context/SettingsContext";
 
 export function FooterBottomBar() {
   const { settings } = useSettings();

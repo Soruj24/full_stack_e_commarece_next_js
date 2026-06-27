@@ -4,7 +4,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Database, Cpu, Zap, CheckCircle2, AlertCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { useSystemHealth } from "@/hooks/use-system-health";
+import { useSystemHealth } from "@/features/admin/hooks/use-system-health";
 
 export function SystemHealth() {
   const { health, loading } = useSystemHealth();

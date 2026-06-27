@@ -11,7 +11,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
-import { useSupportTicketsPage, STATUS_CONFIG, PRIORITY_CONFIG } from "@/hooks/use-support-tickets-page";
+import { useSupportTicketsPage, STATUS_CONFIG, PRIORITY_CONFIG } from "@/features/support/hooks/use-support-tickets-page";
 
 export default function SupportTicketsPage() {
   const { tickets, loading, isCreateOpen, setIsCreateOpen, submitting, formData, setFormData, handleSubmit, formatDate } = useSupportTicketsPage();

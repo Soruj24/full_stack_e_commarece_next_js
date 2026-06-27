@@ -1,7 +1,7 @@
 "use client";
 
 import { Badge } from "@/components/ui/badge";
-import { useAdminVendors } from "@/hooks/use-admin-vendors";
+import { useAdminVendors } from "@/features/admin/hooks/use-admin-vendors";
 import { VendorStatCards } from "@/components/admin/vendors/VendorStatCards";
 import { VendorTable } from "@/components/admin/vendors/VendorTable";
 import { VendorDetailDialog } from "@/components/admin/vendors/VendorDetailDialog";

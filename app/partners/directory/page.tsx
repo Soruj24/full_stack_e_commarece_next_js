@@ -2,7 +2,7 @@
 
 import { Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { usePartnerDirectory } from "@/hooks/use-partner-directory";
+import { usePartnerDirectory } from "@/features/common/hooks/use-partner-directory";
 import { PartnersDirectoryHeader } from "@/components/partners/directory/PartnersDirectoryHeader";
 import { PartnerSidebar } from "@/components/partners/directory/PartnerSidebar";
 import { PartnerCard } from "@/components/partners/directory/PartnerCard";

@@ -14,7 +14,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { IProduct } from "@/types";
-import { useCart } from "@/context/CartContext";
+import { useCart } from "@/features/cart/context/CartContext";
 import { toast } from "sonner";
 
 const STORAGE_KEY = "recently_viewed";

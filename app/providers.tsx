@@ -1,19 +1,19 @@
   
 import { SessionProvider } from 'next-auth/react';
 import { ReactNode } from 'react';
-import { SettingsProvider } from '@/context/SettingsContext';
-import { CartProvider } from '@/context/CartContext';
-import { WishlistProvider } from '@/context/WishlistContext';
-import { RecentlyViewedProvider } from '@/context/RecentlyViewedContext';
-import { CompareProvider } from '@/context/CompareContext';
-import { StockProvider } from '@/context/StockContext';
-import { GuestCheckoutProvider } from '@/context/GuestCheckoutContext';
-import { OrderTrackingProvider } from '@/context/OrderTrackingContext';
-import { SaveForLaterProvider } from '@/context/SaveForLaterContext';
-import { BundleProvider } from '@/context/BundleContext';
-import { SearchProvider } from '@/context/SearchContext';
-import { PriceHistoryProvider } from '@/context/PriceHistoryContext';
-import { QuickViewProvider } from '@/context/QuickViewContext';
+import { SettingsProvider } from '@/features/settings/context/SettingsContext';
+import { CartProvider } from '@/features/cart/context/CartContext';
+import { WishlistProvider } from '@/features/wishlist/hooks/WishlistContext';
+import { RecentlyViewedProvider } from '@/features/common/hooks/RecentlyViewedContext';
+import { CompareProvider } from '@/features/compare/context/CompareContext';
+import { StockProvider } from '@/features/cart/context/StockContext';
+import { GuestCheckoutProvider } from '@/features/checkout/context/GuestCheckoutContext';
+import { OrderTrackingProvider } from '@/features/orders/context/OrderTrackingContext';
+import { SaveForLaterProvider } from '@/features/cart/context/SaveForLaterContext';
+import { BundleProvider } from '@/features/bundles/context/BundleContext';
+import { SearchProvider } from '@/features/search/context/SearchContext';
+import { PriceHistoryProvider } from '@/features/products/context/PriceHistoryContext';
+import { QuickViewProvider } from '@/features/products/context/QuickViewContext';
 import NotificationWrapper from '@/components/common/NotificationWrapper';
 
 export default function Providers({ children }: { children: ReactNode }) {

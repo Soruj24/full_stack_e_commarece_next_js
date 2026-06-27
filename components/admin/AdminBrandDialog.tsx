@@ -14,7 +14,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { getFallbackImage } from "@/lib/utils";
 import { Package } from "lucide-react";
 import Image from "next/image";
-import { useBrandDialog } from "@/hooks/use-brand-dialog";
+import { useBrandDialog } from "@/features/products/hooks/use-brand-dialog";
 
 interface BrandDialogProps {
   open: boolean;

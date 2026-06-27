@@ -1,14 +1,14 @@
 "use client";
 
 import { CheckCircle2, MapPin, Truck } from "lucide-react";
-import { useLocalization } from "@/context/LocalizationContext";
+import { useLocalization } from "@/features/common/hooks/LocalizationContext";
 import { formatPrice } from "@/lib/localization";
 import { ReviewDeliveryCard } from "./ReviewDeliveryCard";
 import { ReviewItemList } from "./ReviewItemList";
 import { ReviewOrderSummary } from "./ReviewOrderSummary";
 import { ReviewPaymentCard } from "./ReviewPaymentCard";
-import type { ShippingRate, ShippingAddress } from "@/types/checkout";
-import type { CartItem as CartItemType } from "@/context/CartContext";
+import type { ShippingRate, ShippingAddress } from "@/features/checkout/types/checkout";
+import type { CartItem as CartItemType } from "@/features/cart/context/CartContext";
 
 interface ReviewOrderProps {
   cart: CartItemType[];

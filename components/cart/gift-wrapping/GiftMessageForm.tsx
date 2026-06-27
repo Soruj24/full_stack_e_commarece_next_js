@@ -2,7 +2,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { MessageSquare } from "lucide-react";
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
-import type { GiftMessage } from "@/types/gift-wrapping";
+import type { GiftMessage } from "@/features/cart/types/gift-wrapping";
 
 interface GiftMessageFormProps {
   show: boolean;

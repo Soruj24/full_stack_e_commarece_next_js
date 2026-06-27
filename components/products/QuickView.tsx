@@ -8,9 +8,9 @@ import {
   DialogContent,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { useCart } from "@/context/CartContext";
-import { useWishlist } from "@/context/WishlistContext";
-import { useLocalization } from "@/context/LocalizationContext";
+import { useCart } from "@/features/cart/context/CartContext";
+import { useWishlist } from "@/features/wishlist/hooks/WishlistContext";
+import { useLocalization } from "@/features/common/hooks/LocalizationContext";
 import { toast } from "sonner";
 import { IProduct } from "@/types";
 import { QuickViewGallery } from "./quickview/QuickViewGallery";

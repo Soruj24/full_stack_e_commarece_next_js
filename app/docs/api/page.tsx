@@ -1,6 +1,6 @@
 "use client";
 
-import { useApiDocs } from "@/hooks/use-api-docs";
+import { useApiDocs } from "@/features/common/hooks/use-api-docs";
 import { ApiHeader } from "@/components/docs/api/ApiHeader";
 import { ApiSidebar } from "@/components/docs/api/ApiSidebar";
 import { ApiIntroduction } from "@/components/docs/api/sections/ApiIntroduction";

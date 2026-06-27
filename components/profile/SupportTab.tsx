@@ -1,6 +1,6 @@
 "use client";
 
-import { useSupportTickets } from "@/hooks/use-support-tickets";
+import { useSupportTickets } from "@/features/support/hooks/use-support-tickets";
 import { TicketForm } from "./support-tab/TicketForm";
 import { TicketCard } from "./support-tab/TicketCard";
 import { TicketEmptyState } from "./support-tab/TicketEmptyState";

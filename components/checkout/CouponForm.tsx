@@ -3,7 +3,7 @@
 import { Tag, CheckCircle2, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useLocalization } from "@/context/LocalizationContext";
+import { useLocalization } from "@/features/common/hooks/LocalizationContext";
 import { convertPrice, formatPrice } from "@/lib/localization";
 import { cn } from "@/lib/utils";
 

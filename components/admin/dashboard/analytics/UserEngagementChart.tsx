@@ -2,7 +2,7 @@
 
 import { Users } from "lucide-react";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
-import { AnalyticsData } from "@/types/analytics";
+import { AnalyticsData } from "@/features/analytics/types/analytics";
 
 interface UserEngagementChartProps {
   data: AnalyticsData["userEngagement"];

@@ -4,9 +4,9 @@ import { Heart, Trash2, ShoppingCart, ArrowRight, Clock, Check, X } from "lucide
 import { Button } from "@/components/ui/button";
 import { cn, getSafeImageSrc, getFallbackImage } from "@/lib/utils";
 import { formatPrice, convertPrice } from "@/lib/localization";
-import { useSaveForLater, type SavedItem } from "@/context/SaveForLaterContext";
-import { useCart } from "@/context/CartContext";
-import { useLocalization } from "@/context/LocalizationContext";
+import { useSaveForLater, type SavedItem } from "@/features/cart/context/SaveForLaterContext";
+import { useCart } from "@/features/cart/context/CartContext";
+import { useLocalization } from "@/features/common/hooks/LocalizationContext";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";

@@ -3,9 +3,9 @@
 import { Share2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { useSocialShare } from "@/hooks/use-social-share";
+import { useSocialShare } from "@/features/products/hooks/use-social-share";
 import { ShareDropdown } from "./product-share/ShareDropdown";
-import type { SocialShareProps } from "@/types/social-share";
+import type { SocialShareProps } from "@/features/products/types/social-share";
 
 export function SocialShare({ url, title, description, variant = "default", size = "md" }: SocialShareProps) {
   const { showDropdown, setShowDropdown, copied, handleShare, handleCopyLink, handleNativeShare } = useSocialShare({ url, title, description } as SocialShareProps);

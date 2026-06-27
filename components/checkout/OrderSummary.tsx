@@ -2,10 +2,10 @@
 
 import Image from "next/image";
 import { ChevronRight, ShieldCheck } from "lucide-react";
-import { useLocalization } from "@/context/LocalizationContext";
+import { useLocalization } from "@/features/common/hooks/LocalizationContext";
 import { convertPrice, formatPrice } from "@/lib/localization";
 import { getSafeImageSrc, cn } from "@/lib/utils";
-import { CartItem } from "@/context/CartContext";
+import { CartItem } from "@/features/cart/context/CartContext";
 
 interface OrderSummaryProps {
   cart: CartItem[];

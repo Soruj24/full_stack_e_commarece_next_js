@@ -9,7 +9,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
-import { useVendorRegistration } from "@/hooks/use-vendor-registration";
+import { useVendorRegistration } from "@/features/vendor/hooks/use-vendor-registration";
 
 export default function VendorRegistrationPage() {
   const router = useRouter();

@@ -3,7 +3,7 @@
 import { ShoppingBag, ArrowRight, Heart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { useSaveForLater } from "@/context/SaveForLaterContext";
+import { useSaveForLater } from "@/features/cart/context/SaveForLaterContext";
 
 interface CartEmptyStateProps {
   savedItemsCount: number;

@@ -1,6 +1,6 @@
 "use client";
 
-import { useVendorDashboard } from "@/hooks/use-vendor-dashboard";
+import { useVendorDashboard } from "@/features/vendor/hooks/use-vendor-dashboard";
 import { VendorStatusViews } from "@/components/vendor/VendorStatusViews";
 import { VendorDashboardContent } from "@/components/vendor/VendorDashboardContent";
 import { PayoutModal } from "@/components/vendor/PayoutModal";

@@ -6,7 +6,7 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { AlertTriangle } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useOrderTracking, OrderStatus } from "@/context/OrderTrackingContext";
+import { useOrderTracking, OrderStatus } from "@/features/orders/context/OrderTrackingContext";
 import {
   OrderTimeline,
   OrderStatusBadge,

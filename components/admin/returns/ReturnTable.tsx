@@ -8,8 +8,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { cn } from "@/lib/utils";
-import { STATUS_CONFIG, getStatusConfig, formatReturnDate } from "@/types/return-item";
-import type { ReturnRequest } from "@/types/return-item";
+import { STATUS_CONFIG, getStatusConfig, formatReturnDate } from "@/features/returns/types/return-item";
+import type { ReturnRequest } from "@/features/returns/types/return-item";
 
 interface ReturnTableProps {
   returns: ReturnRequest[];

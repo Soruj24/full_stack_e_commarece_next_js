@@ -1,6 +1,6 @@
 "use client";
 
-import { useOrderTracking, OrderStatus } from "@/context/OrderTrackingContext";
+import { useOrderTracking, OrderStatus } from "@/features/orders/context/OrderTrackingContext";
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
 import Link from "next/link";

@@ -1,7 +1,7 @@
 "use client";
 
 import { HelpCircle } from "lucide-react";
-import { useAdminFaqs } from "@/hooks/use-admin-faqs";
+import { useAdminFaqs } from "@/features/admin/hooks/use-admin-faqs";
 import { FaqFormDialog } from "@/components/admin/faqs/FaqFormDialog";
 import { FaqTable } from "@/components/admin/faqs/FaqTable";
 

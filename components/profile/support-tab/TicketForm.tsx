@@ -20,7 +20,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import type { NewTicketData } from "@/types/support-ticket";
+import type { NewTicketData } from "@/features/support/types/support-ticket";
 
 interface TicketFormProps {
   isOpen: boolean;

@@ -1,6 +1,6 @@
 "use client";
 
-import { useBundle } from "@/context/BundleContext";
+import { useBundle } from "@/features/bundles/context/BundleContext";
 import { BundleGrid } from "@/components/products/BundleCard";
 import { motion } from "framer-motion";
 import { Package } from "lucide-react";

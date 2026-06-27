@@ -3,7 +3,7 @@
 import { Check, Edit2, Trash2, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import type { SavedAddress, ShippingAddress } from "@/types/checkout";
+import type { SavedAddress, ShippingAddress } from "@/features/checkout/types/checkout";
 
 interface AddressCardProps {
   address: SavedAddress;

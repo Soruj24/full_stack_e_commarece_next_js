@@ -2,7 +2,7 @@
 
 import { Package } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { Bundle } from "@/context/BundleContext";
+import { Bundle } from "@/features/bundles/context/BundleContext";
 import { BundleCard } from "../BundleCard";
 
 interface BundleGridProps {

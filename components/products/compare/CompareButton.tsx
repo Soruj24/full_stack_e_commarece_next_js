@@ -1,6 +1,6 @@
 "use client";
 
-import { useCompare, CompareProduct } from "@/context/CompareContext";
+import { useCompare, CompareProduct } from "@/features/compare/context/CompareContext";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { GitCompare, Check, Plus } from "lucide-react";

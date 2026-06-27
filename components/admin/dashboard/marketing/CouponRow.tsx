@@ -4,7 +4,7 @@ import { Calendar, Percent, Trash2 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { MarketingCoupon } from "@/types/admin/marketing";
+import { MarketingCoupon } from "@/features/admin/types/marketing";
 
 interface CouponRowProps {
   coupon: MarketingCoupon;

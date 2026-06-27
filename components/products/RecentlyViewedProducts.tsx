@@ -2,7 +2,7 @@
 
 import { cn } from "@/lib/utils";
 import { Clock } from "lucide-react";
-import { useRecentlyViewedProducts } from "@/hooks/use-recently-viewed-products";
+import { useRecentlyViewedProducts } from "@/features/common/hooks/use-recently-viewed-products";
 import { CompactView } from "./recently-viewed/CompactView";
 import { DefaultView } from "./recently-viewed/DefaultView";
 

@@ -1,9 +1,9 @@
 "use client";
 
 import Image from "next/image";
-import { useLocalization } from "@/context/LocalizationContext";
+import { useLocalization } from "@/features/common/hooks/LocalizationContext";
 import { formatPrice } from "@/lib/localization";
-import type { CartItem as CartItemType } from "@/context/CartContext";
+import type { CartItem as CartItemType } from "@/features/cart/context/CartContext";
 
 interface ReviewItemListProps {
   items: CartItemType[];

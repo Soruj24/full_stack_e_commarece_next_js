@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { FaqTableRow } from "./FaqTableRow";
-import type { FaqItem } from "@/types/faq";
+import type { FaqItem } from "@/features/support/types/faq";
 
 interface FaqTableProps {
   faqs: FaqItem[];

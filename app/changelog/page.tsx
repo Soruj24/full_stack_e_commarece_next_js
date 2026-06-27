@@ -1,6 +1,6 @@
 "use client";
 
-import { useChangelog } from "@/hooks/use-changelog";
+import { useChangelog } from "@/features/common/hooks/use-changelog";
 import { ChangelogHeader } from "@/components/changelog/ChangelogHeader";
 import { ChangelogFilterBar } from "@/components/changelog/ChangelogFilterBar";
 import { ChangelogTimeline } from "@/components/changelog/ChangelogTimeline";

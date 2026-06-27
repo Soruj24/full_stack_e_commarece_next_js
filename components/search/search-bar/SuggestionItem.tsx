@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import type { SearchSuggestion } from "@/types/search-context";
+import type { SearchSuggestion } from "@/features/search/types/search-context";
 
 interface SuggestionItemProps {
   suggestion: SearchSuggestion;

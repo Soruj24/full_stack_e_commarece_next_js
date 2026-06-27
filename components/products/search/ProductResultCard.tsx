@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { cn, getFallbackImage } from "@/lib/utils";
-import { SearchProduct } from "@/types/product-search";
+import { SearchProduct } from "@/features/search/types/product-search";
 
 interface ProductResultCardProps {
   product: SearchProduct;

@@ -4,7 +4,7 @@ import { Star, MessageSquare, Search, Package } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ProfessionalPagination } from "@/components/common/ProfessionalPagination";
-import { useReviewsTab } from "@/hooks/use-reviews-tab";
+import { useReviewsTab } from "@/features/products/hooks/use-reviews-tab";
 import { ReviewCard } from "./ReviewCard";
 
 export function ReviewsTabContent() {

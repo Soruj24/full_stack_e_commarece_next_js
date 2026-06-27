@@ -3,7 +3,7 @@
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { NewBannerForm } from "@/types/admin/marketing";
+import { NewBannerForm } from "@/features/admin/types/marketing";
 
 interface BannerFormProps {
   data: NewBannerForm;

@@ -4,7 +4,7 @@ import Link from "next/link";
 import { ArrowLeft, Gift, CreditCard, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card";
-import { useGiftCardPurchase } from "@/hooks/use-gift-card-purchase";
+import { useGiftCardPurchase } from "@/features/gift-cards/hooks/use-gift-card-purchase";
 import { GiftCardAmountSelector } from "@/components/gift-cards/GiftCardAmountSelector";
 import { GiftCardRecipientForm } from "@/components/gift-cards/GiftCardRecipientForm";
 import { GiftCardSuccess } from "@/components/gift-cards/GiftCardSuccess";

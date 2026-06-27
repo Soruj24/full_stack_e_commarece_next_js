@@ -14,7 +14,7 @@ import { OrdersTab } from "@/components/profile/OrdersTab";
 import { LoyaltyTab } from "@/components/profile/LoyaltyTab";
 import { StatsTab } from "@/components/profile/StatsTab";
 import { WishlistTab } from "@/components/profile/WishlistTab";
-import { useProfilePage } from "@/hooks/use-profile-page";
+import { useProfilePage } from "@/features/user/hooks/use-profile-page";
 
 export default function ProfilePage() {
   const p = useProfilePage();

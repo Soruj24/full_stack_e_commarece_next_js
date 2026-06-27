@@ -9,7 +9,7 @@ import {
 import {
   Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle,
 } from "@/components/ui/dialog";
-import type { SavedAddress } from "@/types/checkout";
+import type { SavedAddress } from "@/features/checkout/types/checkout";
 
 interface AddressFormDialogProps {
   isOpen: boolean;

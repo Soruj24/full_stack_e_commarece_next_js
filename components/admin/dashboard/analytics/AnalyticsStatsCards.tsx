@@ -2,7 +2,7 @@
 
 import { DollarSign, ShoppingBag, Users, Package, ArrowUpRight, ArrowDownRight } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { AnalyticsData } from "@/types/analytics";
+import { AnalyticsData } from "@/features/analytics/types/analytics";
 
 interface AnalyticsStatsCardsProps {
   data: AnalyticsData | null;

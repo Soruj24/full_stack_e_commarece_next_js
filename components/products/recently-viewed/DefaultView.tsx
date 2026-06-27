@@ -7,9 +7,9 @@ import { Clock, Trash2, ShoppingCart, X, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn, getSafeImageSrc, getFallbackImage } from "@/lib/utils";
 import { formatPrice, convertPrice } from "@/lib/localization";
-import { useLocalization } from "@/context/LocalizationContext";
+import { useLocalization } from "@/features/common/hooks/LocalizationContext";
 import { toast } from "sonner";
-import type { RecentlyViewedProduct } from "@/context/RecentlyViewedContext";
+import type { RecentlyViewedProduct } from "@/features/common/hooks/RecentlyViewedContext";
 
 interface DefaultViewProps {
   title: string;

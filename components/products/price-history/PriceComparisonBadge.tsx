@@ -3,7 +3,7 @@
 import { TrendingUp, TrendingDown } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
-import { usePriceHistory } from "@/context/PriceHistoryContext";
+import { usePriceHistory } from "@/features/products/context/PriceHistoryContext";
 
 interface PriceComparisonProps {
   productId: string;

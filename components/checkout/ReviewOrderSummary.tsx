@@ -1,6 +1,6 @@
 "use client";
 
-import { useLocalization } from "@/context/LocalizationContext";
+import { useLocalization } from "@/features/common/hooks/LocalizationContext";
 import { formatPrice } from "@/lib/localization";
 
 interface ReviewOrderSummaryProps {

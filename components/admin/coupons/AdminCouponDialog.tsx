@@ -9,7 +9,7 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
-import { useCouponDialog } from "@/hooks/use-coupon-dialog";
+import { useCouponDialog } from "@/features/admin/hooks/use-coupon-dialog";
 
 interface AdminCouponDialogProps {
   open: boolean;

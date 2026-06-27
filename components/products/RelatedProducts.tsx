@@ -2,7 +2,7 @@
 
 import { Loader2 } from "lucide-react";
 import type { IProduct } from "@/types";
-import { useRelatedProducts } from "@/hooks/use-related-products";
+import { useRelatedProducts } from "@/features/products/hooks/use-related-products";
 import { RelatedProductsHeader } from "./related-products/RelatedProductsHeader";
 import { RelatedProductCard } from "./related-products/RelatedProductCard";
 

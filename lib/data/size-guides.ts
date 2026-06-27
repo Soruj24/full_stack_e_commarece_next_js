@@ -1,4 +1,4 @@
-import type { SizeGuideCollection } from "@/types/size-guide";
+import type { SizeGuideCollection } from "@/features/products/types/size-guide";
 
 export const SIZE_GUIDES: SizeGuideCollection = {
   clothing: {

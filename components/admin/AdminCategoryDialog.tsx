@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { ICategory } from "@/types";
-import { useCategoryDialog } from "@/hooks/use-category-dialog";
+import { useCategoryDialog } from "@/features/products/hooks/use-category-dialog";
 import { FormFields } from "./category-dialog/FormFields";
 import { ImageField } from "./category-dialog/ImageField";
 import { ToggleFields } from "./category-dialog/ToggleFields";

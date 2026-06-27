@@ -11,11 +11,11 @@ import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Ruler } from "lucide-react";
 import { SIZE_GUIDES } from "@/lib/data/size-guides";
-import { useSizeGuide } from "@/hooks/use-size-guide";
+import { useSizeGuide } from "@/features/products/hooks/use-size-guide";
 import { SizeTable } from "./size-guide/SizeTable";
 import { HowToMeasure } from "./size-guide/HowToMeasure";
 import { FitTips } from "./size-guide/FitTips";
-import type { SubTabKey, SizeGuideTable } from "@/types/size-guide";
+import type { SubTabKey, SizeGuideTable } from "@/features/products/types/size-guide";
 
 interface SizeGuideProps {
   isOpen: boolean;

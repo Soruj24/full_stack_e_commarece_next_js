@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useGuestCheckout } from "@/context/GuestCheckoutContext";
+import { useGuestCheckout } from "@/features/checkout/context/GuestCheckoutContext";
 import { signIn } from "next-auth/react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
