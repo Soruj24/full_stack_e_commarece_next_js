@@ -8,47 +8,61 @@ Nexus is a comprehensive full-stack e-commerce platform built with Next.js 16, M
 
 ```
 my-app/
-├── app/                    # Next.js App Router (pages, API routes, layouts)
-├── features/               # Domain-driven feature modules (business logic)
-│   ├── admin/              # Admin panel (hooks, services, types)
-│   ├── analytics/          # Analytics tracking
-│   ├── auth/               # Authentication & registration
-│   ├── bundles/            # Product bundles
-│   ├── cart/               # Shopping cart & stock management
-│   ├── categories/         # Category management
-│   ├── checkout/           # Checkout flow & payments
-│   ├── common/             # Shared hooks & utilities
-│   ├── compare/            # Product comparison
-│   ├── gift-cards/         # Gift card system
-│   ├── notifications/      # Real-time notifications
-│   ├── orders/             # Order management & tracking
-│   ├── products/           # Products, reviews, search
-│   ├── returns/            # Return requests
-│   ├── reviews/            # Product reviews
-│   ├── search/             # Search functionality
-│   ├── settings/           # Site settings
-│   ├── support/            # Support tickets & FAQ
-│   ├── user/               # User profile management
-│   ├── vendor/             # Vendor management
-│   └── wishlist/           # Wishlist
-├── components/             # Reusable UI components
-│   ├── ui/                 # shadcn/ui primitives (47 components)
-│   └── layout/             # Layout components (navbar, header, mega-menu)
-├── lib/                    # Shared utilities & infrastructure
-│   ├── data/               # Static data (menus, testimonials, etc.)
-│   ├── utils.ts            # cn(), formatDate, formatRole, etc.
-│   ├── validations.ts      # Zod schemas
-│   ├── rbac.ts             # Role-based access control
-│   ├── audit.ts            # Audit logging
-│   ├── stripe.ts           # Stripe client
-│   ├── email.ts            # Email sending (nodemailer)
-│   ├── redis.ts            # Upstash Redis client
-│   └── ...                 # Other utilities
-├── models/                 # Mongoose database models (23 models)
-├── controllers/            # API controllers (thin wrappers)
-├── config/                 # Database configuration
-├── types/                  # Global TypeScript types (index.ts only)
-└── server/                 # Standalone Express + Socket.io server
+├── src/
+│   ├── app/                    # Next.js App Router (pages, API routes, layouts)
+│   │   ├── (auth)/             # Auth route group (login, register, forgot-password, etc.)
+│   │   ├── (shop)/             # Shop route group (products, categories, cart, checkout, etc.)
+│   │   ├── (dashboard)/        # Dashboard route group (profile, security, support)
+│   │   ├── admin/              # Admin panel pages
+│   │   └── api/                # API routes (78 endpoints)
+│   ├── features/               # Domain-driven feature modules (business logic)
+│   │   ├── admin/              # Admin panel (hooks, services, types)
+│   │   ├── analytics/          # Analytics tracking
+│   │   ├── auth/               # Authentication & registration
+│   │   ├── bundles/            # Product bundles
+│   │   ├── cart/               # Shopping cart & stock management
+│   │   ├── categories/         # Category management
+│   │   ├── checkout/           # Checkout flow & payments
+│   │   ├── common/             # Shared hooks & utilities
+│   │   ├── compare/            # Product comparison
+│   │   ├── gift-cards/         # Gift card system
+│   │   ├── notifications/      # Real-time notifications
+│   │   ├── orders/             # Order management & tracking
+│   │   ├── products/           # Products, reviews, search
+│   │   ├── returns/            # Return requests
+│   │   ├── reviews/            # Product reviews
+│   │   ├── search/             # Search functionality
+│   │   ├── settings/           # Site settings
+│   │   ├── support/            # Support tickets & FAQ
+│   │   ├── user/               # User profile management
+│   │   ├── vendor/             # Vendor management
+│   │   └── wishlist/           # Wishlist
+│   ├── components/             # Reusable UI components
+│   │   ├── ui/                 # shadcn/ui primitives (55 components)
+│   │   ├── layout/             # Layout components (navbar, header, mega-menu)
+│   │   ├── home/               # Homepage sections
+│   │   ├── products/           # Product components
+│   │   ├── admin/              # Admin components
+│   │   └── ...                 # Other feature-specific components
+│   ├── lib/                    # Shared utilities & infrastructure
+│   │   ├── mongodb/models/     # Mongoose database models (23 models)
+│   │   ├── auth/               # NextAuth configuration
+│   │   ├── services/           # API controllers (thin wrappers)
+│   │   ├── types/              # TypeScript types
+│   │   ├── data/               # Static data (menus, testimonials, etc.)
+│   │   ├── utils.ts            # cn(), formatDate, formatRole, etc.
+│   │   ├── validations.ts      # Zod schemas
+│   │   ├── rbac.ts             # Role-based access control
+│   │   ├── stripe.ts           # Stripe client
+│   │   ├── email.ts            # Email sending (nodemailer)
+│   │   ├── redis.ts            # Upstash Redis client
+│   │   └── ...                 # Other utilities
+│   ├── config/                 # Database configuration
+│   ├── server/                 # Standalone Express + Socket.io server
+│   ├── scripts/                # Seed scripts
+│   └── middleware.ts           # Next.js middleware (auth/routing)
+├── public/                     # Static assets
+└── ...config files
 ```
 
 ## Important Commands
@@ -89,9 +103,11 @@ npm run typecheck    # TypeScript check
    - Layout components in `components/layout/`
 
 4. **Import Patterns**
-   - Use `@/` path alias for root imports
+   - Use `@/` path alias for root imports (points to `src/`)
    - Import from feature barrel exports: `import { useCart } from '@/features/cart'`
-   - Import types from feature types: `import type { IProduct } from '@/types'`
+   - Import types from feature types: `import type { IProduct } from '@/features/products/types'`
+   - Import models: `import { Product } from '@/lib/mongodb/models/Product'`
+   - Import services: `import { fetchProducts } from '@/lib/services/ProductController'`
 
 5. **Styling**
    - Use Tailwind CSS classes
@@ -122,15 +138,15 @@ npm run typecheck    # TypeScript check
 
 ### Adding New Features
 
-1. Create feature directory in `features/<domain>/`
+1. Create feature directory in `src/features/<domain>/`
 2. Add subdirectories: `hooks/`, `services/`, `types/`, `context/` (as needed)
 3. Create barrel export `index.ts`
-4. Add components in `components/<domain>/`
-5. Add API routes in `app/api/<domain>/`
+4. Add components in `src/components/<domain>/`
+5. Add API routes in `src/app/api/<domain>/`
 
 ### Adding New Components
 
-1. Create in appropriate `components/` subfolder
+1. Create in appropriate `src/components/` subfolder
 2. Export from `index.ts` if it's a barrel export
 3. Add TypeScript interfaces
 4. Support dark mode
@@ -138,7 +154,7 @@ npm run typecheck    # TypeScript check
 
 ### Adding New API Routes
 
-1. Create route in `app/api/`
+1. Create route in `src/app/api/`
 2. Follow existing patterns
 3. Add authentication if needed
 4. Validate input with Zod
@@ -146,7 +162,7 @@ npm run typecheck    # TypeScript check
 
 ### Adding New Pages
 
-1. Create in `app/` directory
+1. Create in `src/app/` directory
 2. Use App Router patterns
 3. Add metadata for SEO
 4. Support loading states
