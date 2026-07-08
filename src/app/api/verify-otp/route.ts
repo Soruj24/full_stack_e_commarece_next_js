@@ -1,16 +1,36 @@
 import { dbConnect } from "@/core/config/database";
 import { User } from "@/core/database/models/User";
 import { NextResponse } from "next/server";
+import { headers } from "next/headers";
+import { redisRateLimit } from "@/lib/redis";
+import { logAction } from "@/lib/audit";
+import LoginHistory from "@/core/database/models/LoginHistory";
+import mongoose from "mongoose";
 
 export async function POST(request: Request) {
   try {
+    const headersList = await headers();
+    const ip = headersList.get("x-forwarded-for") || "unknown";
+    const userAgent = headersList.get("user-agent") || "unknown";
+
+    const { success, remaining } = await redisRateLimit(ip, 5, 60);
+
+    if (!success) {
+      return NextResponse.json(
+        { error: "Too many requests. Please try again later." },
+        {
+          status: 429,
+          headers: { "X-RateLimit-Remaining": remaining.toString() },
+        }
+      );
+    }
+
     let { email, otp } = await request.json();
 
     if (!email || !otp) {
       return NextResponse.json({ error: "Email and OTP are required" }, { status: 400 });
     }
 
-    // Ensure types are consistent
     email = email.toString().toLowerCase().trim();
     otp = otp.toString().trim();
 
@@ -27,29 +47,45 @@ export async function POST(request: Request) {
     }
 
     if (!user.verificationOTP || !user.verificationOTPExpires) {
-      console.log(`OTP Missing in DB for ${email}`);
       return NextResponse.json({ error: "Verification code not found. Please register again." }, { status: 400 });
     }
 
     if (user.verificationOTPExpires < new Date()) {
-      console.log(`OTP Expired for ${email}: Expired at ${user.verificationOTPExpires}, current time ${new Date()}`);
       return NextResponse.json({ error: "Verification code has expired. Please register again." }, { status: 400 });
     }
 
     if (user.verificationOTP !== otp) {
-      console.log(`OTP Mismatch for ${email}: Expected ${user.verificationOTP}, got ${otp}`);
+      await logAction({
+        action: "LOGIN_FAILED",
+        userId: user._id.toString(),
+        userEmail: user.email,
+        entityType: "USER",
+        entityId: user._id.toString(),
+        changes: { reason: "Invalid verification OTP" },
+      });
+
+      try {
+        await LoginHistory.create({
+          userId: user._id,
+          email: user.email,
+          ipAddress: ip,
+          userAgent,
+          success: false,
+          reason: "Invalid verification OTP",
+        });
+      } catch {}
+
       return NextResponse.json({ error: "Invalid verification code" }, { status: 400 });
     }
 
-    // Mark as verified
     user.isVerified = true;
     user.verificationOTP = undefined;
     user.verificationOTPExpires = undefined;
     await user.save();
 
-    return NextResponse.json({ 
-      success: true, 
-      message: "Email verified successfully. You can now login." 
+    return NextResponse.json({
+      success: true,
+      message: "Email verified successfully. You can now login.",
     });
   } catch (error) {
     console.error("OTP Verification Error:", error);

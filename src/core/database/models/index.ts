@@ -17,4 +17,6 @@ export { StockAlert } from "./StockAlert";
 export { PriceHistory } from "./PriceHistory";
 export { Payout } from "./Payout";
 export { default as Settings } from "./Settings";
-// Session and Token are managed by next-auth
+export { default as Session } from "./Session";
+export { default as Token } from "./Token";
+export { default as LoginHistory } from "./LoginHistory";

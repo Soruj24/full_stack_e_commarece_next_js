@@ -1,4 +1,4 @@
-import type { DefaultSession, DefaultUser } from "next-auth";
+import type { DefaultUser } from "next-auth";
 
 declare module "next-auth" {
   interface Session {
@@ -8,8 +8,10 @@ declare module "next-auth" {
       email?: string | null;
       image?: string | null;
       role: string;
+      status: string;
       accessToken?: string;
       refreshToken?: string;
+      sessionId?: string;
     };
   }
 
@@ -18,6 +20,8 @@ declare module "next-auth" {
     role: string;
     email: string;
     status: string;
+    refreshToken?: string;
+    sessionId?: string;
   }
 }
 
@@ -29,6 +33,7 @@ declare module "next-auth/jwt" {
     status: string;
     accessToken?: string;
     refreshToken?: string;
+    sessionId?: string;
     expiresAt?: number;
   }
 }

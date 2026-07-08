@@ -47,6 +47,11 @@ const AuditLogSchema = new Schema<IAuditLog>(
         "INVITE_ACCEPTED",
         "USER_UPDATE",
         "USER_DELETE",
+        "SESSION_REVOKED",
+        "DEVICE_REMOVED",
+        "LOGIN_SUCCESS",
+        "LOCKOUT",
+        "UNLOCKED",
       ],
     },
     userId: {
