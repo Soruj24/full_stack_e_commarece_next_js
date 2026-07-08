@@ -7,6 +7,7 @@ export interface IBrand extends Document {
   logo?: string;
   website?: string;
   isActive: boolean;
+  productCount?: number;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -22,7 +23,21 @@ const brandSchema = new Schema<IBrand>(
   },
   {
     timestamps: true,
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true },
   }
 );
 
-export const Brand = mongoose.models.Brand || mongoose.model<IBrand>("Brand", brandSchema);
+brandSchema.virtual("productCount", {
+  ref: "Product",
+  localField: "_id",
+  foreignField: "brandRef",
+  count: true,
+  options: { match: { isActive: true, isArchived: false } },
+});
+
+brandSchema.index({ isActive: 1 });
+brandSchema.index({ name: "text", description: "text" });
+
+export const Brand =
+  mongoose.models.Brand || mongoose.model<IBrand>("Brand", brandSchema);

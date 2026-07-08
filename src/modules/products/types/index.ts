@@ -10,6 +10,9 @@ export interface ProductFilters {
   keyword?: string;
   inStock?: boolean;
   onSale?: boolean;
+  color?: string;
+  size?: string;
+  tags?: string[];
 }
 
 export interface ReviewData {

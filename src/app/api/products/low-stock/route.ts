@@ -11,17 +11,18 @@ export async function GET() {
 
     await dbConnect();
 
-    const threshold = 10;
     const lowStockProducts = await Product.find({
-      $expr: { $lte: ["$stock", threshold] },
+      $expr: { $lte: ["$stock", "$lowStockThreshold"] },
       isArchived: false,
     })
-      .select("name stock images category")
+      .select("name slug stock lowStockThreshold images category brand variants.sku variants.stock variants.isActive variants.name")
+      .populate("category", "name slug")
       .sort({ stock: 1 })
-      .limit(50);
+      .limit(100)
+      .lean();
 
     const outOfStock = lowStockProducts.filter((p) => p.stock === 0);
-    const lowStock = lowStockProducts.filter((p) => p.stock > 0 && p.stock <= threshold);
+    const lowStock = lowStockProducts.filter((p) => p.stock > 0);
 
     const alerts = await StockAlert.aggregate([
       { $match: { type: "back_in_stock", status: "pending" } },

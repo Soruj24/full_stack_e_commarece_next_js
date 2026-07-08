@@ -1,18 +1,6 @@
-export interface ProductDetail {
-  _id: string;
-  name: string;
-  description: string;
-  price: number;
-  discountPrice?: number;
-  images?: string[];
-  category: { name: string; slug: string };
-  brand?: string;
-  stock: number;
-  rating?: number;
-  numReviews?: number;
-  averageRating?: number;
-  tags?: string[];
-  shippingOptions?: Array<{ method: string; price: number; estimatedDays: string }>;
+import type { IProduct } from "@/shared/types/product";
+
+export interface ProductDetail extends Omit<IProduct, "reviews"> {
   reviews?: Array<{
     _id: string;
     user: { name: string };
