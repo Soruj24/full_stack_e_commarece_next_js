@@ -20,3 +20,4 @@ export { default as Settings } from "./Settings";
 export { default as Session } from "./Session";
 export { default as Token } from "./Token";
 export { default as LoginHistory } from "./LoginHistory";
+export { PopularSearch } from "./PopularSearch";

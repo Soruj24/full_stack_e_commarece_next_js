@@ -15,24 +15,35 @@ export async function GET(request: Request) {
       return NextResponse.json({ success: true, suggestions: [] });
     }
 
-    const regex = new RegExp(q, "i");
+    const regex = new RegExp(q.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "i");
 
     const [products, categories, brands] = await Promise.all([
       Product.find(
-        { name: { $regex: regex } },
-        { name: 1, slug: 1 }
+        {
+          $or: [
+            { name: { $regex: regex } },
+            { sku: { $regex: regex } },
+            { "variants.sku": { $regex: regex } },
+            { tags: { $in: [regex] } },
+          ],
+          isActive: true,
+          isArchived: false,
+        },
+        { name: 1, slug: 1, images: { $slice: 1 }, price: 1, discountPrice: 1 }
       )
         .limit(5)
         .lean(),
+
       Category.find(
-        { name: { $regex: regex } },
-        { name: 1, slug: 1 }
+        { name: { $regex: regex }, isActive: true },
+        { name: 1, slug: 1, image: 1 }
       )
         .limit(5)
         .lean(),
+
       Brand.find(
-        { name: { $regex: regex } },
-        { name: 1, slug: 1 }
+        { name: { $regex: regex }, isActive: true },
+        { name: 1, slug: 1, logo: 1 }
       )
         .limit(3)
         .lean(),
@@ -43,16 +54,21 @@ export async function GET(request: Request) {
         type: "product" as const,
         text: p.name,
         slug: p.slug,
+        image: p.images?.[0] || "",
+        price: p.price,
+        discountPrice: p.discountPrice,
       })),
       ...categories.map((c) => ({
         type: "category" as const,
         text: c.name,
         slug: c.slug,
+        image: c.image || "",
       })),
       ...brands.map((b) => ({
         type: "brand" as const,
         text: b.name,
         slug: b.slug,
+        image: b.logo || "",
       })),
     ];
 
