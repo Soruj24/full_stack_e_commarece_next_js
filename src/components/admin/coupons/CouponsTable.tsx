@@ -1,6 +1,6 @@
 "use client";
 
-import { Coupon } from '@/lib/types';
+import { Coupon } from "@/shared/types";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {

@@ -1,5 +1,5 @@
-import { dbConnect } from "@/config/db";
-import { SupportTicket } from "@/lib/mongodb/models/SupportTicket";
+import { dbConnect } from "@/core/config/database";
+import { SupportTicket } from "@/core/database/models/SupportTicket";
 import { NextResponse } from "next/server";
 import { auth } from '@/lib/auth';
 

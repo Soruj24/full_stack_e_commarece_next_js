@@ -13,7 +13,7 @@ import { Input } from '@/components/ui/input';
 import { Eye, Trash2, Mail, RefreshCw } from 'lucide-react';
 import Link from 'next/link';
 import { formatDistanceToNow } from 'date-fns';
-import { useAdminAbandonedCarts } from '@/features/admin/hooks/use-admin-abandoned-carts';
+import { useAdminAbandonedCarts } from "@/modules/admin/hooks/use-admin-abandoned-carts';
 
 export default function AdminAbandonedCartsPage() {
   const {

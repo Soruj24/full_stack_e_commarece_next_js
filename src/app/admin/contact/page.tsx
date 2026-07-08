@@ -5,7 +5,7 @@ import { ContactStats } from "@/components/admin/contact/ContactStats";
 import { ContactTable } from "@/components/admin/contact/ContactTable";
 import { AdminContactDialog } from "@/components/admin/contact/AdminContactDialog";
 import { ProfessionalPagination } from "@/components/common/ProfessionalPagination";
-import { useAdminContact } from "@/features/admin/hooks/use-admin-contact";
+import { useAdminContact } from "@/modules/admin/hooks/use-admin-contact";
 
 export default function ContactPage() {
   const {

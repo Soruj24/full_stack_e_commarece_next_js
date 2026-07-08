@@ -1,6 +1,6 @@
 "use client";
 
-import { IOrder } from '@/lib/types';
+import { IOrder } from "@/shared/types";
 
 interface OrderSummaryProps {
   order: IOrder;

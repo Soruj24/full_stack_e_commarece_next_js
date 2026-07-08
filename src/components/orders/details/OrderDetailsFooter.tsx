@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Clock, ArrowRight } from "lucide-react";
-import { IOrder } from '@/lib/types';
+import { IOrder } from "@/shared/types";
 
 interface OrderDetailsFooterProps {
   order: IOrder;

@@ -1,5 +1,5 @@
-import { dbConnect } from "@/config/db";
-import Settings from "@/lib/mongodb/models/Settings";
+import { dbConnect } from "@/core/config/database";
+import Settings from "@/core/database/models/Settings";
 import { NextResponse } from "next/server";
 
 export async function GET() {

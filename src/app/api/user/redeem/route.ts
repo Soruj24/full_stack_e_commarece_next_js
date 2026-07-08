@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
-import { dbConnect } from "@/config/db";
-import { User } from "@/lib/mongodb/models/User";
-import { Coupon } from "@/lib/mongodb/models/Coupon";
-import { Notification } from "@/lib/mongodb/models/Notification";
+import { dbConnect } from "@/core/config/database";
+import { User } from "@/core/database/models/User";
+import { Coupon } from "@/core/database/models/Coupon";
+import { Notification } from "@/core/database/models/Notification";
 import { auth } from '@/lib/auth';
 
 export async function POST(req: Request) {

@@ -1,7 +1,7 @@
 // app/api/admin/users/route.ts
 import { NextResponse } from "next/server";
-import { dbConnect } from "@/config/db";
-import { User } from "@/lib/mongodb/models/User";
+import { dbConnect } from "@/core/config/database";
+import { User } from "@/core/database/models/User";
 import { checkRole } from "@/lib/rbac";
 import { logAction } from "@/lib/audit";
 import { adminUpdateUserSchema, adminDeleteUserSchema } from "@/lib/validations";

@@ -4,7 +4,7 @@ import { AlertCircle } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { AnimatePresence, motion } from "framer-motion";
-import { useLoginForm } from "@/features/auth/hooks/use-login-form";
+import { useLoginForm } from "@/modules/auth/hooks/use-login-form";
 import { LoginFormFields } from "./LoginFormFields";
 import SocialLogins from "./SocialLogins";
 import ForgotPasswordForm from "./ForgotPasswordForm";

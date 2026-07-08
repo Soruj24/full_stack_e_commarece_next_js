@@ -1,7 +1,7 @@
 import { auth } from '@/lib/auth';
-import { dbConnect } from "@/config/db";
-import { Product } from "@/lib/mongodb/models/Product";
-import { User } from "@/lib/mongodb/models/User";
+import { dbConnect } from "@/core/config/database";
+import { Product } from "@/core/database/models/Product";
+import { User } from "@/core/database/models/User";
 import { NextResponse } from "next/server";
 
 export async function GET(request: Request) {

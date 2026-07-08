@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { ThumbsUp, CheckCircle2 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { formatDistanceToNow } from "date-fns";
-import type { Question } from "@/features/products/types/question";
+import type { Question } from "@/modules/products/types/question";
 
 interface QuestionItemProps {
   question: Question;

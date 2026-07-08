@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useGuestCheckout } from "@/features/checkout/context/GuestCheckoutContext";
+import { useGuestCheckout } from "@/modules/checkout/context/GuestCheckoutContext";
 import { useSession } from "next-auth/react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";

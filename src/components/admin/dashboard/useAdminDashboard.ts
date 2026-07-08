@@ -3,9 +3,9 @@
 import { useState, useEffect, useCallback } from "react";
 import { useSession } from "next-auth/react";
 import { toast } from "sonner";
-import { User, ContactMessage, IAuditLog } from '@/lib/types';
-import type { AdminStats, AdminSettings } from "@/features/admin/services/admin-service";
-import * as adminService from "@/features/admin/services/admin-service";
+import { User, ContactMessage, IAuditLog } from "@/shared/types";
+import type { AdminStats, AdminSettings } from "@/modules/admin/services/admin-service";
+import * as adminService from "@/modules/admin/services/admin-service";
 
 const defaultSettings: AdminSettings = {
   siteName: "User Management System",

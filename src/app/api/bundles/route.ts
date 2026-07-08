@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
-import { dbConnect } from "@/config/db";
-import { Bundle } from "@/lib/mongodb/models/Bundle";
+import { dbConnect } from "@/core/config/database";
+import { Bundle } from "@/core/database/models/Bundle";
 
 export async function GET() {
   try {

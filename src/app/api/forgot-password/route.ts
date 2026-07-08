@@ -1,5 +1,5 @@
-import { dbConnect } from "@/config/db";
-import { User } from "@/lib/mongodb/models/User";
+import { dbConnect } from "@/core/config/database";
+import { User } from "@/core/database/models/User";
 import { NextResponse } from "next/server";
 import { sendPasswordResetEmail } from "@/lib/email";
 import crypto from "crypto";

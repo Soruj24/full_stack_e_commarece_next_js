@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { dbConnect } from "@/config/db";
+import { dbConnect } from "@/core/config/database";
 
 interface PriceAlert {
   _id?: string;

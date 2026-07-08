@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { X, CheckCircle2, AlertCircle, Star } from "lucide-react";
 import { getSafeImageSrc, getFallbackImage, cn } from "@/lib/utils";
-import { useLocalization } from "@/features/common/hooks/LocalizationContext";
+import { useLocalization } from "@/modules/common/hooks/LocalizationContext";
 import { formatPrice, convertPrice } from "@/lib/localization";
 
 interface Product {

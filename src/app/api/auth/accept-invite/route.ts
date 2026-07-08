@@ -1,6 +1,6 @@
-import { dbConnect } from "@/config/db";
-import Token from "@/lib/mongodb/models/Token";
-import { User } from "@/lib/mongodb/models/User";
+import { dbConnect } from "@/core/config/database";
+import Token from "@/core/database/models/Token";
+import { User } from "@/core/database/models/User";
 import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
 

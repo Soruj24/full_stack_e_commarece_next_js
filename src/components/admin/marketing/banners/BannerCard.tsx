@@ -4,7 +4,7 @@ import Image from "next/image";
 import { Edit3, Trash2 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { IBanner } from '@/lib/types';
+import { IBanner } from "@/shared/types";
 import { getFallbackImage, cn } from "@/lib/utils";
 
 interface BannerCardProps {

@@ -6,7 +6,7 @@ import { HelpCircle, Search, ChevronDown, ChevronUp, Loader2, MessageCircle, Mai
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
-import { useFaqPage } from "@/features/common/hooks/use-faq-page";
+import { useFaqPage } from "@/modules/common/hooks/use-faq-page";
 import { CATEGORY_ICONS, CATEGORY_GRADIENTS } from "@/lib/data/faq";
 
 export default function FaqPage() {

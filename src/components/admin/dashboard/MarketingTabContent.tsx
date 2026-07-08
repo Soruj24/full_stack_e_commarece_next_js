@@ -1,6 +1,6 @@
 "use client";
 
-import { useMarketing } from "@/features/admin/hooks/use-marketing";
+import { useMarketing } from "@/modules/admin/hooks/use-marketing";
 import { BannerSection } from "./marketing/BannerSection";
 import { CouponSection } from "./marketing/CouponSection";
 import { FlashSalesSection } from "./marketing/FlashSalesSection";

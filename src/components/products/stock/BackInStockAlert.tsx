@@ -5,7 +5,7 @@ import { Bell, BellRing, CheckCircle2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
-import { useStock } from "@/features/cart/context/StockContext";
+import { useStock } from "@/modules/cart/context/StockContext";
 
 interface BackInStockAlertProps {
   productId: string;

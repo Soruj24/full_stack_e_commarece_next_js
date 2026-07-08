@@ -13,8 +13,8 @@ import {
 import { Button } from "@/components/ui/button";
 import { formatPrice } from "@/lib/localization";
 import { cn } from "@/lib/utils";
-import { IProduct } from '@/lib/types';
-import { useWishlist } from "@/features/wishlist/hooks/WishlistContext";
+import { IProduct } from "@/shared/types";
+import { useWishlist } from "@/modules/wishlist/hooks/WishlistContext";
 
 interface QuickViewInfoProps {
   product: IProduct;

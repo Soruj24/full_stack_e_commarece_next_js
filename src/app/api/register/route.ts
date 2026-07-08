@@ -1,7 +1,7 @@
-import { dbConnect } from "@/config/db";
+import { dbConnect } from "@/core/config/database";
 import { sendVerificationOTP } from "@/lib/email";
-import { User } from "@/lib/mongodb/models/User";
-import Settings from "@/lib/mongodb/models/Settings";
+import { User } from "@/core/database/models/User";
+import Settings from "@/core/database/models/Settings";
 import bcrypt from "bcryptjs";
 import { NextResponse } from "next/server";
 import { headers } from "next/headers";

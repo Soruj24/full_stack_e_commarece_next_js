@@ -6,7 +6,7 @@ import { OrdersSearch } from "@/components/admin/orders/OrdersSearch";
 import { OrdersTable } from "@/components/admin/orders/OrdersTable";
 import { ProfessionalPagination } from "@/components/common/ProfessionalPagination";
 import { AdminOrderDialog } from "@/components/admin/orders/AdminOrderDialog";
-import { useAdminOrders } from "@/features/admin/hooks/use-admin-orders";
+import { useAdminOrders } from "@/modules/admin/hooks/use-admin-orders";
 
 export default function OrdersPage() {
   const {

@@ -9,7 +9,7 @@ import {
   CategoriesTable,
 } from "@/components/admin/categories";
 import { BulkActions } from "@/components/admin/categories/BulkActions";
-import { useAdminCategories } from "@/features/admin/hooks/use-admin-categories";
+import { useAdminCategories } from "@/modules/admin/hooks/use-admin-categories";
 
 export default function CategoriesPage() {
   const {

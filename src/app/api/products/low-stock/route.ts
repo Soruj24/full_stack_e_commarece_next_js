@@ -1,6 +1,6 @@
-import { dbConnect } from "@/config/db";
-import { Product } from "@/lib/mongodb/models/Product";
-import { StockAlert } from "@/lib/mongodb/models/StockAlert";
+import { dbConnect } from "@/core/config/database";
+import { Product } from "@/core/database/models/Product";
+import { StockAlert } from "@/core/database/models/StockAlert";
 import { NextResponse } from "next/server";
 import { checkRole } from "@/lib/rbac";
 

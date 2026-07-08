@@ -8,7 +8,7 @@ import {
   Table, TableBody, TableCell, TableHead, TableHeader, TableRow,
 } from "@/components/ui/table";
 import { cn } from "@/lib/utils";
-import { useAdminLowStock } from "@/features/admin/hooks/use-admin-low-stock";
+import { useAdminLowStock } from "@/modules/admin/hooks/use-admin-low-stock";
 
 export default function AdminLowStockPage() {
   const { products, stats, loading, fetchData, getAlertCount, getAlertEmails, getStockStatus } = useAdminLowStock();

@@ -1,8 +1,8 @@
 // app/api/orders/guest/route.ts
 import { NextResponse } from "next/server";
-import { dbConnect } from "@/config/db";
-import { Order } from "@/lib/mongodb/models/Order";
-import { Product } from "@/lib/mongodb/models/Product";
+import { dbConnect } from "@/core/config/database";
+import { Order } from "@/core/database/models/Order";
+import { Product } from "@/core/database/models/Product";
 import { sendOrderStatusEmail } from "@/lib/email";
 
 export async function POST(req: Request) {

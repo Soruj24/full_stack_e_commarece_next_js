@@ -4,8 +4,8 @@ import { Gift, Truck, Percent } from "lucide-react";
 import { AuthBanner } from "@/components/auth/AuthBanner";
 import { AuthFooter } from "@/components/auth/AuthFooter";
 import { MobileLogo } from "@/components/auth/MobileLogo";
-import { dbConnect } from "@/config/db";
-import Settings from "@/lib/mongodb/models/Settings";
+import { dbConnect } from "@/core/config/database";
+import Settings from "@/core/database/models/Settings";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 

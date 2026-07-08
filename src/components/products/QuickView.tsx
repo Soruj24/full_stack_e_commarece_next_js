@@ -8,11 +8,11 @@ import {
   DialogContent,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { useCart } from "@/features/cart/context/CartContext";
-import { useWishlist } from "@/features/wishlist/hooks/WishlistContext";
-import { useLocalization } from "@/features/common/hooks/LocalizationContext";
+import { useCart } from "@/modules/cart/context/CartContext";
+import { useWishlist } from "@/modules/wishlist/hooks/WishlistContext";
+import { useLocalization } from "@/modules/common/hooks/LocalizationContext";
 import { toast } from "sonner";
-import { IProduct } from '@/lib/types';
+import { IProduct } from "@/shared/types";
 import { QuickViewGallery } from "./quickview/QuickViewGallery";
 import { QuickViewInfo } from "./quickview/QuickViewInfo";
 

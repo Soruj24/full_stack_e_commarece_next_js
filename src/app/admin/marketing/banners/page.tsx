@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { toast } from "sonner";
 import { AdminBannerDialog } from "@/components/admin/AdminBannerDialog";
-import { IBanner } from '@/lib/types';
+import { IBanner } from "@/shared/types";
 import {
   BannersHeader,
   BannerCard,

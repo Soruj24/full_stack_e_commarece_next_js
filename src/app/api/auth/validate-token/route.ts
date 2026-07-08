@@ -1,5 +1,5 @@
-import { dbConnect } from "@/config/db";
-import Token from "@/lib/mongodb/models/Token";
+import { dbConnect } from "@/core/config/database";
+import Token from "@/core/database/models/Token";
 import { NextResponse } from "next/server";
 
 export async function GET(request: Request) {

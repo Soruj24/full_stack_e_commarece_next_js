@@ -1,6 +1,6 @@
 "use client";
 
-import { useRegistrationForm } from "@/features/auth/hooks/use-registration-form";
+import { useRegistrationForm } from "@/modules/auth/hooks/use-registration-form";
 import { RegistrationClosed } from "./RegistrationClosed";
 import { RegistrationVerify } from "./RegistrationVerify";
 import { RegistrationFormFields } from "./RegistrationFormFields";

@@ -1,6 +1,6 @@
 "use client";
 
-import { useCompare } from "@/features/compare/context/CompareContext";
+import { useCompare } from "@/modules/compare/context/CompareContext";
 import { GitCompare } from "lucide-react";
 import { motion } from "framer-motion";
 import {

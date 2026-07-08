@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
-import { dbConnect } from "@/config/db";
-import { Coupon } from "@/lib/mongodb/models/Coupon";
+import { dbConnect } from "@/core/config/database";
+import { Coupon } from "@/core/database/models/Coupon";
 import { auth } from '@/lib/auth';
 
 export async function GET(req: Request) {

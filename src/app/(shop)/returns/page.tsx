@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
-import { useReturnsPage } from "@/features/orders/hooks/use-returns-page";
+import { useReturnsPage } from "@/modules/orders/hooks/use-returns-page";
 
 const statusConfig: Record<string, { label: string; icon: React.ElementType; color: string }> = {
   pending: { label: "Pending Review", icon: Clock, color: "text-yellow-600 bg-yellow-100 dark:bg-yellow-900/30" },

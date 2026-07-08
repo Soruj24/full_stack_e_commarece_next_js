@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
-import { dbConnect } from "@/config/db";
-import { Product } from "@/lib/mongodb/models/Product";
-import { Order } from "@/lib/mongodb/models/Order";
+import { dbConnect } from "@/core/config/database";
+import { Product } from "@/core/database/models/Product";
+import { Order } from "@/core/database/models/Order";
 import { auth } from '@/lib/auth';
 
 export async function GET(req: Request) {

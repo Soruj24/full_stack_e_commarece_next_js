@@ -12,7 +12,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { useReturnRequest } from "@/features/orders/hooks/use-return-request";
+import { useReturnRequest } from "@/modules/orders/hooks/use-return-request";
 import { ReturnItemList } from "./ReturnItemList";
 import { ReturnDetailsFields } from "./ReturnDetailsFields";
 

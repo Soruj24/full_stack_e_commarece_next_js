@@ -4,7 +4,7 @@
 import { cn } from "@/lib/utils";
 import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 import { ProductFilter } from "@/components/products/ProductFilter";
-import { useProductsPage } from "@/features/products/hooks/use-products-page";
+import { useProductsPage } from "@/modules/products/hooks/use-products-page";
 import { ProductsPageHeader } from "@/components/products/products-page/ProductsPageHeader";
 import { ProductsPageContent } from "@/components/products/products-page/ProductsPageContent";
 

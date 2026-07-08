@@ -1,5 +1,5 @@
-import { dbConnect } from "@/config/db";
-import { Notification } from "@/lib/mongodb/models/Notification";
+import { dbConnect } from "@/core/config/database";
+import { Notification } from "@/core/database/models/Notification";
 import { auth } from '@/lib/auth';
 import mongoose from "mongoose";
 

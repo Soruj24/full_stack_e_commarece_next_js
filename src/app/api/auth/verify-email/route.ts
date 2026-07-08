@@ -1,6 +1,6 @@
-import { dbConnect } from "@/config/db";
-import { User } from "@/lib/mongodb/models/User";
-import { Notification } from "@/lib/mongodb/models/Notification";
+import { dbConnect } from "@/core/config/database";
+import { User } from "@/core/database/models/User";
+import { Notification } from "@/core/database/models/Notification";
 import { NextResponse } from "next/server";
 
 export async function GET(request: Request) {

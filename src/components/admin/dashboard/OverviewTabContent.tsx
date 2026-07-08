@@ -6,7 +6,7 @@ import { SecurityActions } from "./SecurityActions";
 import { AdminNotes } from "./AdminNotes";
 import { ServerLogsViewer } from "./ServerLogsViewer";
 import { EcommerceStats } from "./EcommerceStats";
-import { IAuditLog } from '@/lib/types';
+import { IAuditLog } from "@/shared/types";
 
 interface OverviewTabContentProps {
   activityData: {

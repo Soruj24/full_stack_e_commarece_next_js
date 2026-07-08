@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { Sparkles, ChevronRight } from "lucide-react";
-import { ICategory } from '@/lib/types';
+import { ICategory } from "@/shared/types";
 import { getIcon, getGradient } from "@/lib/data/mega-menu";
 
 interface MegaMenuFeaturedCategoriesProps {

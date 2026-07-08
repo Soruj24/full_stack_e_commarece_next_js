@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 import { ShoppingCart, Package, CheckCircle2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { Bundle } from "@/features/bundles/context/BundleContext";
+import { Bundle } from "@/modules/bundles/context/BundleContext";
 
 interface BundleCardCompactProps {
   bundle: Bundle;

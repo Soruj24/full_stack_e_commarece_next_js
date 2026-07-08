@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ICategory } from '@/lib/types';
+import { ICategory } from "@/shared/types";
 import { MegaMenuFeaturedCategories } from "./mega-menu/MegaMenuFeaturedCategories";
 import { MegaMenuAllCategories } from "./mega-menu/MegaMenuAllCategories";
 import { MegaMenuFeaturedProducts } from "./mega-menu/MegaMenuFeaturedProducts";

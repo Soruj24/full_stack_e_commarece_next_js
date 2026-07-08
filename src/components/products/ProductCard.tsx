@@ -7,12 +7,12 @@ import {
   ANALYTICS_CATEGORIES,
   ANALYTICS_ACTIONS,
 } from "@/lib/analytics";
-import { useLocalization } from "@/features/common/hooks/LocalizationContext";
-import { useCart } from "@/features/cart/context/CartContext";
-import { useWishlist } from "@/features/wishlist/hooks/WishlistContext";
+import { useLocalization } from "@/modules/common/hooks/LocalizationContext";
+import { useCart } from "@/modules/cart/context/CartContext";
+import { useWishlist } from "@/modules/wishlist/hooks/WishlistContext";
 import { ProductCardImage } from "./product-card/ProductCardImage";
 import { ProductCardInfo } from "./product-card/ProductCardInfo";
-import { IProduct } from '@/lib/types';
+import { IProduct } from "@/shared/types";
 import { getSafeImageSrc } from "@/lib/utils";
 
 interface ProductCardProps {

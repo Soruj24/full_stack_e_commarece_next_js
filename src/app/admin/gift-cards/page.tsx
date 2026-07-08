@@ -1,7 +1,7 @@
 "use client";
 
 import { useSession } from "next-auth/react";
-import { useAdminGiftCards } from "@/features/admin/hooks/use-admin-gift-cards";
+import { useAdminGiftCards } from "@/modules/admin/hooks/use-admin-gift-cards";
 import { GiftCardsHeader } from "@/components/admin/gift-cards/GiftCardsHeader";
 import { GiftCardsStats } from "@/components/admin/gift-cards/GiftCardsStats";
 import { GiftCardsTable } from "@/components/admin/gift-cards/GiftCardsTable";

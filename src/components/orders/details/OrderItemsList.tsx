@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { getFallbackImage, getSafeImageSrc } from "@/lib/utils";
-import { IOrder } from '@/lib/types';
+import { IOrder } from "@/shared/types";
 
 interface OrderItemsListProps {
   order: IOrder;

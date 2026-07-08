@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { Truck, ShieldCheck, RotateCcw } from "lucide-react";
-import { BundleProduct } from "@/features/bundles/context/BundleContext";
+import { BundleProduct } from "@/modules/bundles/context/BundleContext";
 
 interface BundleDetailsInfoProps {
   name: string;

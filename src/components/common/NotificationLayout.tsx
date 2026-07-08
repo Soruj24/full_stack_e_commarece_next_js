@@ -1,7 +1,7 @@
 "use client";
 
 import { useSession } from "next-auth/react";
-import { NotificationProvider } from "@/features/notifications/context/NotificationContext";
+import { NotificationProvider } from "@/modules/notifications/context/NotificationContext";
 import { ReactNode } from "react";
 
 export function NotificationLayout({ children }: { children: ReactNode }) {

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { usePartnerForm } from "@/features/common/hooks/use-partner-form";
+import { usePartnerForm } from "@/modules/common/hooks/use-partner-form";
 import { PartnersHero } from "@/components/partners/PartnersHero";
 import { PartnershipTypes } from "@/components/partners/PartnershipTypes";
 import { PartnersGridSection } from "@/components/partners/PartnersGridSection";

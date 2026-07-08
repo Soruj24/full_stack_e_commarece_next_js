@@ -1,6 +1,6 @@
 import { auth } from '@/lib/auth';
-import { dbConnect } from "@/config/db";
-import AuditLog from "@/lib/mongodb/models/AuditLog";
+import { dbConnect } from "@/core/config/database";
+import AuditLog from "@/core/database/models/AuditLog";
 import { NextResponse } from "next/server";
 
 export async function GET() {

@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import { MessageCircle, Send, CheckCircle2, Clock, AlertCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import type { SupportTicket } from "@/features/support/types/support-ticket";
+import type { SupportTicket } from "@/modules/support/types/support-ticket";
 
 function getStatusIcon(status: string) {
   switch (status) {

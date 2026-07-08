@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Download, Printer, ChevronLeft } from "lucide-react";
 import { generateInvoicePDF } from "@/lib/invoice";
-import { IOrder } from '@/lib/types';
+import { IOrder } from "@/shared/types";
 
 interface OrderDetailsHeaderProps {
   order: IOrder;

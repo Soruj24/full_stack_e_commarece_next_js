@@ -1,6 +1,6 @@
 "use client";
 
-import { useNotifications, Notification } from "@/features/notifications/context/NotificationContext";
+import { useNotifications, Notification } from "@/modules/notifications/context/NotificationContext";
 import { Bell, Check, CheckCheck, Trash2, Info, CheckCircle, AlertTriangle, XCircle, Wifi, WifiOff } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { formatDistanceToNow } from "date-fns";

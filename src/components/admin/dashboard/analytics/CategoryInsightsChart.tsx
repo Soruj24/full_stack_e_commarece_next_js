@@ -2,7 +2,7 @@
 
 import { TrendingUp } from "lucide-react";
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from "recharts";
-import { AnalyticsData } from "@/features/analytics/types/analytics";
+import { AnalyticsData } from "@/modules/analytics/types/analytics";
 
 const COLORS = ["#3b82f6", "#10b981", "#f59e0b", "#ef4444", "#8b5cf6"];
 

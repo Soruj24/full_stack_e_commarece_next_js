@@ -1,6 +1,6 @@
 
 import { UserTable } from "@/components/admin/dashboard/UserTable";
-import { User } from '@/lib/types';
+import { User } from "@/shared/types";
 
 interface UsersTabContentProps {
   filteredUsers: User[];

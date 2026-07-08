@@ -1,5 +1,5 @@
-import { dbConnect } from "@/config/db";
-import { Vendor } from "@/lib/mongodb/models/Vendor";
+import { dbConnect } from "@/core/config/database";
+import { Vendor } from "@/core/database/models/Vendor";
 import { NextResponse } from "next/server";
 import { auth } from '@/lib/auth';
 

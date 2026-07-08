@@ -11,7 +11,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Vendor } from "@/features/vendor/types/vendor";
+import { Vendor } from "@/modules/vendor/types/vendor";
 import { VendorTableRow } from "./VendorTableRow";
 
 interface VendorTableProps {

@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Heart, Eye, ShoppingCart, GitCompare } from "lucide-react";
 import { QuickView } from "@/components/products/QuickView";
-import { IProduct } from '@/lib/types';
+import { IProduct } from "@/shared/types";
 import { Button } from "@/components/ui/button";
 import { cn, getFallbackImage } from "@/lib/utils";
 import { CompareButton } from "@/components/products/CompareProducts";

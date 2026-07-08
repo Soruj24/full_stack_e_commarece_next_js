@@ -1,7 +1,7 @@
 "use client";
 
 import { MapPin, Truck, CreditCard } from "lucide-react";
-import { IOrder } from '@/lib/types';
+import { IOrder } from "@/shared/types";
 
 interface OrderDetailsGridProps {
   order: IOrder;

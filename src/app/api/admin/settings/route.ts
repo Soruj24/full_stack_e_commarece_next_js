@@ -1,6 +1,6 @@
 import { checkRole } from "@/lib/rbac";
-import { dbConnect } from "@/config/db";
-import Settings from "@/lib/mongodb/models/Settings";
+import { dbConnect } from "@/core/config/database";
+import Settings from "@/core/database/models/Settings";
 import { NextResponse } from "next/server";
 import { settingsSchema } from "@/lib/validations";
 import mongoose from "mongoose";

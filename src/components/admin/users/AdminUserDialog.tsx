@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { User } from '@/lib/types';
+import { User } from "@/shared/types";
 import {
   Dialog,
   DialogContent,

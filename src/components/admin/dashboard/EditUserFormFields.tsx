@@ -3,7 +3,7 @@
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { User } from '@/lib/types';
+import { User } from "@/shared/types";
 
 interface EditUserFormFieldsProps {
   user: User;

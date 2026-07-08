@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { ShieldCheck } from "lucide-react";
-import { useSettings } from "@/features/settings/context/SettingsContext";
+import { useSettings } from "@/modules/settings/context/SettingsContext";
 
 export function NavLogo() {
   const { settings } = useSettings();

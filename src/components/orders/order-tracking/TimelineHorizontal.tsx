@@ -5,7 +5,7 @@ import { Check } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { statusIcons, statusColors } from "@/lib/data/order-tracking";
 import { formatDistanceToNow } from "date-fns";
-import type { TrackingEvent } from "@/features/orders/context/OrderTrackingContext";
+import type { TrackingEvent } from "@/modules/orders/context/OrderTrackingContext";
 
 interface TimelineHorizontalProps {
   events: TrackingEvent[];

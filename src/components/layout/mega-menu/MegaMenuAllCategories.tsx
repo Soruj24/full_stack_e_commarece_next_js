@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { Layers, ArrowRight } from "lucide-react";
-import { ICategory } from '@/lib/types';
+import { ICategory } from "@/shared/types";
 import { getIcon } from "@/lib/data/mega-menu";
 
 interface MegaMenuAllCategoriesProps {

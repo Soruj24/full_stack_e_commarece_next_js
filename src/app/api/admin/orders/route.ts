@@ -1,10 +1,10 @@
 import { NextResponse } from "next/server";
-import { dbConnect } from "@/config/db";
-import { Order } from "@/lib/mongodb/models/Order";
+import { dbConnect } from "@/core/config/database";
+import { Order } from "@/core/database/models/Order";
 import { checkRole } from "@/lib/rbac";
 import { logAction } from "@/lib/audit";
-import { Notification } from "@/lib/mongodb/models/Notification";
-import { User } from "@/lib/mongodb/models/User";
+import { Notification } from "@/core/database/models/Notification";
+import { User } from "@/core/database/models/User";
 import { sendOrderStatusEmail } from "@/lib/email";
 import mongoose from "mongoose";
 

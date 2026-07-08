@@ -3,7 +3,7 @@
 import { AnimatePresence } from "framer-motion";
 import { Loader2, ChevronUp, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useProductQuestions } from "@/features/products/hooks/use-product-questions";
+import { useProductQuestions } from "@/modules/products/hooks/use-product-questions";
 import { QuestionHeader } from "./product-questions/QuestionHeader";
 import { AskQuestionForm } from "./product-questions/AskQuestionForm";
 import { QuestionItem } from "./product-questions/QuestionItem";

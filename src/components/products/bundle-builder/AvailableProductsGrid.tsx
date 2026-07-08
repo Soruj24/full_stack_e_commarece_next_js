@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { Plus, ArrowRight } from "lucide-react";
-import type { IProduct } from '@/lib/types';
+import type { IProduct } from "@/shared/types";
 
 interface AvailableProductsGridProps {
   products: IProduct[];

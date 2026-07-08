@@ -1,6 +1,6 @@
 "use client";
 
-import { useSaveForLater } from "@/features/cart/context/SaveForLaterContext";
+import { useSaveForLater } from "@/modules/cart/context/SaveForLaterContext";
 import { SaveForLaterList } from "@/components/products/SaveForLater";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";

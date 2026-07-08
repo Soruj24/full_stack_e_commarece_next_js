@@ -1,5 +1,5 @@
-import { dbConnect } from "@/config/db";
-import { Category } from "@/lib/mongodb/models/Category";
+import { dbConnect } from "@/core/config/database";
+import { Category } from "@/core/database/models/Category";
 import { NextResponse } from "next/server";
 import { checkRole } from "@/lib/rbac";
 import { logAction } from "@/lib/audit";

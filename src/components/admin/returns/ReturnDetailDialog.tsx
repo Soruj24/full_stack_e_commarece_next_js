@@ -6,8 +6,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { formatReturnDate } from "@/features/returns/types/return-item";
-import type { ReturnRequest } from "@/features/returns/types/return-item";
+import { formatReturnDate } from "@/modules/returns/types/return-item";
+import type { ReturnRequest } from "@/modules/returns/types/return-item";
 
 interface ReturnDetailDialogProps {
   selectedReturn: ReturnRequest | null;

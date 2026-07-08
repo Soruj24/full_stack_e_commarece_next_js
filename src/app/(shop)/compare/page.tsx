@@ -1,7 +1,7 @@
 "use client";
 
-import { useCompare } from "@/features/compare/context/CompareContext";
-import { useCart } from "@/features/cart/context/CartContext";
+import { useCompare } from "@/modules/compare/context/CompareContext";
+import { useCart } from "@/modules/cart/context/CartContext";
 import { useState } from "react";
 import { toast } from "sonner";
 import { motion, AnimatePresence } from "framer-motion";

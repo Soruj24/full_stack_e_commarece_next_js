@@ -4,7 +4,7 @@ import { Star, MessageSquare } from "lucide-react";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { useReviewForm } from "@/features/products/hooks/use-review-form";
+import { useReviewForm } from "@/modules/products/hooks/use-review-form";
 
 interface ReviewFormProps {
   productId: string;

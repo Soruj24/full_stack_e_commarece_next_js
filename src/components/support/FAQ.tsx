@@ -7,7 +7,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { HelpCircle, Truck, RefreshCcw, CreditCard, ShieldCheck } from "lucide-react";
-import { useMounted } from "@/features/common/hooks/use-mounted";
+import { useMounted } from "@/modules/common/hooks/use-mounted";
 
 const faqs = [
   {

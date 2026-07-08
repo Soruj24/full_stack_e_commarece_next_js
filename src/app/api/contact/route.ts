@@ -1,6 +1,6 @@
 import { auth } from '@/lib/auth';
-import { dbConnect } from "@/config/db";
-import { ContactMessage } from "@/lib/mongodb/models/ContactMessage";
+import { dbConnect } from "@/core/config/database";
+import { ContactMessage } from "@/core/database/models/ContactMessage";
 import { NextResponse } from "next/server";
 import mongoose from "mongoose";
 

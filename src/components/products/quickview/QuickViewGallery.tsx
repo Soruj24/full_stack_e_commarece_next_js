@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { cn, getFallbackImage, getSafeImageSrc } from "@/lib/utils";
-import { IProduct } from '@/lib/types';
+import { IProduct } from "@/shared/types";
 
 interface QuickViewGalleryProps {
   product: IProduct;

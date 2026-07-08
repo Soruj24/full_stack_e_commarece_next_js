@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { ShoppingBag, Smartphone, Watch, Headphones, Camera, Gamepad2, Laptop, Shirt, ArrowRight, Loader2 } from "lucide-react";
-import { useCategoriesPage } from "@/features/categories/hooks/use-categories-page";
+import { useCategoriesPage } from "@/modules/categories/hooks/use-categories-page";
 
 const categoryIcons: Record<string, React.ReactNode> = {
   laptop: <Laptop className="w-8 h-8" />, phones: <Smartphone className="w-8 h-8" />,

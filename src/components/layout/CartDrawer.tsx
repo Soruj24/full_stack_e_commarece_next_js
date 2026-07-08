@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { useCartDrawer } from "@/features/cart/hooks/use-cart-drawer";
+import { useCartDrawer } from "@/modules/cart/hooks/use-cart-drawer";
 import { DrawerHeader } from "./cart-drawer/DrawerHeader";
 import { ShippingProgressBar } from "./cart-drawer/ShippingProgressBar";
 import { CartEmptyState } from "./cart-drawer/CartEmptyState";

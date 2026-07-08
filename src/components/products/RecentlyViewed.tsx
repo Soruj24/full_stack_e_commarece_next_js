@@ -13,8 +13,8 @@ import {
   Eye,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { IProduct } from '@/lib/types';
-import { useCart } from "@/features/cart/context/CartContext";
+import { IProduct } from "@/shared/types";
+import { useCart } from "@/modules/cart/context/CartContext";
 import { toast } from "sonner";
 
 const STORAGE_KEY = "recently_viewed";

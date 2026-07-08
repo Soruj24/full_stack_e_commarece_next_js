@@ -14,7 +14,7 @@ import { ProductSearch } from "@/components/products/ProductSearch";
 import { MobileNavLinks } from "./MobileNavLinks";
 import { MobileNavCategories } from "./MobileNavCategories";
 import { MobileNavFooter } from "./MobileNavFooter";
-import { ICategory } from '@/lib/types';
+import { ICategory } from "@/shared/types";
 
 interface MobileNavProps {
   open: boolean;

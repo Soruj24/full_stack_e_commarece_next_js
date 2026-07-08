@@ -10,7 +10,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { CATEGORY_ICONS } from "@/lib/data/category-icons";
-import { ICategory } from '@/lib/types';
+import { ICategory } from "@/shared/types";
 
 interface FormFieldsProps {
   name: string;

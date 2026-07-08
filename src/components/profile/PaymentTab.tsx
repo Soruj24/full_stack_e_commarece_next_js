@@ -6,7 +6,7 @@ import { Plus, CreditCard, Trash2, CheckCircle2, ShieldCheck } from "lucide-reac
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
-import { IPaymentMethod } from '@/lib/types';
+import { IPaymentMethod } from "@/shared/types";
 
 interface PaymentTabProps {
   paymentMethods: IPaymentMethod[];

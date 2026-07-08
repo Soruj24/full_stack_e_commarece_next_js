@@ -12,7 +12,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Vendor } from "@/features/vendor/types/vendor";
+import { Vendor } from "@/modules/vendor/types/vendor";
 
 interface VendorDetailDialogProps {
   open: boolean;

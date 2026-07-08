@@ -4,7 +4,7 @@ import Image from "next/image";
 import { Star, Heart, Eye, ShoppingCart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import type { IProduct } from '@/lib/types';
+import type { IProduct } from "@/shared/types";
 
 interface RelatedProductCardProps {
   product: IProduct;

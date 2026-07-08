@@ -1,6 +1,6 @@
 "use client";
 
-import { IAuditLog } from '@/lib/types';
+import { IAuditLog } from "@/shared/types";
 import { Badge } from "@/components/ui/badge";
 import {
   Table,

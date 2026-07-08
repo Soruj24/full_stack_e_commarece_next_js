@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Plus, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { IAddress } from '@/lib/types';
+import { IAddress } from "@/shared/types";
 import { AddressForm } from "./AddressForm";
 import { AddressCard } from "./AddressCard";
 

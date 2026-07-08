@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Bundle, useBundle } from "@/features/bundles/context/BundleContext";
+import { Bundle, useBundle } from "@/modules/bundles/context/BundleContext";
 import { toast } from "sonner";
 import { BundleDetailsSkeleton } from "./bundle-details/BundleDetailsSkeleton";
 import { BundleDetailsNotFound } from "./bundle-details/BundleDetailsNotFound";

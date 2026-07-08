@@ -1,4 +1,4 @@
-import type { GiftWrappingOption, GiftMessage } from "@/features/cart/types/gift-wrapping";
+import type { GiftWrappingOption, GiftMessage } from "@/modules/cart/types/gift-wrapping";
 
 interface GiftSummaryBarProps {
   selectedOption: GiftWrappingOption;

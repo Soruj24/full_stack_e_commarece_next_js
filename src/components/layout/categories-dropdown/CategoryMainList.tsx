@@ -3,7 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import { ChevronRight, ArrowRight } from "lucide-react";
-import { ICategory } from '@/lib/types';
+import { ICategory } from "@/shared/types";
 
 interface CategoryMainListProps {
   categories: ICategory[];

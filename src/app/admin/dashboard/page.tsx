@@ -22,7 +22,7 @@ import { OrdersTabContent } from "@/components/admin/dashboard/OrdersTabContent"
 import { MarketingTabContent } from "@/components/admin/dashboard/MarketingTabContent";
 import { InviteUserDialog } from "@/components/admin/InviteUserDialog";
 import { useAdminDashboard } from "@/components/admin/dashboard/useAdminDashboard";
-import { User } from '@/lib/types';
+import { User } from "@/shared/types";
 
 function AdminDashboardContent() {
   const searchParams = useSearchParams();

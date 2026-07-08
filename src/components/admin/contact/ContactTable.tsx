@@ -1,6 +1,6 @@
 "use client";
 
-import { ContactMessage } from '@/lib/types';
+import { ContactMessage } from "@/shared/types";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {

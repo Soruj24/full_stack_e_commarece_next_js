@@ -1,6 +1,6 @@
 "use client";
 
-import { useAnalytics } from "@/features/analytics/hooks/use-analytics";
+import { useAnalytics } from "@/modules/analytics/hooks/use-analytics";
 import { AnalyticsStatsCards } from "./analytics/AnalyticsStatsCards";
 import { SalesTrendChart } from "./analytics/SalesTrendChart";
 import { CategoryInsightsChart } from "./analytics/CategoryInsightsChart";

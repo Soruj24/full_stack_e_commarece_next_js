@@ -4,7 +4,7 @@ import { ShoppingBag, Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
-import { useOrdersTab } from "@/features/orders/hooks/use-orders-tab";
+import { useOrdersTab } from "@/modules/orders/hooks/use-orders-tab";
 import { OrderCard } from "./OrderCard";
 
 const STATUS_FILTERS = ["all","pending","processing","shipped","delivered","cancelled","returned"];

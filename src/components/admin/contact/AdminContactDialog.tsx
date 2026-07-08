@@ -1,6 +1,6 @@
 "use client";
 
-import { ContactMessage } from '@/lib/types';
+import { ContactMessage } from "@/shared/types";
 import {
   Dialog,
   DialogContent,

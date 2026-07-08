@@ -12,8 +12,8 @@ import {
   DropdownMenu, DropdownMenuContent, DropdownMenuItem,
   DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { formatDate, isExpired } from "@/features/gift-cards/services/gift-cards-service";
-import type { GiftCard } from "@/features/gift-cards/services/gift-cards-service";
+import { formatDate, isExpired } from "@/modules/gift-cards/services/gift-cards-service";
+import type { GiftCard } from "@/modules/gift-cards/services/gift-cards-service";
 
 interface Props {
   loading: boolean;

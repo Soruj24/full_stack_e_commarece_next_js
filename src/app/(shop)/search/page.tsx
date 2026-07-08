@@ -12,7 +12,7 @@ import {
   SearchEmptyState,
   FiltersState,
 } from "@/components/search";
-import { IProduct, ICategory } from '@/lib/types';
+import { IProduct, ICategory } from "@/shared/types";
 
 interface SearchPageProps {
   searchParams: { q?: string; category?: string; brand?: string };

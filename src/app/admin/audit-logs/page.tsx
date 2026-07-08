@@ -7,7 +7,7 @@ import { redirect } from "next/navigation";
 import { AuditLogsHeader } from "@/components/admin/audit-logs/AuditLogsHeader";
 import { AuditLogsTable } from "@/components/admin/audit-logs/AuditLogsTable";
 import { ProfessionalPagination } from "@/components/common/ProfessionalPagination";
-import { IAuditLog } from '@/lib/types';
+import { IAuditLog } from "@/shared/types";
 
 export default function AuditLogsPage() {
   const { data: session, status } = useSession();

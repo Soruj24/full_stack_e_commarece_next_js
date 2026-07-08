@@ -6,7 +6,7 @@ import { ProductCard } from "@/components/products/ProductCard";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { IProduct } from '@/lib/types';
+import { IProduct } from "@/shared/types";
 
 export function ProductRecommendations() {
   const [products, setProducts] = useState<IProduct[]>([]);

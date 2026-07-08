@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { toast } from "sonner";
 import { useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
-import { Coupon } from '@/lib/types';
+import { Coupon } from "@/shared/types";
 import { CouponsHeader } from "@/components/admin/coupons/CouponsHeader";
 import { CouponsStats } from "@/components/admin/coupons/CouponsStats";
 import { CouponsSearch } from "@/components/admin/coupons/CouponsSearch";

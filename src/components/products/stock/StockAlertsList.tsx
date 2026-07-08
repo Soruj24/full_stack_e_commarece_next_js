@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { getSafeImageSrc, getFallbackImage } from "@/lib/utils";
-import { useStock } from "@/features/cart/context/StockContext";
+import { useStock } from "@/modules/cart/context/StockContext";
 
 export function StockAlertsList() {
   const { alerts, unsubscribeFromStockAlert } = useStock();

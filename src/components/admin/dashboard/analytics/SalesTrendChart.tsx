@@ -2,7 +2,7 @@
 
 import { Calendar } from "lucide-react";
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
-import { AnalyticsData } from "@/features/analytics/types/analytics";
+import { AnalyticsData } from "@/modules/analytics/types/analytics";
 
 interface SalesTrendChartProps {
   data: AnalyticsData["salesData"];

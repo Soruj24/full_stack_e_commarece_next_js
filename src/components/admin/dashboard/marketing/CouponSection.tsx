@@ -3,7 +3,7 @@
 import { Tag } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { MarketingCoupon, NewCouponForm } from "@/features/admin/types/marketing";
+import { MarketingCoupon, NewCouponForm } from "@/modules/admin/types/marketing";
 import { CouponForm } from "./CouponForm";
 import { CouponRow } from "./CouponRow";
 

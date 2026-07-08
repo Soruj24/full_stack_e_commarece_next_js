@@ -2,7 +2,7 @@
 
 import { User, MapPin, Truck, ClipboardCheck, CreditCard, Check } from "lucide-react";
 import { cn } from "@/lib/utils";
-import type { CheckoutStep } from "@/features/checkout/types/checkout";
+import type { CheckoutStep } from "@/modules/checkout/types/checkout";
 
 interface Step {
   id: CheckoutStep;

@@ -16,7 +16,7 @@ import {
   RefreshCw,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { IProduct } from '@/lib/types';
+import { IProduct } from "@/shared/types";
 
 interface ProductBadge {
   type: BadgeType;

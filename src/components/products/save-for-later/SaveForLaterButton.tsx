@@ -3,7 +3,7 @@
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Heart } from "lucide-react";
-import { useSaveForLater } from "@/features/cart/context/SaveForLaterContext";
+import { useSaveForLater } from "@/modules/cart/context/SaveForLaterContext";
 
 interface SaveForLaterButtonProps {
   product: { _id: string; name: string; price: number; image?: string; stock?: number };

@@ -2,7 +2,7 @@
 
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
-import { useStock } from "@/features/cart/context/StockContext";
+import { useStock } from "@/modules/cart/context/StockContext";
 
 interface StockIndicatorProps {
   stock: number;

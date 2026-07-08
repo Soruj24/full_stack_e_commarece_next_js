@@ -1,7 +1,7 @@
 "use client";
 
 import { Checkbox } from "@/components/ui/checkbox";
-import { ICategory } from '@/lib/types';
+import { ICategory } from "@/shared/types";
 import { CategoryRow } from "./CategoryRow";
 
 interface CategoriesTableProps {

@@ -22,7 +22,7 @@ interface SearchDropdownProps {
   onClose: () => void;
 }
 
-import { SearchSuggestions } from "@/features/search/types/product-search";
+import { SearchSuggestions } from "@/modules/search/types/product-search";
 
 export function SearchDropdown({
   isOpen, query, suggestions, recentSearches, popularSearches,

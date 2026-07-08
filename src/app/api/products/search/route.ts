@@ -1,7 +1,7 @@
 // app/api/products/search/route.ts
-import { dbConnect } from "@/config/db";
-import { Product } from "@/lib/mongodb/models/Product";
-import { Category } from "@/lib/mongodb/models/Category";
+import { dbConnect } from "@/core/config/database";
+import { Product } from "@/core/database/models/Product";
+import { Category } from "@/core/database/models/Category";
 import { NextResponse } from "next/server";
 
 export async function GET(request: Request) {

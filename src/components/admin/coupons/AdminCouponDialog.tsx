@@ -1,6 +1,6 @@
 "use client";
 
-import { Coupon } from '@/lib/types';
+import { Coupon } from "@/shared/types";
 import {
   Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle,
 } from "@/components/ui/dialog";
@@ -9,7 +9,7 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
-import { useCouponDialog } from "@/features/admin/hooks/use-coupon-dialog";
+import { useCouponDialog } from "@/modules/admin/hooks/use-coupon-dialog";
 
 interface AdminCouponDialogProps {
   open: boolean;

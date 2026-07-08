@@ -3,7 +3,7 @@
 import { CheckCircle2, X, Clock, Truck } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { format } from "date-fns";
-import type { OrderStatus } from "@/features/orders/context/OrderTrackingContext";
+import type { OrderStatus } from "@/modules/orders/context/OrderTrackingContext";
 
 interface EstimatedDeliveryProps {
   estimatedDate?: string;

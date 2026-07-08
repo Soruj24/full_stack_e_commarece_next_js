@@ -2,7 +2,7 @@ import {
   Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { User } from '@/lib/types';
+import { User } from "@/shared/types";
 import { EditUserFormFields } from "./EditUserFormFields";
 
 interface AdminEditUserDialogProps {

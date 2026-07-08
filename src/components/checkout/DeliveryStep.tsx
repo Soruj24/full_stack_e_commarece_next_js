@@ -3,7 +3,7 @@
 import { Truck as TruckIcon, Truck, CheckCircle2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ShippingRate } from "@/lib/checkout-utils";
-import { useLocalization } from "@/features/common/hooks/LocalizationContext";
+import { useLocalization } from "@/modules/common/hooks/LocalizationContext";
 import { convertPrice, formatPrice } from "@/lib/localization";
 import { cn } from "@/lib/utils";
 

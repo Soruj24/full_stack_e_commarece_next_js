@@ -2,10 +2,10 @@
 
 import { MapPin, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useAddressForm } from "@/features/checkout/hooks/use-address-form";
+import { useAddressForm } from "@/modules/checkout/hooks/use-address-form";
 import { AddressFormDialog } from "./address-book/AddressFormDialog";
 import { AddressCard, AddressEmptyState } from "./address-book/AddressCard";
-import type { SavedAddress, ShippingAddress } from "@/features/checkout/types/checkout";
+import type { SavedAddress, ShippingAddress } from "@/modules/checkout/types/checkout";
 
 interface AddressBookProps {
   addresses: SavedAddress[];

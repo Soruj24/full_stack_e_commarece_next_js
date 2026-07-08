@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
-import { dbConnect } from "@/config/db";
-import { Order } from "@/lib/mongodb/models/Order";
-import { User } from "@/lib/mongodb/models/User";
-import { Product } from "@/lib/mongodb/models/Product";
+import { dbConnect } from "@/core/config/database";
+import { Order } from "@/core/database/models/Order";
+import { User } from "@/core/database/models/User";
+import { Product } from "@/core/database/models/Product";
 import { checkRole } from "@/lib/rbac";
 import { startOfDay, endOfDay, subDays, format } from "date-fns";
 

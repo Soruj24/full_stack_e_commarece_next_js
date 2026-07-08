@@ -3,7 +3,7 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
-import { STATUS_CONFIG } from "@/features/returns/types/return-item";
+import { STATUS_CONFIG } from "@/modules/returns/types/return-item";
 
 interface ReturnStatusCardsProps {
   statusCounts: Record<string, number>;

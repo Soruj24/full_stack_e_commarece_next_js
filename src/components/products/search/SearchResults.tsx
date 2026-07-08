@@ -4,7 +4,7 @@ import Link from "next/link";
 import { ArrowRight, Tag, Package } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { SearchSuggestions } from "@/features/search/types/product-search";
+import { SearchSuggestions } from "@/modules/search/types/product-search";
 import { ProductResultCard } from "./ProductResultCard";
 
 interface SearchResultsProps {

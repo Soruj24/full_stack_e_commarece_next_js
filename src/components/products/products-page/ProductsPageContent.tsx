@@ -6,7 +6,7 @@ import { ProfessionalPagination } from "@/components/common/ProfessionalPaginati
 import { cn } from "@/lib/utils";
 import { ProductSkeleton } from "./ProductSkeleton";
 import { ProductsPageEmpty } from "./ProductsPageEmpty";
-import type { IProduct } from '@/lib/types';
+import type { IProduct } from "@/shared/types";
 
 const containerVariants = {
   hidden: { opacity: 0 },

@@ -16,8 +16,8 @@ import {
 } from "@/components/ui/select";
 import { Package } from "lucide-react";
 import Image from "next/image";
-import { useBannerDialog } from "@/features/products/hooks/use-banner-dialog";
-import { IBanner } from '@/lib/types';
+import { useBannerDialog } from "@/modules/products/hooks/use-banner-dialog";
+import { IBanner } from "@/shared/types";
 
 interface BannerDialogProps {
   open: boolean;

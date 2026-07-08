@@ -3,7 +3,7 @@
 import { User, MapPin, TruckIcon, Package, CreditCard } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useRouter } from "next/navigation";
-import { useCheckout } from "@/features/checkout/hooks/use-checkout";
+import { useCheckout } from "@/modules/checkout/hooks/use-checkout";
 import { CheckoutStepsBar } from "@/components/checkout/CheckoutStepsBar";
 import { GuestCheckoutForm } from "@/components/checkout/GuestCheckoutForm";
 import {

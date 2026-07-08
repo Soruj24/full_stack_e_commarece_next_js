@@ -1,6 +1,6 @@
-import { dbConnect } from "@/config/db";
-import { Return } from "@/lib/mongodb/models/Return";
-import { Order } from "@/lib/mongodb/models/Order";
+import { dbConnect } from "@/core/config/database";
+import { Return } from "@/core/database/models/Return";
+import { Order } from "@/core/database/models/Order";
 import { NextResponse } from "next/server";
 import { auth } from '@/lib/auth';
 

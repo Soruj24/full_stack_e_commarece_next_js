@@ -10,7 +10,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { cn } from "@/lib/utils";
-import { useNotifications } from "@/features/notifications/context/NotificationContext";
+import { useNotifications } from "@/modules/notifications/context/NotificationContext";
 
 export function NotificationDropdown() {
   const {

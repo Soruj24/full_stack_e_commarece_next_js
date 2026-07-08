@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
-import { dbConnect } from "@/config/db";
-import { Product } from "@/lib/mongodb/models/Product";
-import { Category } from "@/lib/mongodb/models/Category";
-import { Brand } from "@/lib/mongodb/models/Brand";
+import { dbConnect } from "@/core/config/database";
+import { Product } from "@/core/database/models/Product";
+import { Category } from "@/core/database/models/Category";
+import { Brand } from "@/core/database/models/Brand";
 
 export async function GET(request: Request) {
   try {

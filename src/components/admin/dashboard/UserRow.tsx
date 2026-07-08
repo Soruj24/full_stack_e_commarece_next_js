@@ -24,7 +24,7 @@ import {
   Trash2,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { User } from '@/lib/types';
+import { User } from "@/shared/types";
 
 interface UserRowProps {
   user: User;

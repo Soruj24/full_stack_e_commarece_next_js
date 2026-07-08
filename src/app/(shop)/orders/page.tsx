@@ -5,7 +5,7 @@ import { Package, ChevronRight, Truck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import Link from "next/link";
-import { useOrdersPage, STATUS_CONFIG } from "@/features/orders/hooks/use-orders-page";
+import { useOrdersPage, STATUS_CONFIG } from "@/modules/orders/hooks/use-orders-page";
 
 export default function OrdersPage() {
   const { filteredOrders, filter, setFilter } = useOrdersPage();

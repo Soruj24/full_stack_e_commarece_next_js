@@ -13,7 +13,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { cn } from "@/lib/utils";
-import { Vendor } from "@/features/vendor/types/vendor";
+import { Vendor } from "@/modules/vendor/types/vendor";
 
 interface VendorTableRowProps {
   vendor: Vendor;

@@ -6,8 +6,8 @@ import { X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn, getSafeImageSrc, getFallbackImage } from "@/lib/utils";
 import { formatPrice, convertPrice } from "@/lib/localization";
-import { useLocalization } from "@/features/common/hooks/LocalizationContext";
-import type { RecentlyViewedProduct } from "@/features/common/hooks/RecentlyViewedContext";
+import { useLocalization } from "@/modules/common/hooks/LocalizationContext";
+import type { RecentlyViewedProduct } from "@/modules/common/hooks/RecentlyViewedContext";
 
 interface CompactViewProps {
   products: RecentlyViewedProduct[];

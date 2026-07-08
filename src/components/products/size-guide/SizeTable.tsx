@@ -1,4 +1,4 @@
-import type { SizeGuideTable } from "@/features/products/types/size-guide";
+import type { SizeGuideTable } from "@/modules/products/types/size-guide";
 
 interface SizeTableProps {
   guide: SizeGuideTable | null;

@@ -1,4 +1,4 @@
-import type { Review } from "@/features/reviews/types/review";
+import type { Review } from "@/modules/reviews/types/review";
 import { RatingSummary } from "./review-section/RatingSummary";
 import { ReviewCard } from "./review-section/ReviewCard";
 import { ReviewEmptyState } from "./review-section/ReviewEmptyState";

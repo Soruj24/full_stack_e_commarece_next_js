@@ -5,7 +5,7 @@ import Image from "next/image";
 import { Clock, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { getSafeImageSrc, getFallbackImage } from "@/lib/utils";
-import { useRecentlyViewed } from "@/features/common/hooks/RecentlyViewedContext";
+import { useRecentlyViewed } from "@/modules/common/hooks/RecentlyViewedContext";
 
 export function RecentlyViewedWidget() {
   const { products } = useRecentlyViewed();

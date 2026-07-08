@@ -1,7 +1,7 @@
 import { Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import type { Review, RatingDistribution } from "@/features/reviews/types/review";
+import type { Review, RatingDistribution } from "@/modules/reviews/types/review";
 
 interface RatingSummaryProps {
   reviews: Review[];

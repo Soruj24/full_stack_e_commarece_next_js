@@ -4,7 +4,7 @@ import { Edit3, Trash2, Star, Eye, EyeOff } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import { ICategory } from '@/lib/types';
+import { ICategory } from "@/shared/types";
 
 interface CategoryRowProps {
   category: ICategory;

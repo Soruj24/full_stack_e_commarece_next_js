@@ -1,7 +1,7 @@
 "use client";
 
 import { Badge } from "@/components/ui/badge";
-import { useAdminReturns } from "@/features/admin/hooks/use-admin-returns";
+import { useAdminReturns } from "@/modules/admin/hooks/use-admin-returns";
 import { ReturnStatusCards } from "@/components/admin/returns/ReturnStatusCards";
 import { ReturnTable } from "@/components/admin/returns/ReturnTable";
 import { ReturnDetailDialog } from "@/components/admin/returns/ReturnDetailDialog";

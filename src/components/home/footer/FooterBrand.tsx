@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { ShoppingBag } from "lucide-react";
 import { SOCIAL_LINKS } from "@/lib/data/footer";
-import { useSettings } from "@/features/settings/context/SettingsContext";
+import { useSettings } from "@/modules/settings/context/SettingsContext";
 
 export function FooterBrand() {
   const { settings } = useSettings();

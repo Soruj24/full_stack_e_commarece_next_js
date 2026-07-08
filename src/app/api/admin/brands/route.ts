@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
-import { dbConnect } from "@/config/db";
-import { Brand } from "@/lib/mongodb/models/Brand";
+import { dbConnect } from "@/core/config/database";
+import { Brand } from "@/core/database/models/Brand";
 import { auth } from '@/lib/auth';
 import slugify from "slugify";
 

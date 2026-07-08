@@ -5,8 +5,8 @@ import Link from "next/link";
 import { Heart, ShoppingBag, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
-import { useCart } from "@/features/cart/context/CartContext";
-import { useSaveForLater } from "@/features/cart/context/SaveForLaterContext";
+import { useCart } from "@/modules/cart/context/CartContext";
+import { useSaveForLater } from "@/modules/cart/context/SaveForLaterContext";
 import { getSafeImageSrc } from "@/lib/utils";
 
 export function CartSaveForLater() {

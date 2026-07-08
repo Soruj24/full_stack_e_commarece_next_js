@@ -17,7 +17,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { cn, getFallbackImage, getSafeImageSrc } from "@/lib/utils";
 import { generateInvoicePDF } from "@/lib/invoice";
-import { IOrder, IOrderItem } from '@/lib/types';
+import { IOrder, IOrderItem } from "@/shared/types";
 
 export function OrdersTab() {
   const [orders, setOrders] = useState<IOrder[]>([]);

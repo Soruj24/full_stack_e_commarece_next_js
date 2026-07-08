@@ -13,7 +13,7 @@ import {
   Search,
   Download,
 } from "lucide-react";
-import { User } from '@/lib/types';
+import { User } from "@/shared/types";
 import { exportToCSV } from "@/lib/export-utils";
 import { UserRow } from "./UserRow";
 

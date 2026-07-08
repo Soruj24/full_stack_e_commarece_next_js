@@ -6,7 +6,7 @@ import { ProductCard } from "@/components/products/ProductCard";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import { Flame, Loader2 } from "lucide-react";
-import { IProduct } from '@/lib/types';
+import { IProduct } from "@/shared/types";
 
 export function TrendingProducts() {
   const [products, setProducts] = useState<IProduct[]>([]);

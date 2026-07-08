@@ -3,7 +3,7 @@
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { NewCouponForm } from "@/features/admin/types/marketing";
+import { NewCouponForm } from "@/modules/admin/types/marketing";
 
 interface CouponFormProps {
   data: NewCouponForm;

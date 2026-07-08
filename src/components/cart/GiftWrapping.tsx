@@ -7,7 +7,7 @@ import { GiftWrappingToggle } from "./gift-wrapping/GiftWrappingToggle";
 import { WrappingOptionsGrid } from "./gift-wrapping/WrappingOptionsGrid";
 import { GiftMessageForm } from "./gift-wrapping/GiftMessageForm";
 import { GiftSummaryBar } from "./gift-wrapping/GiftSummaryBar";
-import type { GiftWrappingOption, GiftMessage } from "@/features/cart/types/gift-wrapping";
+import type { GiftWrappingOption, GiftMessage } from "@/modules/cart/types/gift-wrapping";
 
 interface GiftWrappingProps {
   isEnabled: boolean;
@@ -47,4 +47,4 @@ export function GiftWrapping({ isEnabled, onToggle, selectedOption, onOptionChan
 }
 
 export { GiftMessageCard } from "./gift-wrapping/GiftMessageCard";
-export type { GiftWrappingOption, GiftMessage } from "@/features/cart/types/gift-wrapping";
+export type { GiftWrappingOption, GiftMessage } from "@/modules/cart/types/gift-wrapping";

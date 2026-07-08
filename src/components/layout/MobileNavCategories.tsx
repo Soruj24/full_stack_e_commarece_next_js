@@ -6,7 +6,7 @@ import {
   Laptop, Smartphone, Watch, Headphones,
   Camera, Gamepad2, Shirt, ShoppingBag, Star,
 } from "lucide-react";
-import { ICategory } from '@/lib/types';
+import { ICategory } from "@/shared/types";
 import { cn } from "@/lib/utils";
 
 interface MobileNavCategoriesProps {

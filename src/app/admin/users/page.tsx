@@ -6,7 +6,7 @@ import { UsersSearch } from "@/components/admin/users/UsersSearch";
 import { UsersTable } from "@/components/admin/users/UsersTable";
 import { ProfessionalPagination } from "@/components/common/ProfessionalPagination";
 import { AdminUserDialog } from "@/components/admin/users/AdminUserDialog";
-import { useAdminUsers } from "@/features/admin/hooks/use-admin-users";
+import { useAdminUsers } from "@/modules/admin/hooks/use-admin-users";
 
 export default function UsersPage() {
   const {
