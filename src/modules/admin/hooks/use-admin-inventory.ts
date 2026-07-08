@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { toast } from "sonner";
-import { IProduct } from "@/lib/mongodb/models/Product";
-import { ICategory } from '@/lib/types';
+import type { IProduct, ICategory } from "@/shared/types";
 
 export function useAdminInventory() {
   const [products, setProducts] = useState<IProduct[]>([]);

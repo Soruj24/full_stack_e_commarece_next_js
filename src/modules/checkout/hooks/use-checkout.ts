@@ -6,7 +6,7 @@ import { useSession } from "next-auth/react";
 import { toast } from "sonner";
 import { useCart } from "@/modules/cart/context/CartContext";
 import { useGuestCheckout } from "@/modules/checkout/context/GuestCheckoutContext";
-import { useLocalization } from "@/features/common/hooks/LocalizationContext";
+import { useLocalization } from "@/modules/common/hooks/LocalizationContext";
 import { ShippingAddress, ShippingRate } from "@/modules/checkout/types/checkout";
 import { getShippingRatesIntl, calculateTaxIntl, validateAddressIntl, validatePhoneBD } from "@/modules/checkout/utils/checkout-utils";
 import { convertPrice } from "@/lib/localization";

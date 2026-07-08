@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { toast } from "sonner";
-import type { FaqItem } from "@/features/support/types/faq";
+import type { FaqItem } from "@/modules/support/types/faq";
 
 const INITIAL_FORM = { question: "", answer: "", category: "", order: 0, isPublished: true };
 

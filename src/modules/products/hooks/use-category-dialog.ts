@@ -2,11 +2,11 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { toast } from "sonner";
-import { ICategory } from '@/lib/types';
+import type { ICategory } from "@/shared/types";
 import {
   fetchAllCategoriesForParent,
   saveCategory,
-} from "@/features/categories/services/category-service";
+} from "@/modules/categories/services/category-service";
 
 interface CategoryDialogState {
   name: string;

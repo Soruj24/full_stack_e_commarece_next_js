@@ -9,7 +9,7 @@ export async function GET() {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const { dbConnect } = await import("@/config/db");
+    const { dbConnect } = await import("@/core/config/database");
     const mongoose = (await import("mongoose")).default;
     const os = await import("os");
     const { redis } = await import("@/lib/redis");

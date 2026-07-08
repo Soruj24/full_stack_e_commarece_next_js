@@ -25,3 +25,8 @@ export interface SizeGuideData {
   category: string;
   measurements: Record<string, string[]>;
 }
+
+export type { SocialShareProps } from "./social-share";
+export type { SubTabKey, CategoryTabKey, SizeGuideRow, SizeGuideTable, SizeGuideCollection } from "./size-guide";
+export type { Question } from "./question";
+export type { ProductDetail } from "./product-detail";

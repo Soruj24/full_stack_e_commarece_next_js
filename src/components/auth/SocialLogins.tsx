@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { doSocialLogin } from "@/lib/actions";
+import { doSocialLogin } from "@/modules/auth/services/auth-actions";
 import { Button } from "@/components/ui/button";
 import { Github, Chrome, Loader2 } from "lucide-react";
 import { motion } from "framer-motion";

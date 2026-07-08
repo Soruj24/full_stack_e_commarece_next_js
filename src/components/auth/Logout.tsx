@@ -1,6 +1,6 @@
 "use client"; // Required if doLogout uses server actions (common in Next.js App Router)
 
-import { doLogout } from "@/lib/actions";
+import { doLogout } from "@/modules/auth/services/auth-actions";
 import { Button } from "@/components/ui/button";
 import { LogOut } from "lucide-react"; // Optional: nice logout icon
 

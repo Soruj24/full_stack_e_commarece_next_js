@@ -2,7 +2,7 @@
 
 import { useSession } from 'next-auth/react';
 import { ReactNode } from 'react';
-import { NotificationProvider } from "@/modules/notifications/context/NotificationContext';
+import { NotificationProvider } from "@/modules/notifications/context/NotificationContext";
 
 function NotificationWrapper({ children }: { children: ReactNode }) {
   const { data: session } = useSession();

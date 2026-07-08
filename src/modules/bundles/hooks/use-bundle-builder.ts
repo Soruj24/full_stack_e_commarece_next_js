@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { toast } from "sonner";
 import { useCart } from "@/modules/cart/context/CartContext";
-import type { IProduct } from '@/lib/types';
+import type { IProduct } from "@/shared/types";
 import type { BundleItem } from "@/modules/bundles/types/bundle";
 
 export function useBundleBuilder(products: IProduct[], bundleName: string, onBundleComplete?: (items: BundleItem[]) => void) {

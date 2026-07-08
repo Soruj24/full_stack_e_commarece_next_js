@@ -2,7 +2,7 @@
 
 import { useCallback } from "react";
 import { toast } from "sonner";
-import { User } from '@/lib/types';
+import type { User } from "@/shared/types";
 
 export function useEditUserDialog(
   selectedUser: User | null,

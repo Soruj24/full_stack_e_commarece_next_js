@@ -1,5 +1,5 @@
-import AuditLog from "@/lib/mongodb/models/AuditLog";
-import { dbConnect } from "@/config/db";
+import AuditLog from "@/core/database/models/AuditLog";
+import { dbConnect } from "@/core/config/database";
 import { headers } from "next/headers";
 
 interface LogActionParams {

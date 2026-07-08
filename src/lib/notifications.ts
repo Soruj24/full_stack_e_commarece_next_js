@@ -1,5 +1,5 @@
-import { dbConnect } from "@/config/db";
-import { Notification, INotification } from "@/lib/mongodb/models/Notification";
+import { dbConnect } from "@/core/config/database";
+import { Notification, INotification } from "@/core/database/models/Notification";
 import mongoose from "mongoose";
 
 export type NotificationType = "info" | "success" | "warning" | "error";

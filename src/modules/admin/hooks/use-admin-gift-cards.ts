@@ -2,8 +2,8 @@
 
 import { useState, useEffect } from "react";
 import { toast } from "sonner";
-import { fetchGiftCards, createGiftCard, toggleGiftCard, deleteGiftCard, copyCode } from "@/features/gift-cards/services/gift-cards-service";
-import type { GiftCard } from "@/features/gift-cards/services/gift-cards-service";
+import { fetchGiftCards, createGiftCard, toggleGiftCard, deleteGiftCard, copyCode } from "@/modules/gift-cards/services/gift-cards-service";
+import type { GiftCard } from "@/modules/gift-cards/services/gift-cards-service";
 
 const initialForm = {
   amount: "", senderName: "", senderEmail: "",

@@ -1,4 +1,4 @@
-import { IAddress, IPaymentMethod } from '@/lib/types';
+import type { IAddress, IPaymentMethod } from "@/shared/types";
 
 interface SocialLinks {
   twitter: string;

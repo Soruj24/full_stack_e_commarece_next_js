@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { toast } from "sonner";
 import { useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
-import { User } from '@/lib/types';
+import type { User } from "@/shared/types";
 
 export function useAdminUsers() {
   const { data: session, status } = useSession();

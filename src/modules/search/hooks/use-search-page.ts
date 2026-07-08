@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
-import { IProduct, ICategory } from '@/lib/types';
+import type { IProduct, ICategory } from "@/shared/types";
 
 interface Brand {
   _id: string;

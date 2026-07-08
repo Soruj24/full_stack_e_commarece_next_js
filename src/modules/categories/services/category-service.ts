@@ -1,4 +1,4 @@
-import { ICategory } from '@/lib/types';
+import type { ICategory } from "@/shared/types";
 
 interface CategoryApiResponse {
   success: boolean;

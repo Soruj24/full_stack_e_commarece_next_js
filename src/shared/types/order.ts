@@ -6,6 +6,23 @@ export interface IOrderItem {
   image: string;
 }
 
+export interface Coupon {
+  _id: string;
+  code: string;
+  discountType: "percentage" | "fixed";
+  discountValue: number;
+  minPurchase: number;
+  maxDiscount: number;
+  usageLimit: number;
+  usedCount: number;
+  applicableCategories: string[];
+  applicableProducts: string[];
+  startDate: string;
+  endDate: string;
+  isActive: boolean;
+  createdAt: string;
+}
+
 export interface IOrder {
   _id: string;
   user: string;

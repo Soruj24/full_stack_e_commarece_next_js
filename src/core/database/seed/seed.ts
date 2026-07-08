@@ -1,11 +1,11 @@
 import { loadEnvConfig } from "@next/env";
 import mongoose from "mongoose";
-import { User } from "@/lib/mongodb/models/User";
-import { Category } from "@/lib/mongodb/models/Category";
-import { Product } from "@/lib/mongodb/models/Product";
-import { Banner } from "@/lib/mongodb/models/Banner";
+import { User } from "@/core/database/models/User";
+import { Category } from "@/core/database/models/Category";
+import { Product } from "@/core/database/models/Product";
+import { Banner } from "@/core/database/models/Banner";
 import bcrypt from "bcryptjs";
-import { ICategory } from "@/lib/types";
+import type { ICategory } from "@/shared/types";
 
 // Load environment variables
 const projectDir = process.cwd();

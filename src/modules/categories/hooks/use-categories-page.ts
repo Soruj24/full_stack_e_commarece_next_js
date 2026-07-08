@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { ICategory } from '@/lib/types';
+import type { ICategory } from "@/shared/types";
 
 export function useCategoriesPage() {
   const [categories, setCategories] = useState<ICategory[]>([]);

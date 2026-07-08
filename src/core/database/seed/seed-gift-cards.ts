@@ -1,5 +1,5 @@
-import { dbConnect } from '@/config/db';
-import { GiftCard } from '@/lib/mongodb/models/GiftCard';
+import { dbConnect } from "@/core/config/database";
+import { GiftCard } from "@/core/database/models/GiftCard";
 
 const sampleGiftCards = [
   {

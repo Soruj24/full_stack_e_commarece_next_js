@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { toast } from "sonner";
 import { useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
-import { ContactMessage } from '@/lib/types';
+import type { ContactMessage } from "@/shared/types";
 
 export function useAdminContact() {
   const { data: session, status } = useSession();

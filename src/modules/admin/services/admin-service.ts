@@ -1,4 +1,4 @@
-import { User, ContactMessage, IAuditLog } from '@/lib/types';
+import type { User, ContactMessage, IAuditLog } from "@/shared/types";
 
 interface AdminStats {
   totalRevenue: number;

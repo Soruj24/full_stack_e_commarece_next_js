@@ -1,11 +1,11 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import { useRecentlyViewed } from "@/features/common/hooks/RecentlyViewedContext";
+import { useRecentlyViewed } from "@/modules/common/hooks/RecentlyViewedContext";
 import { trackEvent, ANALYTICS_CATEGORIES, ANALYTICS_ACTIONS } from "@/lib/analytics";
 import { toast } from "sonner";
 import { fetchProduct } from "@/modules/products/services/product-service";
-import type { ProductDetail } from "@/features/products/types/product-detail";
+import type { ProductDetail } from "@/modules/products/types/product-detail";
 
 export function useProductDetail(id: string) {
   const { addProduct } = useRecentlyViewed();

@@ -1,3 +1,13 @@
+export interface IBanner {
+  _id: string;
+  title: string;
+  subtitle?: string | undefined;
+  image: string;
+  link?: string | undefined;
+  type: string;
+  isActive: boolean;
+}
+
 export interface IProduct {
   _id: string;
   name: string;

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import type { SubTabKey, CategoryTabKey } from "@/features/products/types/size-guide";
+import type { SubTabKey, CategoryTabKey } from "@/modules/products/types/size-guide";
 
 export function useSizeGuide() {
   const [selectedTab, setSelectedTab] = useState<CategoryTabKey>("clothing");

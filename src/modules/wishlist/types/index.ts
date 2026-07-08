@@ -1,3 +1,3 @@
-import type { IProduct } from "@/lib/types";
+import type { IProduct } from "@/shared/types";
 
 export type { IProduct };

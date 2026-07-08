@@ -3,7 +3,7 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { toast } from "sonner";
-import { IProduct } from '@/lib/types';
+import type { IProduct } from "@/shared/types";
 
 interface WishlistContextType {
   wishlist: IProduct[];

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { toast } from "sonner";
-import type { ReturnRequest } from "@/features/returns/types/return-item";
+import type { ReturnRequest } from "@/modules/returns/types/return-item";
 
 export function useAdminReturns() {
   const [returns, setReturns] = useState<ReturnRequest[]>([]);

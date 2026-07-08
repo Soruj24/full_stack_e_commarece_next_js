@@ -41,3 +41,25 @@ export interface IPaymentMethod {
   brand?: string;
   isDefault: boolean;
 }
+
+export interface ContactMessage {
+  _id: string;
+  userId?: string;
+  name: string;
+  email: string;
+  subject: string;
+  message: string;
+  status: string;
+  createdAt: string;
+}
+
+export interface IAuditLog {
+  _id: string;
+  createdAt: string;
+  userEmail: string;
+  userId: string;
+  action: string;
+  entityType: string;
+  entityId: string;
+  ipAddress: string;
+}

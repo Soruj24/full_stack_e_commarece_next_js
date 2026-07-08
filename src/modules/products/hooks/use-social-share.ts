@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { toast } from "sonner";
 import { SHARE_CONFIG } from "@/lib/data/social-share";
-import type { SocialShareProps } from "@/features/products/types/social-share";
+import type { SocialShareProps } from "@/modules/products/types/social-share";
 
 export function useSocialShare({ url, title, description }: SocialShareProps) {
   const [showDropdown, setShowDropdown] = useState(false);

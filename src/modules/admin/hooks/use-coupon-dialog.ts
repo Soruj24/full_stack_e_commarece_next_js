@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useCallback } from "react";
-import { Coupon } from '@/lib/types';
+import type { Coupon } from "@/shared/types";
 
 export function useCouponDialog(coupon: Coupon | null, onSuccess: () => void, onOpenChange: (open: boolean) => void) {
   const [loading, setLoading] = useState(false);

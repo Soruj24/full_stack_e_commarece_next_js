@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { ICategory } from '@/lib/types';
+import type { ICategory } from "@/shared/types";
 import { CATEGORY_ICON_MAP } from "@/lib/data/category-icons";
 
 export function useCategoriesDropdown(isOpen: boolean, onClose: () => void) {

@@ -4,7 +4,7 @@ import { useState, useEffect, useCallback } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import { IAddress, IPaymentMethod } from '@/lib/types';
+import type { IAddress, IPaymentMethod } from "@/shared/types";
 import { fetchProfile, updateProfile } from "@/modules/user/services/profile-service";
 import { useProfileSecurity } from "./use-profile-security";
 import { useProfilePreferences } from "./use-profile-preferences";

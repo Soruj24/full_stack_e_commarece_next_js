@@ -1,8 +1,8 @@
 import { useState, useEffect, useRef } from "react";
-import { useCart } from "@/features/cart/context/CartContext";
-import { useWishlist } from "@/features/wishlist/hooks/WishlistContext";
+import { useCart } from "@/modules/cart/context/CartContext";
+import { useWishlist } from "@/modules/wishlist/hooks/WishlistContext";
 import { toast } from "sonner";
-import type { IProduct } from '@/lib/types';
+import type { IProduct } from "@/shared/types";
 
 export function useRelatedProducts(productId?: string, category?: string, maxItems = 8) {
   const [products, setProducts] = useState<IProduct[]>([]);

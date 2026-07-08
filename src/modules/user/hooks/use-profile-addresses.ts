@@ -2,7 +2,7 @@
 
 import { useState, useCallback } from "react";
 import { toast } from "sonner";
-import { IAddress, IPaymentMethod } from '@/lib/types';
+import type { IAddress, IPaymentMethod } from "@/shared/types";
 import {
   updateAddresses as serviceUpdateAddresses,
   updatePaymentMethods as serviceUpdatePaymentMethods,

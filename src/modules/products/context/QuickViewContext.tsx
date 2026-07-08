@@ -1,7 +1,7 @@
 "use client";
 
 import { createContext, useContext, useState, ReactNode } from "react";
-import { IProduct } from '@/lib/types';
+import type { IProduct } from "@/shared/types";
 import { QuickViewModal } from "@/components/products/QuickViewModal";
 
 interface QuickViewContextType {

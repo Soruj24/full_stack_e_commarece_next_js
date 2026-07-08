@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useCart, type CartItem } from "@/modules/cart/context/CartContext";
-import { useWishlist } from "@/features/wishlist/hooks/WishlistContext";
+import { useWishlist } from "@/modules/wishlist/hooks/WishlistContext";
 
 export function useCartDrawer(onClose: () => void) {
   const router = useRouter();

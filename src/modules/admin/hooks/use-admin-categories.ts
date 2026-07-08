@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { toast } from "sonner";
-import { ICategory } from '@/lib/types';
+import type { ICategory } from "@/shared/types";
 
 export function useAdminCategories() {
   const [categories, setCategories] = useState<ICategory[]>([]);

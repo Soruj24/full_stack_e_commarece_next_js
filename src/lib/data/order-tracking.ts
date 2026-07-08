@@ -1,5 +1,5 @@
 import { Check, Clock, Package, Truck, MapPin, RefreshCw, X, CheckCircle2 } from "lucide-react";
-import type { OrderStatus } from "@/features/orders/context/OrderTrackingContext";
+import type { OrderStatus } from "@/modules/orders/context/OrderTrackingContext";
 
 export const statusIcons: Record<OrderStatus, typeof Check> = {
   pending: Clock,

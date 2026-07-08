@@ -2,8 +2,8 @@
 
 import { useState, useEffect, useCallback, useMemo } from "react";
 import { toast } from "sonner";
-import { Vendor } from "@/features/vendor/types/vendor";
-import { fetchVendors, updateVendorStatus } from "@/features/vendor/services/vendor-service";
+import { Vendor } from "@/modules/vendor/types/vendor";
+import { fetchVendors, updateVendorStatus } from "@/modules/vendor/services/vendor-service";
 
 export function useAdminVendors() {
   const [vendors, setVendors] = useState<Vendor[]>([]);

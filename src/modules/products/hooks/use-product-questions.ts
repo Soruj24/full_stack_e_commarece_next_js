@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { toast } from "sonner";
-import type { Question } from "@/features/products/types/question";
+import type { Question } from "@/modules/products/types/question";
 
 export function useProductQuestions(productId: string) {
   const [questions, setQuestions] = useState<Question[]>([]);
