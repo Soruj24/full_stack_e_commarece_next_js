@@ -1,5 +1,5 @@
 import { User } from "@/core/database/models/User";
-import type { FilterQuery } from "mongoose";
+
 
 export const UserRepository = {
   async findById(id: string) {
@@ -22,11 +22,11 @@ export const UserRepository = {
     return User.findByIdAndDelete(id);
   },
 
-  async find(filter: FilterQuery<unknown> = {}) {
+  async find(filter: Record<string, unknown> = {}) {
     return User.find(filter).sort({ createdAt: -1 });
   },
 
-  async count(filter: FilterQuery<unknown> = {}) {
+  async count(filter: Record<string, unknown> = {}) {
     return User.countDocuments(filter);
   },
 };

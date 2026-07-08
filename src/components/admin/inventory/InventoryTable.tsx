@@ -4,7 +4,7 @@ import Image from "next/image";
 import { Edit3, Trash2, MoreVertical } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { IProduct } from "@/core/database/models/Product";
+import type { IProduct } from "@/shared/types";
 import { cn } from "@/lib/utils";
 
 interface InventoryTableProps {

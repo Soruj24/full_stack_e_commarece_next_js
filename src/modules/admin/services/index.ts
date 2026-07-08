@@ -12,9 +12,9 @@ export {
   updateSettings,
   setup2FA,
   verify2FA,
-  AdminStats,
-  AdminSettings,
 } from "./admin-service";
+
+export type { AdminStats, AdminSettings } from "./admin-service";
 
 export {
   fetchMarketingData,

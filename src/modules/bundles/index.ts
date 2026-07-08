@@ -1,3 +1,4 @@
 export { BundleProvider, useBundle } from "./context";
 export { useBundleBuilder, useBundleCard } from "./hooks";
-export type { Bundle, BundleProduct, BundleItem } from "./context";
+export type { Bundle, BundleProduct } from "./context";
+export type { BundleItem } from "./types";

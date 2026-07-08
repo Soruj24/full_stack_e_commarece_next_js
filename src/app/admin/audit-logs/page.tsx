@@ -47,7 +47,7 @@ export default function AuditLogsPage() {
 
   useEffect(() => {
     if (status === "loading") return;
-    if (!session || session.user.role !== "admin") {
+    if (!session || !session.user || session.user.role !== "admin") {
       redirect("/login");
     }
     fetchLogs();

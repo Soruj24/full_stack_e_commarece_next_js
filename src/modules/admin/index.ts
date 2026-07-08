@@ -13,5 +13,4 @@ export { useCouponDialog } from "./hooks/use-coupon-dialog";
 export { useEditUserDialog } from "./hooks/use-edit-user-dialog";
 export { useMarketing } from "./hooks/use-marketing";
 export { useSystemHealth } from "./hooks/use-system-health";
-export { AdminService } from "./services/admin-service";
-export { MarketingService } from "./services/marketing-service";
+

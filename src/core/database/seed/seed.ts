@@ -97,7 +97,7 @@ function generateProduct(category: ICategory, index: number) {
   };
 }
 
-async function seed() {
+export async function seed() {
   try {
     console.log("Connecting to MongoDB...");
 

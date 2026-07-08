@@ -1,5 +1,5 @@
 import { Product } from "@/core/database/models/Product";
-import type { FilterQuery } from "mongoose";
+
 
 export const ProductRepository = {
   async findById(id: string) {
@@ -22,7 +22,7 @@ export const ProductRepository = {
     return Product.findByIdAndDelete(id);
   },
 
-  async findWithFilters(filter: FilterQuery<unknown> = {}, options: { sort?: Record<string, 1 | -1>; limit?: number; skip?: number } = {}) {
+  async findWithFilters(filter: Record<string, unknown> = {}, options: { sort?: Record<string, 1 | -1>; limit?: number; skip?: number } = {}) {
     return Product.find(filter)
       .sort(options.sort || { createdAt: -1 })
       .skip(options.skip || 0)
@@ -34,7 +34,7 @@ export const ProductRepository = {
     return Product.findByIdAndUpdate(id, { $inc: { stock: -quantity } }, { new: true });
   },
 
-  async count(filter: FilterQuery<unknown> = {}) {
+  async count(filter: Record<string, unknown> = {}) {
     return Product.countDocuments(filter);
   },
 

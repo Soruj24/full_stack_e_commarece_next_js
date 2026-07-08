@@ -3,10 +3,12 @@ import { authConfig } from "@/lib/auth/config";
 import { PUBLIC_ROUTES, LOGIN, ADMIN_ROUTES } from "@/lib/routes";
 import { NextResponse } from "next/server";
 
-const { auth } = NextAuth(authConfig);
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const { auth } = NextAuth(authConfig) as any;
 
 // Renamed from middleware to proxy as per Next.js deprecation warning
-export const proxy = auth((req) => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const proxy = auth((req: any) => {
   const { nextUrl } = req;
   const isLoggedIn = !!req.auth;
   const role = req.auth?.user?.role;

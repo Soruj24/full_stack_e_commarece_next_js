@@ -43,7 +43,7 @@ const sampleGiftCards = [
   },
 ];
 
-async function seedGiftCards() {
+export async function seedGiftCards() {
   try {
     await dbConnect();
 

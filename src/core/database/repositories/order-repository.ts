@@ -1,5 +1,5 @@
 import { Order } from "@/core/database/models/Order";
-import type { FilterQuery } from "mongoose";
+
 
 export const OrderRepository = {
   async findById(id: string) {
@@ -32,14 +32,14 @@ export const OrderRepository = {
       .populate("user", "name email");
   },
 
-  async find(filter: FilterQuery<unknown> = {}) {
+  async find(filter: Record<string, unknown> = {}) {
     return Order.find(filter)
       .sort({ createdAt: -1 })
       .populate("user", "name email")
       .populate("items.product");
   },
 
-  async count(filter: FilterQuery<unknown> = {}) {
+  async count(filter: Record<string, unknown> = {}) {
     return Order.countDocuments(filter);
   },
 
