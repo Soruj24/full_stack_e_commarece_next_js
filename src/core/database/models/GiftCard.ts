@@ -41,7 +41,6 @@ const giftCardSchema = new Schema<IGiftCard>(
   { timestamps: true }
 );
 
-giftCardSchema.index({ code: 1 });
 giftCardSchema.index({ purchasedBy: 1 });
 giftCardSchema.index({ expiresAt: 1 });
 

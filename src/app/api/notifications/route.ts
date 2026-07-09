@@ -1,6 +1,6 @@
 import { dbConnect } from "@/core/config/database";
 import { Notification } from "@/core/database/models/Notification";
-import { auth } from '@/lib/auth';
+import { auth } from "@/lib/auth";
 import mongoose from "mongoose";
 import { NextRequest } from "next/server";
 

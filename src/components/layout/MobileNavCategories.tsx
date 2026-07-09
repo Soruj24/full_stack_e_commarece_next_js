@@ -1,5 +1,6 @@
 "use client";
 
+import { memo } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import {
@@ -36,7 +37,7 @@ const categoryGradients: Record<string, string> = {
   default: "from-primary to-purple-500",
 };
 
-export function MobileNavCategories({ categories, onClose }: MobileNavCategoriesProps) {
+export const MobileNavCategories = memo(function MobileNavCategories({ categories, onClose }: MobileNavCategoriesProps) {
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between px-2">
@@ -100,4 +101,4 @@ export function MobileNavCategories({ categories, onClose }: MobileNavCategories
       </div>
     </div>
   );
-}
+});

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
 import { ProductCard } from "@/components/products/ProductCard";
 import { Button } from "@/components/ui/button";
@@ -38,7 +38,9 @@ export function AllProducts() {
     );
   }
 
-  if (products.length === 0) return null;
+  const memoizedProducts = useMemo(() => products, [products]);
+
+  if (memoizedProducts.length === 0) return null;
 
   return (
     <section className="py-5 bg-muted/30 relative overflow-hidden">
@@ -76,7 +78,7 @@ export function AllProducts() {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {products.map((product, index) => (
+          {memoizedProducts.map((product, index) => (
             <motion.div
               key={product._id}
               initial={{ opacity: 0, y: 20 }}

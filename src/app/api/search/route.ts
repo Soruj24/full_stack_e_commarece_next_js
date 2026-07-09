@@ -25,26 +25,31 @@ export async function GET(request: Request) {
     const limit = Math.min(100, Math.max(1, parseInt(searchParams.get("limit") || "20")));
     const skip = (page - 1) * limit;
 
-    const andConditions: Record<string, unknown>[] = [];
     const match: Record<string, unknown> = { isActive: true, isArchived: false };
 
     if (q) {
-      const escapedQ = q.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-      const orClause = [
-        { name: { $regex: escapedQ, $options: "i" } },
-        { sku: { $regex: escapedQ, $options: "i" } },
-        { "variants.sku": { $regex: escapedQ, $options: "i" } },
-        { description: { $regex: escapedQ, $options: "i" } },
-        { tags: { $in: [new RegExp(escapedQ, "i")] } },
-        { brand: { $regex: escapedQ, $options: "i" } },
-      ];
-      andConditions.push({ $or: orClause });
+      const trimmed = q.trim();
+      const escapedQ = trimmed.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+
+      if (/^[\w\s]+$/.test(trimmed)) {
+        match.$text = { $search: trimmed };
+      } else {
+        const orClause = [
+          { name: { $regex: escapedQ, $options: "i" } },
+          { sku: { $regex: escapedQ, $options: "i" } },
+          { "variants.sku": { $regex: escapedQ, $options: "i" } },
+          { description: { $regex: escapedQ, $options: "i" } },
+          { tags: { $in: [new RegExp(escapedQ, "i")] } },
+          { brand: { $regex: escapedQ, $options: "i" } },
+        ];
+        match.$or = orClause;
+      }
 
       PopularSearch.updateOne(
-        { normalizedQuery: q.toLowerCase().trim() },
+        { normalizedQuery: trimmed.toLowerCase() },
         {
           $inc: { count: 1 },
-          $setOnInsert: { query: q.trim(), normalizedQuery: q.toLowerCase().trim() },
+          $setOnInsert: { query: trimmed, normalizedQuery: trimmed.toLowerCase() },
           $set: { lastSearchedAt: new Date() },
         },
         { upsert: true }
@@ -57,12 +62,10 @@ export async function GET(request: Request) {
     }
 
     if (brand) {
-      andConditions.push({
-        $or: [
-          { brandRef: brand },
-          { brand: { $regex: brand, $options: "i" } },
-        ],
-      });
+      match.$or = [
+        ...(Array.isArray(match.$or) ? match.$or : []),
+        { brand: { $regex: brand.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), $options: "i" } },
+      ];
     }
 
     if (minPrice || maxPrice) {
@@ -74,29 +77,38 @@ export async function GET(request: Request) {
     if (rating) match.rating = { $gte: parseFloat(rating) };
     if (inStock) match.stock = { $gt: 0 };
     if (onSale) match.discountPrice = { $exists: true, $ne: null };
-    if (color) match.colors = { $in: [new RegExp(color, "i")] };
-    if (size) match.sizes = { $in: [new RegExp(size, "i")] };
+    if (color) match.colors = { $in: [new RegExp(color.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "i")] };
+    if (size) match.sizes = { $in: [new RegExp(size.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "i")] };
     if (tags) {
-      const tagList = tags.split(",").map((t) => t.trim());
-      match.tags = { $in: tagList };
+      match.tags = { $in: tags.split(",").map((t) => t.trim()) };
     }
 
-    if (andConditions.length > 0) match.$and = andConditions;
-
-    const sortMap: Record<string, Record<string, 1 | -1>> = {
-      price_asc: { price: 1 },
-      price_desc: { price: -1 },
-      newest: { createdAt: -1 },
-      oldest: { createdAt: 1 },
-      rating: { rating: -1 },
-      popular: { numReviews: -1 },
-      name_asc: { name: 1 },
-      name_desc: { name: -1 },
-    };
-    const sort = sortMap[sortBy] || { createdAt: -1 };
+    const sort: Record<string, unknown> =
+      sortBy === "relevance" && q && /^[\w\s]+$/.test(q.trim())
+        ? { score: { $meta: "textScore" } }
+        : sortBy === "price_asc"
+          ? { price: 1 }
+          : sortBy === "price_desc"
+            ? { price: -1 }
+            : sortBy === "newest"
+              ? { createdAt: -1 }
+              : sortBy === "oldest"
+                ? { createdAt: 1 }
+                : sortBy === "rating"
+                  ? { rating: -1 }
+                  : sortBy === "popular"
+                    ? { numReviews: -1 }
+                    : sortBy === "name_asc"
+                      ? { name: 1 }
+                      : sortBy === "name_desc"
+                        ? { name: -1 }
+                        : { createdAt: -1 };
+    const projection = q && /^[\w\s]+$/.test(q.trim())
+      ? { score: { $meta: "textScore" } }
+      : {};
 
     const [results, total, filteredCategories, filteredBrands, priceRange] = await Promise.all([
-      (Product as any).find(match)
+      (Product as any).find(match, projection)
         .populate("category", "name slug")
         .populate("brandRef", "name slug logo")
         .sort(sort)

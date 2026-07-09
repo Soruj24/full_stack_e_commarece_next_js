@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { auth } from '@/lib/auth';
+import { auth } from "@/lib/auth";
 import { dbConnect } from "@/core/config/database";
 import { User } from "@/core/database/models/User";
 import Token from "@/core/database/models/Token";

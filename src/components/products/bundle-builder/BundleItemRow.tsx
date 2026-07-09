@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { Plus, Minus, Trash2 } from "lucide-react";
 import type { BundleItem } from "@/modules/bundles/types/bundle";
@@ -16,7 +17,7 @@ export function BundleItemRow({ item, onUpdateQuantity, onRemove }: BundleItemRo
       exit={{ opacity: 0, x: 20 }}
       className="flex items-center gap-4 p-3 bg-zinc-50 dark:bg-white/5 rounded-2xl"
     >
-      <img src={item.product.images?.[0] || "/placeholder.png"} alt={item.product.name} className="w-16 h-16 rounded-xl object-cover" />
+      <Image src={item.product.images?.[0] || "/placeholder.png"} alt={item.product.name} width={64} height={64} className="w-16 h-16 rounded-xl object-cover" />
       <div className="flex-1 min-w-0">
         <h4 className="font-semibold text-sm line-clamp-1">{item.product.name}</h4>
         <p className="text-xs text-zinc-500">${(item.product.discountPrice || item.product.price).toFixed(2)}</p>

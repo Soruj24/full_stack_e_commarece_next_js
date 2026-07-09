@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { Edit3, Trash2, Star, Eye, EyeOff } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -24,7 +25,7 @@ export function CategoryRow({ category, selected, onSelect, onEdit, onDelete, on
       </td>
       <td className="py-4 px-6">
         <div className="flex items-center gap-3">
-          {category.image && <img src={category.image} alt="" className="w-10 h-10 rounded-lg object-cover" />}
+          {category.image && <Image src={category.image} alt="" width={40} height={40} className="w-10 h-10 rounded-lg object-cover" />}
           <div>
             <div className="font-bold text-foreground flex items-center gap-2">
               {category.name}

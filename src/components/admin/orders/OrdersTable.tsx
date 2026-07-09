@@ -1,5 +1,6 @@
 "use client";
 
+import { memo } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -37,7 +38,7 @@ interface OrdersTableProps {
   onUpdateStatus: (orderId: string, status: string) => void;
 }
 
-export function OrdersTable({
+export const OrdersTable = memo(function OrdersTable({
   orders,
   loading,
   onView,
@@ -179,4 +180,4 @@ export function OrdersTable({
       </TableBody>
     </Table>
   );
-}
+});

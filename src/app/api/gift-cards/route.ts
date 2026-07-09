@@ -34,11 +34,13 @@ export async function GET(request: Request) {
       GiftCard.countDocuments(filter),
     ]);
 
-    return NextResponse.json({
+    const response = NextResponse.json({
       success: true,
       giftCards,
       pagination: { total, page, pages: Math.ceil(total / limit) },
     });
+    response.headers.set("Cache-Control", "public, max-age=60, stale-while-revalidate=300");
+    return response;
   } catch (error) {
     console.error("GiftCard GET Error:", error);
     return NextResponse.json({ error: "Internal server error" }, { status: 500 });

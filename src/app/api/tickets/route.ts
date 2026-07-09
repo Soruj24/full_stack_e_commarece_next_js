@@ -1,7 +1,7 @@
 import { dbConnect } from "@/core/config/database";
 import { SupportTicket } from "@/core/database/models/SupportTicket";
 import { NextResponse } from "next/server";
-import { auth } from '@/lib/auth';
+import { auth } from "@/lib/auth";
 
 export async function GET(request: Request) {
   try {
@@ -23,11 +23,23 @@ export async function GET(request: Request) {
       else return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const tickets = await SupportTicket.find(filter)
-      .sort({ createdAt: -1 })
-      .limit(50);
+    const page = Math.max(1, parseInt(searchParams.get("page") || "1"));
+    const limit = Math.min(100, Math.max(1, parseInt(searchParams.get("limit") || "20")));
+    const skip = (page - 1) * limit;
 
-    return NextResponse.json({ success: true, tickets });
+    const [tickets, total] = await Promise.all([
+      SupportTicket.find(filter)
+        .sort({ createdAt: -1 })
+        .skip(skip)
+        .limit(limit),
+      SupportTicket.countDocuments(filter),
+    ]);
+
+    return NextResponse.json({
+      success: true,
+      tickets,
+      pagination: { page, limit, total, pages: Math.ceil(total / limit) },
+    });
   } catch (error) {
     console.error("Tickets GET Error:", error);
     return NextResponse.json({ error: "Internal server error" }, { status: 500 });

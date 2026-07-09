@@ -2,7 +2,46 @@
 
 ## Project Overview
 
-Nexus is a comprehensive full-stack e-commerce platform built with Next.js 16, MongoDB, and TypeScript. It follows Clean Architecture with feature-based modular organization.
+Nexus is a comprehensive full-stack e-commerce platform built with Next.js 16, MongoDB, and TypeScript. It follows Clean Architecture with feature-based modular organization. Enterprise-grade security, Docker support, CI/CD ready.
+
+## Delivery Readiness
+
+- **Build**: `npm run build` -- 0 errors, 155 static pages, TypeScript strict
+- **Lint**: `npm run lint` -- 0 errors (83 pre-existing React Compiler purity warnings, 190 TS warnings)
+- **Typecheck**: `npm run typecheck` -- 0 errors
+- **Docker**: `docker compose up --build` for dev, `docker compose -f docker-compose.prod.yml up -d` for prod
+- **CI/CD**: GitHub Actions in `.github/workflows/` (ci.yml, cd.yml, docker-build.yml)
+- **Documentation**: README.md, ARCHITECTURE.md, API.md, DATABASE.md, DEPLOYMENT.md, ENVIRONMENT.md, TESTING.md
+- **Health check**: `GET /api/health` returns `{ status: "ok", timestamp, uptime }`
+- **Error tracking**: Sentry ready (configure `NEXT_PUBLIC_SENTRY_DSN`)
+- **Security**: CSP headers, CSRF, rate limiting, NoSQL injection protection, audit logging, 2FA
+- **Performance**: 155 static pages, dynamic imports, React.memo, caching headers, MongoDB indexes, bundle analyzer
+
+## Package Name and Scripts
+
+```json
+{
+  "name": "nexus-ecommerce",
+  "version": "1.0.0"
+}
+```
+
+| Script | Description |
+|--------|-------------|
+| `npm run dev` | Start Next.js dev server |
+| `npm run dev:socket` | Start Socket.io server standalone |
+| `npm run dev:all` | Start both servers concurrently |
+| `npm run build` | Production build (155 static pages) |
+| `npm run start` | Start production server |
+| `npm run lint` | ESLint |
+| `npm run typecheck` | TypeScript check (tsc --noEmit) |
+| `npm run test` | Run Vitest tests |
+| `npm run test:watch` | Vitest watch mode |
+| `npm run test:ci` | Vitest CI mode (verbose) |
+| `npm run seed` | Run database seed |
+| `npm run docker:build` | Docker compose build |
+| `npm run docker:up` | Docker compose up |
+| `npm run docker:prod` | Production Docker up |
 
 ## Key Directories
 
@@ -10,224 +49,132 @@ Nexus is a comprehensive full-stack e-commerce platform built with Next.js 16, M
 my-app/
 ├── src/
 │   ├── app/                    # Next.js App Router (pages, API routes, layouts)
-│   │   ├── (auth)/             # Auth route group (login, register, forgot-password, etc.)
-│   │   ├── (shop)/             # Shop route group (products, categories, cart, checkout, etc.)
-│   │   ├── (dashboard)/        # Dashboard route group (profile, security, support)
-│   │   ├── admin/              # Admin panel pages
-│   │   └── api/                # API routes (78 endpoints)
-│   ├── features/               # Domain-driven feature modules (business logic)
+│   │   ├── (auth)/             # Auth route group
+│   │   ├── (shop)/             # Shop route group
+│   │   ├── (dashboard)/        # Dashboard route group
+│   │   ├── admin/              # Admin panel (28 pages)
+│   │   └── api/                # API routes (78 endpoints + health)
+│   ├── modules/                # Domain-driven feature modules (23 domains)
 │   │   ├── admin/              # Admin panel (hooks, services, types)
-│   │   ├── analytics/          # Analytics tracking
 │   │   ├── auth/               # Authentication & registration
-│   │   ├── bundles/            # Product bundles
 │   │   ├── cart/               # Shopping cart & stock management
-│   │   ├── categories/         # Category management
 │   │   ├── checkout/           # Checkout flow & payments
-│   │   ├── common/             # Shared hooks & utilities
-│   │   ├── compare/            # Product comparison
-│   │   ├── gift-cards/         # Gift card system
-│   │   ├── notifications/      # Real-time notifications
-│   │   ├── orders/             # Order management & tracking
 │   │   ├── products/           # Products, reviews, search
-│   │   ├── returns/            # Return requests
-│   │   ├── reviews/            # Product reviews
-│   │   ├── search/             # Search functionality
-│   │   ├── settings/           # Site settings
-│   │   ├── support/            # Support tickets & FAQ
-│   │   ├── user/               # User profile management
-│   │   ├── vendor/             # Vendor management
-│   │   └── wishlist/           # Wishlist
+│   │   ├── orders/             # Order management & tracking
+│   │   └── ... (15 more modules)
+│   ├── core/                   # Core infrastructure
+│   │   ├── database/models/    # 26 Mongoose models
+│   │   ├── config/             # Database config
+│   │   ├── server/             # Express + Socket.io server
+│   │   └── middleware/         # Auth guards
 │   ├── components/             # Reusable UI components
-│   │   ├── ui/                 # shadcn/ui primitives (55 components)
-│   │   ├── layout/             # Layout components (navbar, header, mega-menu)
-│   │   ├── home/               # Homepage sections
-│   │   ├── products/           # Product components
+│   │   ├── ui/                 # shadcn/ui primitives
+│   │   ├── layout/             # Navbar, header, mega-menu
 │   │   ├── admin/              # Admin components
-│   │   └── ...                 # Other feature-specific components
+│   │   ├── products/           # Product components
+│   │   └── ... (40+ component directories)
 │   ├── lib/                    # Shared utilities & infrastructure
-│   │   ├── mongodb/models/     # Mongoose database models (23 models)
+│   │   ├── security/           # Enterprise security modules (7 files)
 │   │   ├── auth/               # NextAuth configuration
-│   │   ├── services/           # API controllers (thin wrappers)
-│   │   ├── types/              # TypeScript types
 │   │   ├── data/               # Static data (menus, testimonials, etc.)
-│   │   ├── utils.ts            # cn(), formatDate, formatRole, etc.
-│   │   ├── validations.ts      # Zod schemas
-│   │   ├── rbac.ts             # Role-based access control
-│   │   ├── stripe.ts           # Stripe client
-│   │   ├── email.ts            # Email sending (nodemailer)
-│   │   ├── redis.ts            # Upstash Redis client
-│   │   └── ...                 # Other utilities
-│   ├── config/                 # Database configuration
-│   ├── server/                 # Standalone Express + Socket.io server
-│   ├── scripts/                # Seed scripts
-│   └── middleware.ts           # Next.js middleware (auth/routing)
+│   │   ├── routes.ts           # Route constants & rate limits
+│   │   └── utils.ts, validations.ts, stripe.ts, email.ts, redis.ts, ...
+│   ├── shared/                 # Shared components, hooks, types, utils
+│   ├── proxy.ts                # Next.js proxy (middleware) - auth, security, rate limiting
+│   └── config/                 # Database configuration
+├── .github/workflows/          # CI/CD (ci.yml, cd.yml, docker-build.yml)
+├── Dockerfile                  # Multi-stage build
+├── docker-compose.yml          # Dev services (app + mongo + redis)
+├── docker-compose.prod.yml     # Production overrides
+├── scripts/healthcheck.mjs     # Docker health check
 ├── public/                     # Static assets
-└── ...config files
+└── *.md                        # 7 documentation files
 ```
 
-## Important Commands
+## Architecture
 
-```bash
-npm run dev          # Start development server
-npm run build        # Production build
-npm run lint         # Run ESLint
-npm run typecheck    # TypeScript check
-```
-
-## Architecture Principles
-
-1. **Feature-Based Organization**: Code is grouped by business domain, not file type
-2. **Separation of Concerns**: UI (components/) separated from logic (features/)
-3. **Single Responsibility**: Each feature module handles one domain
-4. **Barrel Exports**: Each feature has an `index.ts` for clean imports
-5. **Shared Utilities**: Cross-cutting concerns in `lib/`
+- **Framework**: Next.js 16 App Router + React 19
+- **Language**: TypeScript strict
+- **Database**: MongoDB 7 + Mongoose 9 (26 models)
+- **Auth**: NextAuth v5 (Credentials, Google, GitHub) + JWT
+- **Styling**: Tailwind CSS v4 + shadcn/ui (55 Radix primitives)
+- **Payments**: Stripe + PayPal
+- **Real-time**: Socket.io (Express standalone on port 3001)
+- **Caching/Rate limiting**: Upstash Redis
+- **State**: React Context + Redux Toolkit
+- **Email**: Nodemailer (SMTP) + Resend
 
 ## Code Style Guidelines
 
-1. **Component Structure**
-   - Use functional components with hooks
-   - Export named components
-   - Use TypeScript for all components
-   - Follow single responsibility principle
+1. **Component Structure**: Functional components with hooks, named exports, TypeScript
+2. **Naming**: PascalCase for components, camelCase with `use` prefix for hooks, PascalCase for types
+3. **Imports**: Use `@/` path alias, double-quote strings, barrel exports from modules
+4. **Styling**: Tailwind CSS, shadcn/ui patterns, `cn()` for class merging, dark mode support
+5. **State**: React Context for global state, local state for component-specific, localStorage for cart/wishlist
 
-2. **Naming Conventions**
-   - Components: PascalCase (e.g., `ProductCard.tsx`)
-   - Hooks: camelCase with `use` prefix (e.g., `useCart.ts`)
-   - Services: camelCase with `-service` suffix (e.g., `product-service.ts`)
-   - Types: PascalCase (e.g., `Product.ts`)
+## Enterprise Security (10 layers)
 
-3. **File Organization**
-   - Components in `components/` organized by feature
-   - Business logic in `features/<domain>/`
-   - UI components in `components/ui/`
-   - Layout components in `components/layout/`
-
-4. **Import Patterns**
-   - Use `@/` path alias for root imports (points to `src/`)
-   - Import from feature barrel exports: `import { useCart } from '@/features/cart'`
-   - Import types from feature types: `import type { IProduct } from '@/features/products/types'`
-   - Import models: `import { Product } from '@/lib/mongodb/models/Product'`
-   - Import services: `import { fetchProducts } from '@/lib/services/ProductController'`
-
-5. **Styling**
-   - Use Tailwind CSS classes
-   - Follow shadcn/ui patterns
-   - Support dark mode
-   - Use `cn()` utility for class merging
-
-6. **State Management**
-   - Use React Context for global state (contexts in feature modules)
-   - Use local state for component-specific
-   - Store cart/wishlist in localStorage
-
-## Database Conventions
-
-1. **Mongoose Models**
-   - Schema with proper types
-   - Index frequently queried fields
-   - Use virtuals for computed fields
-   - Enable timestamps
-
-2. **API Routes**
-   - RESTful naming in `app/api/`
-   - Error handling with try/catch
-   - Return consistent response format: `{ success, data?, error?, pagination? }`
-   - Use proper HTTP status codes
+| Layer | Implementation |
+|-------|---------------|
+| CSP Headers | `src/lib/security/headers.ts` |
+| CSRF Protection | `src/lib/security/csrf.ts` (double-submit cookie) |
+| Rate Limiting | `src/lib/redis.ts` (sliding window, 22 routes in routes.ts) |
+| NoSQL Injection | `src/proxy.ts` (regex detection on query params) |
+| XSS Sanitization | `src/lib/security/sanitize.ts` |
+| File Upload | `src/lib/security/upload.ts` (type/size/extension validation) |
+| Audit Logging | `src/lib/security/audit.ts` (sensitive field redaction) |
+| Security Logging | `src/lib/security/logger.ts` (structured JSON logs) |
+| Env Validation | `src/lib/security/env.ts` (Zod schema) |
+| RBAC | `src/lib/rbac.ts` (role-based access control) |
 
 ## Important Patterns
 
 ### Adding New Features
-
-1. Create feature directory in `src/features/<domain>/`
+1. Create feature directory in `src/modules/<domain>/`
 2. Add subdirectories: `hooks/`, `services/`, `types/`, `context/` (as needed)
 3. Create barrel export `index.ts`
 4. Add components in `src/components/<domain>/`
 5. Add API routes in `src/app/api/<domain>/`
 
-### Adding New Components
-
-1. Create in appropriate `src/components/` subfolder
-2. Export from `index.ts` if it's a barrel export
-3. Add TypeScript interfaces
-4. Support dark mode
-5. Add animations with Framer Motion
-
 ### Adding New API Routes
-
 1. Create route in `src/app/api/`
-2. Follow existing patterns
-3. Add authentication if needed
+2. Add rate limit config to `src/lib/routes.ts` if needed
+3. Follow response format: `{ success: boolean, data?: any, error?: string, pagination? }`
 4. Validate input with Zod
-5. Return consistent response format
+5. Add auth check via `auth()` from `@/lib/auth`
 
 ### Adding New Pages
-
 1. Create in `src/app/` directory
 2. Use App Router patterns
 3. Add metadata for SEO
-4. Support loading states
-5. Handle error states
+4. Support loading/error states
 
-## Performance Considerations
+## Performance Optimizations
 
-1. Use `next/image` for all images
-2. Lazy load heavy components
-3. Memoize expensive computations
-4. Use proper pagination
-5. Implement proper caching
-
-## Accessibility Requirements
-
-1. Use semantic HTML
-2. Add ARIA labels
-3. Support keyboard navigation
-4. Test with screen readers
-5. Meet WCAG 2.1 AA standards
-
-## Security Requirements
-
-1. Validate all user input
-2. Sanitize output
-3. Use parameterized queries
-4. Implement rate limiting
-5. Follow OWASP guidelines
+1. 155 static pages with ISR (revalidate)
+2. Dynamic imports with `next/dynamic` + `ssr: false` + skeletons
+3. React.memo on 12 components
+4. useMemo on expensive computations
+5. Cache-Control headers on 10+ API routes
+6. MongoDB indexes on frequently queried fields
+7. Pagination on list API routes
+8. Bundle analyzer (`ANALYZE=true`)
 
 ## Deployment Checklist
 
-1. Run `npm run build`
-2. Fix any TypeScript errors
-3. Run `npm run lint`
-4. Test all features
-5. Verify environment variables
-6. Check database migrations
-7. Test payment integrations
+1. `npm run build` -- must pass
+2. `npm run typecheck` -- must pass (0 errors)
+3. `npm run lint` -- review warnings
+4. Configure environment variables per ENVIRONMENT.md
+5. Run `docker compose -f docker-compose.prod.yml up -d`
+6. Verify `GET /api/health` returns 200
+7. Configure Sentry DSN for error tracking
+8. Set up Stripe webhooks in production dashboard
+9. Configure MongoDB Atlas IP whitelist
+10. Set up Upstash Redis production instance
 
 ## Commit Message Best Practices
 
-1. **Use Conventional Commits format:**
-   ```
-   <type>(<scope>): <description>
-   ```
-   Types: `feat`, `fix`, `docs`, `style`, `refactor`, `test`, `chore`, `perf`, `ci`, `build`
-   Scopes: `auth`, `cart`, `checkout`, `products`, `orders`, `admin`, `search`, `user`, `vendor`, `ui`, `api`, `db`
-
-2. **Keep subject line under 50 characters**
-
-3. **Use imperative mood** (e.g., "add feature" not "added feature")
-
-4. **Separate subject from body with a blank line**
-
-5. **Body should explain what and why, not how**
-
-6. **Reference issues: Fixes #123, Closes #456**
-
-7. **Example:**
-   ```
-   feat(cart): add wishlist functionality
-   
-   - Add wishlist button to product cards
-   - Store wishlist in localStorage
-   - Add wishlist page to view saved items
-   
-   Closes #42
-   ```
+Use Conventional Commits: `<type>(<scope>): <description>`
+Types: `feat`, `fix`, `docs`, `style`, `refactor`, `test`, `chore`, `perf`, `ci`, `build`
+Scopes: `auth`, `cart`, `checkout`, `products`, `orders`, `admin`, `search`, `user`, `vendor`, `ui`, `api`, `db`, `security`, `docker`, `ci`, `docs`

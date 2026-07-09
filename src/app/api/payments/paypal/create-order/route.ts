@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { auth } from '@/lib/auth';
+import { auth } from "@/lib/auth";
 
 async function getAccessToken() {
   const clientId = process.env.PAYPAL_CLIENT_ID;

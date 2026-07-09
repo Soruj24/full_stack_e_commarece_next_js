@@ -1,5 +1,6 @@
 "use client";
 
+import { memo } from "react";
 import Link from "next/link";
 import { LogOut, Home, User as UserIcon, LayoutDashboard } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -22,7 +23,7 @@ interface UserMenuProps {
   onLogout: () => void;
 }
 
-export function UserMenu({ user, isAdmin, onLogout }: UserMenuProps) {
+export const UserMenu = memo(function UserMenu({ user, isAdmin, onLogout }: UserMenuProps) {
   const userNavigation = [
     { name: "Dashboard", href: "/dashboard", icon: Home },
     { name: "Profile", href: "/profile", icon: UserIcon },
@@ -102,4 +103,4 @@ export function UserMenu({ user, isAdmin, onLogout }: UserMenuProps) {
       </DropdownMenuContent>
     </DropdownMenu>
   );
-}
+});

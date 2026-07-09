@@ -19,7 +19,6 @@ interface SearchResultsToolbarProps {
   onViewChange: (view: "grid" | "list") => void;
   sortBy: string;
   onSortChange: (sort: string) => void;
-  showFilters: boolean;
   onToggleFilters: () => void;
   hasActiveFilters: boolean;
 }
@@ -40,7 +39,6 @@ export function SearchResultsToolbar({
   onViewChange,
   sortBy,
   onSortChange,
-  showFilters,
   onToggleFilters,
   hasActiveFilters,
 }: SearchResultsToolbarProps) {

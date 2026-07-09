@@ -14,7 +14,7 @@ import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { dbConnect } from "@/core/config/database";
 import Settings from "@/core/database/models/Settings";
-import { auth } from '@/lib/auth';
+import { auth } from "@/lib/auth";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import { NotificationLayout } from "@/components/common/NotificationLayout";
 import { RecentlyViewedWidget } from "@/components/products/RecentlyViewedProducts";

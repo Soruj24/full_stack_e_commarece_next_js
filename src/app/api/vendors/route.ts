@@ -1,7 +1,7 @@
 import { dbConnect } from "@/core/config/database";
 import { Vendor } from "@/core/database/models/Vendor";
 import { NextResponse } from "next/server";
-import { auth } from '@/lib/auth';
+import { auth } from "@/lib/auth";
 
 export async function GET(request: Request) {
   try {
@@ -25,11 +25,26 @@ export async function GET(request: Request) {
       }
     }
 
-    const vendors = await Vendor.find(filter)
-      .populate("userId", "name email image")
-      .sort({ createdAt: -1 });
+    const page = Math.max(1, parseInt(searchParams.get("page") || "1"));
+    const limit = Math.min(100, Math.max(1, parseInt(searchParams.get("limit") || "20")));
+    const skip = (page - 1) * limit;
 
-    return NextResponse.json({ success: true, vendors });
+    const [vendors, total] = await Promise.all([
+      Vendor.find(filter)
+        .populate("userId", "name email image")
+        .sort({ createdAt: -1 })
+        .skip(skip)
+        .limit(limit),
+      Vendor.countDocuments(filter),
+    ]);
+
+    const response = NextResponse.json({
+      success: true,
+      vendors,
+      pagination: { page, limit, total, pages: Math.ceil(total / limit) },
+    });
+    response.headers.set("Cache-Control", "public, max-age=120, stale-while-revalidate=360");
+    return response;
   } catch (error) {
     console.error("Vendor GET Error:", error);
     return NextResponse.json({ error: "Internal server error" }, { status: 500 });

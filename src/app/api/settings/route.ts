@@ -12,7 +12,7 @@ export async function GET() {
     }
 
     // Only return public settings
-    return NextResponse.json({
+    const response = NextResponse.json({
       success: true,
       settings: {
         siteName: settings.siteName,
@@ -23,6 +23,8 @@ export async function GET() {
         paypalEnabled: settings.paypalEnabled,
       },
     });
+    response.headers.set("Cache-Control", "public, max-age=300, stale-while-revalidate=600");
+    return response;
   } catch (error) {
     console.warn("Public settings fetch error:", error);
     return NextResponse.json({

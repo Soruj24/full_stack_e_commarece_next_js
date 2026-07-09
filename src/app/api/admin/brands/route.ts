@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { dbConnect } from "@/core/config/database";
 import { Brand } from "@/core/database/models/Brand";
-import { auth } from '@/lib/auth';
+import { auth } from "@/lib/auth";
 import slugify from "slugify";
 
 export async function GET(req: Request) {

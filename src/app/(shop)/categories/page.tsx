@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
@@ -45,7 +46,7 @@ export default function CategoriesPage() {
                   <Link href={`/products?category=${category.slug}`}>
                     <div className="group relative h-72 rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300">
                       {category.image ? (
-                        <img src={category.image} alt={category.name} className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                        <Image src={category.image} alt={category.name} fill sizes="(max-width: 768px) 100vw, 33vw" className="object-cover group-hover:scale-110 transition-transform duration-500" />
                       ) : (
                         <div className={`absolute inset-0 bg-gradient-to-br ${category.icon ? categoryGradients[category.icon] || categoryGradients.default : categoryGradients.default}`} />
                       )}

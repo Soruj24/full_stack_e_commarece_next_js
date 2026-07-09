@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { Package, ArrowLeft, Clock, Check, X, RefreshCw, DollarSign, ChevronRight, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -59,7 +60,7 @@ export default function ReturnsPage() {
                     <div className="space-y-3 mb-4">
                       {ret.items.slice(0, 2).map((item, idx) => (
                         <div key={idx} className="flex items-center gap-3 text-sm">
-                          <div className="w-12 h-12 rounded-lg bg-muted overflow-hidden"><img src={item.image || "/placeholder.png"} alt={item.name} className="w-full h-full object-cover" /></div>
+                          <div className="w-12 h-12 rounded-lg bg-muted overflow-hidden"><Image src={item.image || "/placeholder.png"} alt={item.name} width={48} height={48} className="w-full h-full object-cover" /></div>
                           <div className="flex-1"><p className="font-medium line-clamp-1">{item.name}</p><p className="text-muted-foreground">Qty: {item.quantity} | ${item.price.toFixed(2)}</p></div>
                         </div>
                       ))}

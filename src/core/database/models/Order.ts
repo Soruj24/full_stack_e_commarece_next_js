@@ -10,7 +10,7 @@ export interface IOrderItem {
 }
 
 export interface IOrder extends Document {
-  user: Schema.Types.ObjectId;
+  user?: Schema.Types.ObjectId;
   items: IOrderItem[];
   shippingAddress: {
     street: string;
@@ -43,7 +43,6 @@ const orderSchema = new Schema<IOrder>(
     user: {
       type: Schema.Types.ObjectId,
       ref: "User",
-      required: true,
     },
     items: [
       {

@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import Image from "next/image";
 import { Smartphone, QrCode, Loader2 } from "lucide-react";
 
 interface TwoFactorDialogProps {
@@ -50,7 +51,7 @@ export function TwoFactorDialog({
             {qrCodeUrl ? (
               // In a real app, use a QR code library like qrcode.react
               // For now we'll just show the placeholder or an img if it was a real data URL
-              <img src={qrCodeUrl} alt="QR Code" className="w-full h-full object-contain" />
+              <Image src={qrCodeUrl} alt="QR Code" width={200} height={200} className="w-full h-full object-contain" />
             ) : (
               <QrCode className="w-32 h-32 text-black opacity-20" />
             )}

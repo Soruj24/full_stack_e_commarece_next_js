@@ -1,5 +1,6 @@
 "use client";
 
+import { memo } from "react";
 import Link from "next/link";
 import { LogOut, Home, User as UserIcon, LayoutDashboard } from "lucide-react";
 import { motion } from "framer-motion";
@@ -23,7 +24,7 @@ const userNavigation = [
   { name: "Profile", href: "/profile", icon: UserIcon },
 ];
 
-export function MobileNavFooter({ user, isAdmin, onLogout, onClose }: MobileNavFooterProps) {
+export const MobileNavFooter = memo(function MobileNavFooter({ user, isAdmin, onLogout, onClose }: MobileNavFooterProps) {
   const displayedNav = [
     ...userNavigation,
     ...(isAdmin ? [{ name: "Admin", href: "/admin/dashboard", icon: LayoutDashboard }] : []),
@@ -110,4 +111,4 @@ export function MobileNavFooter({ user, isAdmin, onLogout, onClose }: MobileNavF
       )}
     </div>
   );
-}
+});

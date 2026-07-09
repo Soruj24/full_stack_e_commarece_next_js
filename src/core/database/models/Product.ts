@@ -240,7 +240,6 @@ productSchema.pre("save", function () {
   }
 });
 
-productSchema.index({ slug: 1 }, { unique: true });
 productSchema.index({ category: 1, isActive: 1 });
 productSchema.index({ brand: 1 });
 productSchema.index({ brandRef: 1 });
@@ -253,10 +252,21 @@ productSchema.index({ "variants.sku": 1 });
 productSchema.index({ relatedProducts: 1 });
 productSchema.index({ frequentlyBoughtTogether: 1 });
 productSchema.index({ tags: 1 });
+
 productSchema.index(
-  { name: "text", description: "text" },
-  { weights: { name: 10, description: 5 } }
+  { name: "text", description: "text", brand: "text", tags: "text" },
+  { weights: { name: 10, brand: 8, tags: 5, description: 3 } }
 );
+
+productSchema.index({ isActive: 1, isArchived: 1, price: 1 });
+productSchema.index({ isActive: 1, isArchived: 1, category: 1, price: 1 });
+productSchema.index({ isActive: 1, isArchived: 1, rating: -1 });
+productSchema.index({ isActive: 1, isArchived: 1, stock: 1 });
+productSchema.index({ isActive: 1, isArchived: 1, discountPrice: 1 });
+productSchema.index({ isActive: 1, isArchived: 1, brand: 1 });
+productSchema.index({ isActive: 1, isArchived: 1, createdAt: -1 });
+productSchema.index({ isActive: 1, isArchived: 1, colors: 1 });
+productSchema.index({ isActive: 1, isArchived: 1, sizes: 1 });
 
 export const Product =
   mongoose.models.Product || mongoose.model<IProduct>("Product", productSchema);

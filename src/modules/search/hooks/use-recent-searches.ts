@@ -13,7 +13,7 @@ export function useRecentSearches() {
       const saved = localStorage.getItem(KEY);
       if (saved) setRecentSearches(JSON.parse(saved));
     } catch {
-      console.error("Failed to load recent searches");
+      // localStorage not available
     }
   }, []);
 
@@ -27,10 +27,18 @@ export function useRecentSearches() {
     });
   }, []);
 
+  const removeRecentSearch = useCallback((search: string) => {
+    setRecentSearches((prev) => {
+      const updated = prev.filter((s) => s.toLowerCase() !== search.toLowerCase());
+      localStorage.setItem(KEY, JSON.stringify(updated));
+      return updated;
+    });
+  }, []);
+
   const clearRecentSearches = useCallback(() => {
     setRecentSearches([]);
     localStorage.removeItem(KEY);
   }, []);
 
-  return { recentSearches, addRecentSearch, clearRecentSearches };
+  return { recentSearches, addRecentSearch, removeRecentSearch, clearRecentSearches };
 }

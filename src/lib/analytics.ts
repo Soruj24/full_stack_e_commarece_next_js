@@ -36,6 +36,7 @@ export const trackEvent = ({
   } else {
     // Fallback for development or if GA is not loaded
     if (process.env.NODE_ENV === "development") {
+      // TODO: Remove console.log or replace with proper logging
       console.log(`[GA Event] ${category} > ${action}:`, {
         label,
         value,

@@ -4,24 +4,22 @@ import { useEffect, useState, useCallback, useRef, useMemo } from "react";
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { SlidersHorizontal, Search, X, Grid3X3, List } from "lucide-react";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Search, X, SlidersHorizontal, Grid3X3, List } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useRecentSearches } from "@/modules/search";
 import {
   SearchResultsGrid,
   SearchLoadingSkeletons,
   SearchEmptyState,
-  PriceSlider,
-  RatingFilter,
-  BrandFilter,
-  CategoryFilter,
+  SearchFiltersPanel,
   ActiveFilters,
   SearchPagination,
-  MobileFilterDrawer,
   PopularSearches,
   SearchHistory,
 } from "@/components/search";
 import type { ActiveFilter } from "@/components/search";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import type { IProduct } from "@/shared/types";
 
 const SORT_OPTIONS = [
   { value: "relevance", label: "Relevance" },
@@ -31,43 +29,9 @@ const SORT_OPTIONS = [
   { value: "price_desc", label: "Price: High to Low" },
   { value: "rating", label: "Top Rated" },
   { value: "popular", label: "Most Reviewed" },
-  { value: "name_asc", label: "Name: A–Z" },
-  { value: "name_desc", label: "Name: Z–A" },
+  { value: "name_asc", label: "Name: A\u2013Z" },
+  { value: "name_desc", label: "Name: Z\u2013A" },
 ];
-
-function useRecentSearches() {
-  const [searches, setSearches] = useState<string[]>([]);
-
-  useEffect(() => {
-    try {
-      const stored = localStorage.getItem("search-history");
-      if (stored) setSearches(JSON.parse(stored));
-    } catch {}
-  }, []);
-
-  const add = useCallback((q: string) => {
-    setSearches((prev) => {
-      const next = [q, ...prev.filter((s) => s !== q)].slice(0, 10);
-      localStorage.setItem("search-history", JSON.stringify(next));
-      return next;
-    });
-  }, []);
-
-  const remove = useCallback((q: string) => {
-    setSearches((prev) => {
-      const next = prev.filter((s) => s !== q);
-      localStorage.setItem("search-history", JSON.stringify(next));
-      return next;
-    });
-  }, []);
-
-  const clear = useCallback(() => {
-    setSearches([]);
-    localStorage.removeItem("search-history");
-  }, []);
-
-  return { searches, add, remove, clear };
-}
 
 export default function SearchPage() {
   const router = useRouter();
@@ -90,50 +54,45 @@ export default function SearchPage() {
   const [view, setView] = useState<"grid" | "list">("grid");
   const [mobileFilterOpen, setMobileFilterOpen] = useState(false);
 
-  const [results, setResults] = useState<any[]>([]);
+  const [results, setResults] = useState<IProduct[]>([]);
   const [total, setTotal] = useState(0);
   const [pages, setPages] = useState(0);
   const [loading, setLoading] = useState(true);
 
   const [filterCategories, setFilterCategories] = useState<{ _id: string; name: string; slug: string }[]>([]);
   const [filterBrands, setFilterBrands] = useState<string[]>([]);
-  const [filterPriceRange, setFilterPriceRange] = useState<{ minPrice: number; maxPrice: number }>({ minPrice: 0, maxPrice: 0 });
+  const [filterPriceRange, setFilterPriceRange] = useState({ minPrice: 0, maxPrice: 0 });
 
-  const { searches: recentSearches, add: addRecentSearch, remove: removeRecentSearch, clear: clearRecentSearches } = useRecentSearches();
+  const { recentSearches, addRecentSearch, removeRecentSearch, clearRecentSearches } = useRecentSearches();
 
   const updateURL = useCallback(
-    (params: Record<string, string | undefined>) => {
+    (overrides: Record<string, string | undefined | boolean>) => {
       const next = new URLSearchParams();
-      const q = params.q ?? sp.get("q") ?? "";
-      const category = params.category ?? sp.get("category") ?? "";
-      const brand = params.brand ?? sp.get("brand") ?? "";
-      const minPrice = params.minPrice ?? sp.get("minPrice") ?? "";
-      const maxPrice = params.maxPrice ?? sp.get("maxPrice") ?? "";
-      const rating = params.rating ?? sp.get("rating") ?? "";
-      const inStock = params.inStock ?? sp.get("inStock");
-      const onSale = params.onSale ?? sp.get("onSale");
-      const sortBy = params.sortBy ?? sp.get("sortBy") ?? "relevance";
-      const page = params.page ?? sp.get("page") ?? "1";
+      const qVal = overrides.q !== undefined ? String(overrides.q) : sp.get("q") || "";
+      const catVal = overrides.category !== undefined ? String(overrides.category) : sp.get("category") || "";
+      const brandVal = overrides.brand !== undefined ? String(overrides.brand) : sp.get("brand") || "";
+      const minP = overrides.minPrice !== undefined ? String(overrides.minPrice) : sp.get("minPrice") || "";
+      const maxP = overrides.maxPrice !== undefined ? String(overrides.maxPrice) : sp.get("maxPrice") || "";
+      const rateVal = overrides.rating !== undefined ? String(overrides.rating) : sp.get("rating") || "";
+      const inStockVal = overrides.inStock ?? sp.get("inStock");
+      const onSaleVal = overrides.onSale ?? sp.get("onSale");
+      const sortVal = overrides.sortBy !== undefined ? String(overrides.sortBy) : sp.get("sortBy") || "relevance";
+      const pageVal = overrides.page !== undefined ? String(overrides.page) : sp.get("page") || "1";
 
-      if (q) next.set("q", q);
-      if (category) next.set("category", category);
-      if (brand) next.set("brand", brand);
-      if (minPrice.length > 0 && minPrice !== "0") {
-        if (parseFloat(minPrice) > filterPriceRange.minPrice) next.set("minPrice", minPrice);
-      }
-      if (maxPrice.length > 0 && maxPrice !== "0") {
-        if (parseFloat(maxPrice) < filterPriceRange.maxPrice) next.set("maxPrice", maxPrice);
-      }
-      if (rating) next.set("rating", rating);
-      if (inStock === "true") next.set("inStock", "true");
-      if (onSale === "true") next.set("onSale", "true");
-      if (sortBy !== "relevance") next.set("sortBy", sortBy);
-      if (page !== "1") next.set("page", page);
+      if (qVal) next.set("q", qVal);
+      if (catVal) next.set("category", catVal);
+      if (brandVal) next.set("brand", brandVal);
+      if (minP) next.set("minPrice", minP);
+      if (maxP) next.set("maxPrice", maxP);
+      if (rateVal) next.set("rating", rateVal);
+      if (inStockVal === true || inStockVal === "true") next.set("inStock", "true");
+      if (onSaleVal === true || onSaleVal === "true") next.set("onSale", "true");
+      if (sortVal && sortVal !== "relevance") next.set("sortBy", sortVal);
+      if (pageVal && pageVal !== "1") next.set("page", pageVal);
 
-      const str = next.toString();
-      router.replace(str ? `${pathname}?${str}` : pathname, { scroll: false });
+      router.replace(next.toString() ? `${pathname}?${next.toString()}` : pathname, { scroll: false });
     },
-    [router, pathname, sp, filterPriceRange]
+    [router, pathname, sp]
   );
 
   const performSearch = useCallback(async () => {
@@ -165,7 +124,7 @@ export default function SearchPage() {
       const res = await fetch(`/api/search?${params.toString()}`);
       const data = await res.json();
       if (data.success) {
-        setResults(data.results || []);
+        setResults((data.results || []) as IProduct[]);
         setTotal(data.pagination?.total || 0);
         setPages(data.pagination?.pages || 0);
         if (data.filters) {
@@ -255,6 +214,8 @@ export default function SearchPage() {
     return [min || 0, max || filterPriceRange.maxPrice || 10000];
   }, [minPrice, maxPrice, filterPriceRange]);
 
+  const hasActiveFilters = activeFilters.length > 0;
+
   return (
     <div className="min-h-screen pb-20">
       <div className="bg-gradient-to-b from-primary/5 to-background border-b">
@@ -298,112 +259,29 @@ export default function SearchPage() {
 
       <div className="container mx-auto px-4 py-8">
         <div className="flex flex-col md:flex-row gap-6">
-          <aside className="hidden md:block w-64 flex-shrink-0">
-            <div className="bg-card border rounded-2xl p-6 sticky top-4 space-y-6">
-              <div className="flex items-center justify-between">
-                <h2 className="font-bold text-lg">Filters</h2>
-                {activeFilters.length > 0 && (
-                  <Button variant="ghost" size="sm" onClick={clearAllFilters} className="text-xs h-7">
-                    Reset
-                  </Button>
-                )}
-              </div>
-
-              <CategoryFilter categories={filterCategories} selected={category} onChange={(v) => setFilter("category", v)} />
-
-              <BrandFilter
-                brands={filterBrands}
-                selected={brand ? brand.split(",").filter(Boolean) : []}
-                onChange={(list) => setFilter("brand", list.join(","))}
-              />
-
-              <PriceSlider
-                min={filterPriceRange.minPrice || 0}
-                max={filterPriceRange.maxPrice || 10000}
-                value={priceValue}
-                onChange={([min, max]) => {
-                  updateURL({
-                    minPrice: String(min),
-                    maxPrice: String(max),
-                    page: "1",
-                  });
-                }}
-              />
-
-              <RatingFilter
-                value={rating ? parseFloat(rating) : ""}
-                onChange={(v) => setFilter("rating", v ? String(v) : "")}
-              />
-
-              <div className="space-y-2">
-                <label className="flex items-center gap-2 cursor-pointer">
-                  <input
-                    type="checkbox"
-                    checked={inStock}
-                    onChange={(e) => setFilter("inStock", e.target.checked ? "true" : "")}
-                    className="w-4 h-4 rounded border-input accent-primary"
-                  />
-                  <span className="text-sm font-medium">In Stock Only</span>
-                </label>
-                <label className="flex items-center gap-2 cursor-pointer">
-                  <input
-                    type="checkbox"
-                    checked={onSale}
-                    onChange={(e) => setFilter("onSale", e.target.checked ? "true" : "")}
-                    className="w-4 h-4 rounded border-input accent-primary"
-                  />
-                  <span className="text-sm font-medium">On Sale</span>
-                </label>
-              </div>
-            </div>
-          </aside>
-
-          <MobileFilterDrawer
-            open={mobileFilterOpen}
-            onOpenChange={setMobileFilterOpen}
-            hasActiveFilters={activeFilters.length > 0}
-            onApply={() => setMobileFilterOpen(false)}
-            onReset={clearAllFilters}
-          >
-            <CategoryFilter categories={filterCategories} selected={category} onChange={(v) => setFilter("category", v)} />
-            <BrandFilter
-              brands={filterBrands}
-              selected={brand ? brand.split(",").filter(Boolean) : []}
-              onChange={(list) => setFilter("brand", list.join(","))}
-            />
-            <PriceSlider
-              min={filterPriceRange.minPrice || 0}
-              max={filterPriceRange.maxPrice || 10000}
-              value={priceValue}
-              onChange={([min, max]) => {
-                updateURL({ minPrice: String(min), maxPrice: String(max), page: "1" });
-              }}
-            />
-            <RatingFilter
-              value={rating ? parseFloat(rating) : ""}
-              onChange={(v) => setFilter("rating", v ? String(v) : "")}
-            />
-            <div className="space-y-2">
-              <label className="flex items-center gap-2 cursor-pointer">
-                <input
-                  type="checkbox"
-                  checked={inStock}
-                  onChange={(e) => setFilter("inStock", e.target.checked ? "true" : "")}
-                  className="w-4 h-4 rounded border-input accent-primary"
-                />
-                <span className="text-sm font-medium">In Stock Only</span>
-              </label>
-              <label className="flex items-center gap-2 cursor-pointer">
-                <input
-                  type="checkbox"
-                  checked={onSale}
-                  onChange={(e) => setFilter("onSale", e.target.checked ? "true" : "")}
-                  className="w-4 h-4 rounded border-input accent-primary"
-                />
-                <span className="text-sm font-medium">On Sale</span>
-              </label>
-            </div>
-          </MobileFilterDrawer>
+          <SearchFiltersPanel
+            categories={filterCategories}
+            brands={filterBrands}
+            priceRange={filterPriceRange}
+            priceValue={priceValue}
+            selectedCategory={category}
+            selectedBrands={brand ? brand.split(",").filter(Boolean) : []}
+            selectedRating={rating ? parseFloat(rating) : ""}
+            inStock={inStock}
+            onSale={onSale}
+            activeFilterCount={activeFilters.length}
+            mobileFilterOpen={mobileFilterOpen}
+            onMobileFilterOpenChange={setMobileFilterOpen}
+            onCategoryChange={(v) => setFilter("category", v)}
+            onBrandChange={(list) => setFilter("brand", list.join(","))}
+            onPriceChange={([min, max]) => {
+              updateURL({ minPrice: String(min), maxPrice: String(max), page: "1" });
+            }}
+            onRatingChange={(v) => setFilter("rating", v ? String(v) : "")}
+            onInStockChange={(checked) => setFilter("inStock", checked ? "true" : "")}
+            onOnSaleChange={(checked) => setFilter("onSale", checked ? "true" : "")}
+            onClearAll={clearAllFilters}
+          />
 
           <main className="flex-1 min-w-0">
             <div className="flex items-center justify-between mb-4">
@@ -416,7 +294,7 @@ export default function SearchPage() {
                 >
                   <SlidersHorizontal className="w-4 h-4 mr-2" />
                   Filters
-                  {activeFilters.length > 0 && (
+                  {hasActiveFilters && (
                     <span className="ml-1.5 w-5 h-5 rounded-full bg-primary text-primary-foreground text-xs flex items-center justify-center">
                       {activeFilters.length}
                     </span>
@@ -444,12 +322,14 @@ export default function SearchPage() {
                   <button
                     onClick={() => setView("grid")}
                     className={cn("p-2 transition-colors", view === "grid" ? "bg-primary text-white" : "hover:bg-muted")}
+                    aria-label="Grid view"
                   >
                     <Grid3X3 className="w-4 h-4" />
                   </button>
                   <button
                     onClick={() => setView("list")}
                     className={cn("p-2 transition-colors", view === "list" ? "bg-primary text-white" : "hover:bg-muted")}
+                    aria-label="List view"
                   >
                     <List className="w-4 h-4" />
                   </button>
@@ -481,7 +361,7 @@ export default function SearchPage() {
             ) : (
               <SearchEmptyState
                 query={q}
-                hasActiveFilters={activeFilters.length > 0}
+                hasActiveFilters={hasActiveFilters}
                 onResetFilters={clearAllFilters}
               />
             )}

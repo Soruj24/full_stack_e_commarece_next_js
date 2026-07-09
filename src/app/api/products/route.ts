@@ -149,7 +149,7 @@ export async function GET(request: Request) {
       };
     }
 
-    return NextResponse.json({
+    const response = NextResponse.json({
       success: true,
       products,
       pagination: {
@@ -162,6 +162,8 @@ export async function GET(request: Request) {
       },
       ...(Object.keys(filterOptions).length > 0 ? { filters: filterOptions } : {}),
     });
+    response.headers.set("Cache-Control", "public, max-age=60, stale-while-revalidate=300");
+    return response;
   } catch (error: unknown) {
     return NextResponse.json({
       success: false,

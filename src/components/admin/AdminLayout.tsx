@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { cn } from '@/lib/utils';
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { cn } from "@/lib/utils";
 import {
   ChevronLeft,
   ChevronRight,
@@ -10,11 +10,11 @@ import {
   Bell,
   Search,
   LayoutDashboard,
-} from 'lucide-react';
-import { useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { sidebarLinks } from '@/lib/data/admin-sidebar';
+} from "lucide-react";
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { sidebarLinks } from "@/lib/data/admin-sidebar";
 
 interface AdminLayoutProps {
   children: React.ReactNode;

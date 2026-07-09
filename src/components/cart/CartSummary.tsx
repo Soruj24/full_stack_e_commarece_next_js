@@ -1,9 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowRight, Tag } from "lucide-react";
+import { ArrowRight, ShoppingBag, Tag } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { useLocalization } from "@/modules/common/hooks/LocalizationContext";
+import { convertPrice, formatPrice } from "@/lib/localization";
 
 interface CartSummaryProps {
   subtotal: number;
@@ -30,6 +32,7 @@ export function CartSummary({
   onPromoCodeChange,
   onApplyPromoCode,
 }: CartSummaryProps) {
+  const { currency } = useLocalization();
   return (
     <aside className="lg:w-[450px]">
       <div className="sticky top-24 space-y-8">
@@ -43,27 +46,27 @@ export function CartSummary({
               <span className="text-muted-foreground">
                 Subtotal ({totalItems} items)
               </span>
-              <span className="font-black">${subtotal.toFixed(2)}</span>
+              <span className="font-black">{formatPrice(convertPrice(subtotal, currency), currency)}</span>
             </div>
             <div className="flex justify-between text-sm font-medium">
               <span className="text-muted-foreground">
                 Shipping Estimate
               </span>
               <span className="font-black">
-                {shipping === 0 ? "FREE" : `$${shipping.toFixed(2)}`}
+                {shipping === 0 ? "FREE" : formatPrice(convertPrice(shipping, currency), currency)}
               </span>
             </div>
             <div className="flex justify-between text-sm font-medium">
               <span className="text-muted-foreground">
-                Estimated Tax (15%)
+                Estimated Tax
               </span>
-              <span className="font-black">${tax.toFixed(2)}</span>
+              <span className="font-black">{formatPrice(convertPrice(tax, currency), currency)}</span>
             </div>
             {discount > 0 && (
               <div className="flex justify-between text-sm font-medium text-green-500">
                 <span>Promo Discount</span>
                 <span className="font-black">
-                  -${discount.toFixed(2)}
+                  -{formatPrice(convertPrice(discount, currency), currency)}
                 </span>
               </div>
             )}
@@ -75,7 +78,7 @@ export function CartSummary({
                 Total Amount
               </span>
               <span className="text-4xl font-black tracking-tighter text-primary">
-                ${total.toFixed(2)}
+                {formatPrice(convertPrice(total, currency), currency)}
               </span>
             </div>
           </div>
@@ -133,5 +136,3 @@ export function CartSummary({
     </aside>
   );
 }
-
-import { ShoppingBag } from "lucide-react";

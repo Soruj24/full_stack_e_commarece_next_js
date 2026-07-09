@@ -20,8 +20,9 @@ const popularSearchSchema = new Schema<IPopularSearch>(
 );
 
 popularSearchSchema.index({ normalizedQuery: 1 }, { unique: true });
-popularSearchSchema.index({ count: -1 });
+popularSearchSchema.index({ count: -1, lastSearchedAt: -1 });
 popularSearchSchema.index({ lastSearchedAt: -1 });
+popularSearchSchema.index({ query: "text" });
 
 export const PopularSearch =
   mongoose.models.PopularSearch ||

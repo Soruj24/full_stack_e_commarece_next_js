@@ -1,5 +1,6 @@
 "use client";
 
+import { memo } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { Minus, Plus, Trash2, Heart } from "lucide-react";
@@ -13,7 +14,7 @@ interface CartItemRowProps {
   onMoveToWishlist: (item: CartItem) => void;
 }
 
-export function CartItemRow({ item, removingId, onQuantityChange, onRemove, onMoveToWishlist }: CartItemRowProps) {
+export const CartItemRow = memo(function CartItemRow({ item, removingId, onQuantityChange, onRemove, onMoveToWishlist }: CartItemRowProps) {
   return (
     <motion.div
       layout
@@ -68,4 +69,4 @@ export function CartItemRow({ item, removingId, onQuantityChange, onRemove, onMo
       </div>
     </motion.div>
   );
-}
+});

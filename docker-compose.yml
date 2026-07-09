@@ -1,0 +1,51 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - MONGODB_URI=mongodb://mongodb:27017/full_stack_e_commerce_next_js
+      - UPSTASH_REDIS_REST_URL=http://redis:6379
+      - UPSTASH_REDIS_REST_TOKEN=
+      - AUTH_SECRET=${AUTH_SECRET:-RIZzprCOq8Ao1pMM1AeJM3Hwi0HrP33WNH5iYFp8gEU=}
+      - NEXT_PUBLIC_BASE_URL=http://localhost:3000
+      - NEXT_PUBLIC_APP_URL=http://localhost:3000
+      - NEXT_PUBLIC_SOCKET_URL=http://localhost:3001
+    depends_on:
+      mongodb:
+        condition: service_started
+      redis:
+        condition: service_started
+    networks:
+      - nexus-network
+
+  mongodb:
+    image: mongo:7
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    environment:
+      - MONGO_INITDB_DATABASE=full_stack_e_commerce_next_js
+    networks:
+      - nexus-network
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - nexus-network
+
+volumes:
+  mongodb_data:
+  redis_data:
+
+networks:
+  nexus-network:
+    driver: bridge

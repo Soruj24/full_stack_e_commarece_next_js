@@ -11,6 +11,7 @@ export function PWAProvider({ children }: { children: React.ReactNode }) {
       navigator.serviceWorker
         .register("/sw.js")
         .then((registration) => {
+          // TODO: Remove console.log or replace with proper logging
           console.log("SW registered:", registration.scope);
           setServiceWorkerReady(true);
         })

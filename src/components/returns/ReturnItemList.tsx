@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { Checkbox } from "@/components/ui/checkbox";
 
 interface OrderItem {
@@ -34,7 +35,7 @@ export function ReturnItemList({ items, selectedItems, toggleItem }: ReturnItemL
             onCheckedChange={() => toggleItem(item)}
           />
           <div className="w-12 h-12 rounded-lg bg-muted overflow-hidden">
-            <img src={item.image || "/placeholder.png"} alt={item.name} className="w-full h-full object-cover" />
+            <Image src={item.image || "/placeholder.png"} alt={item.name} width={80} height={80} className="w-full h-full object-cover" />
           </div>
           <div className="flex-1">
             <p className="font-medium line-clamp-1">{item.name}</p>

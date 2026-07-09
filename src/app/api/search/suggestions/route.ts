@@ -3,6 +3,7 @@ import { dbConnect } from "@/core/config/database";
 import { Product } from "@/core/database/models/Product";
 import { Category } from "@/core/database/models/Category";
 import { Brand } from "@/core/database/models/Brand";
+import { PopularSearch } from "@/core/database/models/PopularSearch";
 
 export async function GET(request: Request) {
   try {
@@ -10,41 +11,58 @@ export async function GET(request: Request) {
 
     const { searchParams } = new URL(request.url);
     const q = searchParams.get("q") || "";
+    const trimmed = q.trim();
 
-    if (q.length < 2) {
+    if (trimmed.length < 2) {
       return NextResponse.json({ success: true, suggestions: [] });
     }
 
-    const regex = new RegExp(q.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "i");
+    const escapedQ = trimmed.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    const useTextSearch = /^[\w\s]+$/.test(trimmed);
 
-    const [products, categories, brands] = await Promise.all([
-      Product.find(
-        {
+    const productQuery = useTextSearch
+      ? { $text: { $search: trimmed }, isActive: true, isArchived: false }
+      : {
           $or: [
-            { name: { $regex: regex } },
-            { sku: { $regex: regex } },
-            { "variants.sku": { $regex: regex } },
-            { tags: { $in: [regex] } },
+            { name: { $regex: escapedQ, $options: "i" } },
+            { sku: { $regex: escapedQ, $options: "i" } },
+            { "variants.sku": { $regex: escapedQ, $options: "i" } },
+            { tags: { $in: [new RegExp(escapedQ, "i")] } },
           ],
           isActive: true,
           isArchived: false,
-        },
-        { name: 1, slug: 1, images: { $slice: 1 }, price: 1, discountPrice: 1 }
+        };
+
+    const [products, categories, brands, popular] = await Promise.all([
+      Product.find(
+        productQuery,
+        useTextSearch
+          ? { name: 1, slug: 1, images: { $slice: 1 }, price: 1, discountPrice: 1, score: { $meta: "textScore" } }
+          : { name: 1, slug: 1, images: { $slice: 1 }, price: 1, discountPrice: 1 }
       )
+        .sort(useTextSearch ? { score: { $meta: "textScore" } } : { name: 1 })
         .limit(5)
         .lean(),
 
       Category.find(
-        { name: { $regex: regex }, isActive: true },
+        { name: { $regex: escapedQ, $options: "i" }, isActive: true },
         { name: 1, slug: 1, image: 1 }
       )
         .limit(5)
         .lean(),
 
       Brand.find(
-        { name: { $regex: regex }, isActive: true },
+        { name: { $regex: escapedQ, $options: "i" }, isActive: true },
         { name: 1, slug: 1, logo: 1 }
       )
+        .limit(3)
+        .lean(),
+
+      PopularSearch.find(
+        { query: { $regex: escapedQ, $options: "i" } },
+        { query: 1, count: 1 }
+      )
+        .sort({ count: -1 })
         .limit(3)
         .lean(),
     ]);
@@ -69,6 +87,11 @@ export async function GET(request: Request) {
         text: b.name,
         slug: b.slug,
         image: b.logo || "",
+      })),
+      ...popular.map((p) => ({
+        type: "popular" as const,
+        text: p.query,
+        count: p.count,
       })),
     ];
 

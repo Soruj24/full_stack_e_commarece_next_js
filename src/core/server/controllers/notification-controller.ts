@@ -5,9 +5,11 @@ import { getUnreadNotifications, createNotification } from "../services/notifica
 
 export function setupNotificationHandlers(io: Server) {
   io.on("connection", (socket) => {
+    // TODO: Remove console.log or replace with proper logging
     console.log("Client connected:", socket.id);
 
     socket.on("join", async (userId: string) => {
+      // TODO: Remove console.log or replace with proper logging
       console.log(`User ${userId} joined`);
       socket.join(userId);
 
@@ -32,6 +34,7 @@ export function setupNotificationHandlers(io: Server) {
     });
 
     socket.on("leave", (userId: string) => {
+      // TODO: Remove console.log or replace with proper logging
       console.log(`User ${userId} left`);
       socket.leave(userId);
     });
@@ -60,6 +63,7 @@ export function setupNotificationHandlers(io: Server) {
     });
 
     socket.on("disconnect", () => {
+      // TODO: Remove console.log or replace with proper logging
       console.log("Client disconnected:", socket.id);
     });
   });

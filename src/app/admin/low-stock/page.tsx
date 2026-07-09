@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { Package, AlertTriangle, Bell, Loader2, RefreshCw, TrendingDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -77,7 +78,7 @@ export default function AdminLowStockPage() {
                     <TableRow key={product._id} className={product.stock === 0 ? "bg-red-50/50 dark:bg-red-950/20" : ""}>
                       <TableCell>
                         <div className="flex items-center gap-3">
-                          <div className="w-12 h-12 rounded-lg bg-muted overflow-hidden"><img src={product.images?.[0] || "/placeholder.png"} alt={product.name} className="w-full h-full object-cover" /></div>
+                          <div className="w-12 h-12 rounded-lg bg-muted overflow-hidden"><Image src={product.images?.[0] || "/placeholder.png"} alt={product.name} width={48} height={48} className="w-full h-full object-cover" /></div>
                           <span className="font-medium">{product.name}</span>
                         </div>
                       </TableCell>

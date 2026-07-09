@@ -1,5 +1,6 @@
 "use client";
 
+import { memo } from "react";
 import { User } from "@/shared/types";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
@@ -30,7 +31,7 @@ interface UsersTableProps {
   onUpdateStatus: (userId: string, status: string) => void;
 }
 
-export function UsersTable({
+export const UsersTable = memo(function UsersTable({
   users,
   loading,
   onEdit,
@@ -170,4 +171,4 @@ export function UsersTable({
       </TableBody>
     </Table>
   );
-}
+});

@@ -3,7 +3,7 @@ import { dbConnect } from "@/core/config/database";
 import { User } from "@/core/database/models/User";
 import { Coupon } from "@/core/database/models/Coupon";
 import { Notification } from "@/core/database/models/Notification";
-import { auth } from '@/lib/auth';
+import { auth } from "@/lib/auth";
 
 export async function POST(req: Request) {
   try {

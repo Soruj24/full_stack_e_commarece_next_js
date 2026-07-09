@@ -1,3 +1,5 @@
+export const revalidate = 86400;
+
 import { Gavel, Scale, ShieldAlert, CheckCircle2, ShieldCheck } from "lucide-react";
 
 export default function TermsPage() {

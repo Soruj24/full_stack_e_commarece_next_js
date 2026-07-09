@@ -1,5 +1,3 @@
-import { ShippingAddress } from "@/modules/checkout/types/checkout";
-
 export interface PaymentSettings {
   stripe: boolean; paypal: boolean; cod: boolean;
   bkash: boolean; nagad: boolean; rocket: boolean;
@@ -23,15 +21,19 @@ export async function fetchPaymentSettings(): Promise<PaymentSettings> {
   return { stripe: true, paypal: true, cod: true, bkash: true, nagad: true, rocket: true };
 }
 
-interface CouponResult { success: boolean; discount?: number; error?: string }
+export interface CouponResult { success: boolean; discount?: number; error?: string }
 
-export async function validateCoupon(code: string, subtotal: number): Promise<CouponResult> {
+export async function validateCoupon(code: string, cartTotal: number): Promise<CouponResult> {
   const res = await fetch("/api/coupons/validate", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ code, subtotal }),
+    body: JSON.stringify({ code, cartTotal }),
   });
-  return res.json();
+  const data = await res.json();
+  if (data.success) {
+    return { success: true, discount: data.coupon.discount };
+  }
+  return { success: false, error: data.error };
 }
 
 export async function createPaymentIntent(amount: number, currency: string, itemCount: number) {

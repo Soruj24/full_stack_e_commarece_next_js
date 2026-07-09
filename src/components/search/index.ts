@@ -3,6 +3,7 @@ export { SuggestionItem } from "./search-bar/SuggestionItem";
 export { SearchPageHero } from "./SearchPageHero";
 export { SearchFiltersSidebar } from "./SearchFiltersSidebar";
 export type { FiltersState } from "./SearchFiltersSidebar";
+export { SearchFiltersPanel } from "./SearchFiltersPanel";
 export { SearchResultsToolbar } from "./SearchResultsToolbar";
 export { SearchResultsGrid } from "./SearchResultsGrid";
 export { SearchLoadingSkeletons } from "./SearchLoadingSkeletons";

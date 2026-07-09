@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import Image from "next/image";
 import { RefreshCw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ReorderButton } from "./ReorderButton";
@@ -48,7 +49,7 @@ export function ReorderCard({ orderId, items, onReorderComplete }: ReorderCardPr
             <div className="p-4 space-y-3">
               {items.map((item) => (
                 <div key={item._id} className="flex items-center gap-3 p-3 bg-zinc-50 dark:bg-white/5 rounded-xl">
-                  <img src={item.image || "/placeholder.png"} alt={item.name} className="w-12 h-12 rounded-lg object-cover" />
+                  <Image src={item.image || "/placeholder.png"} alt={item.name} width={48} height={48} className="w-12 h-12 rounded-lg object-cover" />
                   <div className="flex-1 min-w-0">
                     <p className="font-medium text-sm truncate">{item.name}</p>
                     <p className="text-xs text-zinc-500">Qty: {item.quantity} × ${item.price.toFixed(2)}</p>

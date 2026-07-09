@@ -41,7 +41,7 @@ export async function GET() {
       ]),
     ]);
 
-    return NextResponse.json({
+    const response = NextResponse.json({
       success: true,
       filters: {
         categories,
@@ -52,6 +52,8 @@ export async function GET() {
         ratingOptions: [4, 3, 2, 1],
       },
     });
+    response.headers.set("Cache-Control", "public, max-age=60, stale-while-revalidate=300");
+    return response;
   } catch (error: unknown) {
     return NextResponse.json({
       success: false,

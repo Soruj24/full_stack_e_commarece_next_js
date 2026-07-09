@@ -1,4 +1,4 @@
-import { auth } from '@/lib/auth';
+import { auth } from "@/lib/auth";
 import { dbConnect } from "@/core/config/database";
 import { Product } from "@/core/database/models/Product";
 import { User } from "@/core/database/models/User";

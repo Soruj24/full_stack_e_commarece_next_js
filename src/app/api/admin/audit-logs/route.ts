@@ -1,4 +1,4 @@
-import { auth } from '@/lib/auth';
+import { auth } from "@/lib/auth";
 import { dbConnect } from "@/core/config/database";
 import AuditLog from "@/core/database/models/AuditLog";
 import { NextResponse } from "next/server";

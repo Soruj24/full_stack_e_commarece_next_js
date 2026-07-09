@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { dbConnect } from "@/core/config/database";
 import { Product } from "@/core/database/models/Product";
 import { Order } from "@/core/database/models/Order";
-import { auth } from '@/lib/auth';
+import { auth } from "@/lib/auth";
 
 export async function GET() {
   try {
@@ -100,7 +100,9 @@ export async function GET() {
       recommendations = [...recommendations, ...recentProducts];
     }
 
-    return NextResponse.json(recommendations);
+    const response = NextResponse.json(recommendations);
+    response.headers.set("Cache-Control", "public, max-age=60, stale-while-revalidate=300");
+    return response;
   } catch (error: unknown) {
     console.warn("Recommendation Error:", error);
     return NextResponse.json([]);

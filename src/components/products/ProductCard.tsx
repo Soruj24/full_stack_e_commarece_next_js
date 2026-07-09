@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { memo, useState } from "react";
 import { motion } from "framer-motion";
 import {
   trackEvent,
@@ -19,7 +19,7 @@ interface ProductCardProps {
   product: IProduct;
 }
 
-export function ProductCard({ product }: ProductCardProps) {
+export const ProductCard = memo(function ProductCard({ product }: ProductCardProps) {
   const [imgSrc, setImgSrc] = useState(() => {
     return getSafeImageSrc(product.images?.[0], product.category?.slug);
   });
@@ -115,4 +115,4 @@ export function ProductCard({ product }: ProductCardProps) {
       />
     </motion.div>
   );
-}
+});

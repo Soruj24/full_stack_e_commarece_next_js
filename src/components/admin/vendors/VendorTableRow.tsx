@@ -1,5 +1,6 @@
 "use client";
 
+import { memo } from "react";
 import { Store, Check, X, Eye, MoreHorizontal, AlertTriangle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -45,7 +46,7 @@ function formatDate(date: string) {
   });
 }
 
-export function VendorTableRow({
+export const VendorTableRow = memo(function VendorTableRow({
   vendor,
   onViewDetails,
   onAction,
@@ -118,6 +119,6 @@ export function VendorTableRow({
           </DropdownMenuContent>
         </DropdownMenu>
       </TableCell>
-    </TableRow>
-  );
-}
+      </TableRow>
+    );
+  });

@@ -1,5 +1,6 @@
 "use client";
 
+import { memo } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { ChevronDown, Home, Mail, Info } from "lucide-react";
@@ -16,7 +17,7 @@ const publicNavigation = [
   { name: "Contact", href: "/contact", icon: Mail },
 ];
 
-export function MobileNavLinks({ pathname, onClose }: MobileNavLinksProps) {
+export const MobileNavLinks = memo(function MobileNavLinks({ pathname, onClose }: MobileNavLinksProps) {
   return (
     <div className="space-y-3">
       <p className="text-[9px] font-black uppercase tracking-[0.4em] text-muted-foreground/40 mb-5 px-2">
@@ -75,4 +76,4 @@ export function MobileNavLinks({ pathname, onClose }: MobileNavLinksProps) {
       </div>
     </div>
   );
-}
+});

@@ -1,5 +1,6 @@
 "use client";
 
+import { memo } from "react";
 import { Search, Loader2 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -24,7 +25,7 @@ interface VendorTableProps {
   onAction: (action: string, vendor: Vendor) => void;
 }
 
-export function VendorTable({
+export const VendorTable = memo(function VendorTable({
   filteredVendors,
   loading,
   searchQuery,
@@ -92,4 +93,4 @@ export function VendorTable({
       </CardContent>
     </Card>
   );
-}
+});

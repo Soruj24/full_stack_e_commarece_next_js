@@ -5,6 +5,9 @@ import { useState } from "react";
 import { toast } from "sonner";
 import { useCart } from "@/modules/cart/context/CartContext";
 import { useSaveForLater } from "@/modules/cart/context/SaveForLaterContext";
+import { useLocalization } from "@/modules/common/hooks/LocalizationContext";
+import { convertPrice, formatPrice } from "@/lib/localization";
+import { calculateTaxIntl, getShippingRatesIntl } from "@/modules/checkout/utils/checkout-utils";
 import {
   CartEmptyState,
   CartHeader,
@@ -18,6 +21,7 @@ export default function CartPage() {
   const { cart, removeFromCart, updateQuantity, subtotal, totalItems } =
     useCart();
   const { savedItems } = useSaveForLater();
+  const { currency, country } = useLocalization();
   const [promoCode, setPromoCode] = useState("");
   const [discount, setDiscount] = useState(0);
   const [isApplyingCoupon, setIsApplyingCoupon] = useState(false);
@@ -29,12 +33,12 @@ export default function CartPage() {
       const res = await fetch(`/api/coupons/validate`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ code: promoCode, amount: subtotal }),
+        body: JSON.stringify({ code: promoCode, cartTotal: subtotal }),
       });
       const data = await res.json();
       if (data.success) {
-        setDiscount(data.discount);
-        toast.success(`Coupon applied: ${data.discountAmount} off`);
+        setDiscount(data.coupon.discount);
+        toast.success(`Coupon applied: ${formatPrice(convertPrice(data.coupon.discount, currency), currency)} off`);
       } else {
         toast.error(data.error);
       }
@@ -45,8 +49,9 @@ export default function CartPage() {
     }
   };
 
-  const shipping = subtotal > 500 ? 0 : 50;
-  const tax = subtotal * 0.15;
+  const shippingRates = getShippingRatesIntl("", country, subtotal);
+  const shipping = shippingRates.length > 0 ? Math.min(...shippingRates.map((r) => r.rate)) : (subtotal > 500 ? 0 : 50);
+  const tax = calculateTaxIntl(subtotal - discount, country);
   const total = subtotal + shipping + tax - discount;
 
   if (cart.length === 0) {

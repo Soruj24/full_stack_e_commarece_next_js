@@ -2,7 +2,7 @@ import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import GitHubProvider from "next-auth/providers/github";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { authConfig } from './config';
+import { authConfig } from "./config";
 import bcrypt from "bcryptjs";
 import { User } from "@/core/database/models/User";
 import Session from "@/core/database/models/Session";

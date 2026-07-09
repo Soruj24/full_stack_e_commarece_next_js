@@ -1,6 +1,6 @@
 "use server";
 
-import { signIn, signOut } from '@/core/auth';
+import { signIn, signOut } from "@/core/auth";
 
 export async function doSocialLogin(formData: FormData) {
   const action = formData.get("action");

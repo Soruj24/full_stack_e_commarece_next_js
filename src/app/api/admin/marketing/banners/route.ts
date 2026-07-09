@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { dbConnect } from "@/core/config/database";
 import { Banner } from "@/core/database/models/Banner";
-import { auth } from '@/lib/auth';
+import { auth } from "@/lib/auth";
 
 export async function GET(req: Request) {
   try {

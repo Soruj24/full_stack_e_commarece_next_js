@@ -22,7 +22,7 @@ export async function GET(request: Request) {
       Brand.countDocuments(query),
     ]);
 
-    return NextResponse.json({
+    const response = NextResponse.json({
       success: true,
       brands,
       pagination: {
@@ -32,6 +32,8 @@ export async function GET(request: Request) {
         pages: Math.ceil(total / limit),
       },
     });
+    response.headers.set("Cache-Control", "public, max-age=300, stale-while-revalidate=600");
+    return response;
   } catch (error: unknown) {
     return NextResponse.json({
       success: false,

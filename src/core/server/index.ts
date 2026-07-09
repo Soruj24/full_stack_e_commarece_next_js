@@ -3,8 +3,10 @@ import { createServer } from "http";
 import { Server } from "socket.io";
 import dotenv from "dotenv";
 import cors from "cors";
+import helmet from "helmet";
 import { setupRoutes } from "./routes";
 import { SERVER_CONFIG } from "./config";
+import { authenticateSocket } from "./middlewares/auth";
 
 dotenv.config({ path: "../.env.local" });
 
@@ -17,14 +19,31 @@ const io = new Server(httpServer, {
     methods: ["GET", "POST"],
     credentials: true,
   },
+  maxHttpBufferSize: 1e6, // 1MB max message size
 });
 
-app.use(cors());
-app.use(express.json());
+// Security middleware
+app.use(helmet({
+  contentSecurityPolicy: false, // CSP handled by Next.js
+  crossOriginEmbedderPolicy: false, // Allow embedded resources
+}));
+
+app.use(cors({
+  origin: SERVER_CONFIG.corsOrigin,
+  methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
+  credentials: true,
+  maxAge: 86400, // 24 hours preflight cache
+}));
+
+app.use(express.json({ limit: "1mb" }));
+app.use(express.urlencoded({ extended: true, limit: "1mb" }));
+
+// Socket.IO authentication
+io.use(authenticateSocket);
 
 setupRoutes(io);
 
-app.get("/health", (req, res) => {
+app.get("/health", (_req, res) => {
   res.json({ status: "ok", timestamp: new Date().toISOString() });
 });
 

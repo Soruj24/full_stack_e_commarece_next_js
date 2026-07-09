@@ -9,6 +9,8 @@ interface CategoryFilterProps {
 }
 
 export function CategoryFilter({ categories, selected, onChange }: CategoryFilterProps) {
+  if (categories.length === 0) return null;
+
   return (
     <div>
       <label className="text-sm font-medium mb-2 block">Category</label>
@@ -17,7 +19,7 @@ export function CategoryFilter({ categories, selected, onChange }: CategoryFilte
           onClick={() => onChange("")}
           className={cn(
             "w-full text-left px-3 py-2 rounded-lg text-sm transition-colors",
-            selected === "" ? "bg-primary/10 text-primary font-medium" : "hover:bg-muted text-muted-foreground"
+            !selected ? "bg-primary/10 text-primary font-medium" : "hover:bg-muted text-muted-foreground"
           )}
         >
           All Categories

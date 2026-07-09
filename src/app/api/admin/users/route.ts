@@ -12,7 +12,15 @@ export async function GET(req: Request) {
     if (!authorized) return response as NextResponse;
 
     await dbConnect();
-    const users = await User.find({}).sort({ createdAt: -1 });
+    const { searchParams } = new URL(req.url);
+    const page = Math.max(1, parseInt(searchParams.get("page") || "1"));
+    const limit = Math.min(100, Math.max(1, parseInt(searchParams.get("limit") || "20")));
+    const skip = (page - 1) * limit;
+
+    const [users, total] = await Promise.all([
+      User.find({}).sort({ createdAt: -1 }).skip(skip).limit(limit),
+      User.countDocuments({}),
+    ]);
 
     // Transform _id to id for the frontend
     const transformedUsers = users.map(user => ({
@@ -20,7 +28,11 @@ export async function GET(req: Request) {
       id: user._id.toString()
     }));
 
-    return NextResponse.json({ success: true, users: transformedUsers });
+    return NextResponse.json({
+      success: true,
+      users: transformedUsers,
+      pagination: { page, limit, total, pages: Math.ceil(total / limit) },
+    });
   } catch (error: unknown) {
     return NextResponse.json(
       {

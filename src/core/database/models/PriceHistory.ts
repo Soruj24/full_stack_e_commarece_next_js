@@ -33,7 +33,6 @@ const priceHistorySchema = new Schema<IPriceHistory>(
   { timestamps: true }
 );
 
-priceHistorySchema.index({ productId: 1 });
 priceHistorySchema.index({ "pricePoints.date": -1 });
 
 export const PriceHistory =

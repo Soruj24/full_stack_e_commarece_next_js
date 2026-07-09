@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 import { TrendingUp } from "lucide-react";
 
 interface PopularSearchesProps {
@@ -9,20 +10,28 @@ interface PopularSearchesProps {
 
 export function PopularSearches({ onSelect }: PopularSearchesProps) {
   const [searches, setSearches] = useState<{ query: string; count: number }[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    let cancelled = false;
     fetch("/api/search/popular")
       .then((res) => res.json())
       .then((data) => {
-        if (data.success) setSearches(data.searches.slice(0, 5));
+        if (!cancelled && data.success) setSearches(data.searches.slice(0, 5));
       })
-      .catch(() => {});
+      .catch(() => {})
+      .finally(() => { if (!cancelled) setLoading(false); });
+    return () => { cancelled = true; };
   }, []);
 
+  if (loading) return null;
   if (searches.length === 0) return null;
 
   return (
-    <div>
+    <motion.div
+      initial={{ opacity: 0, y: 8 }}
+      animate={{ opacity: 1, y: 0 }}
+    >
       <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2 flex items-center gap-1.5">
         <TrendingUp className="w-3 h-3" />
         Trending Searches
@@ -38,6 +47,6 @@ export function PopularSearches({ onSelect }: PopularSearchesProps) {
           </button>
         ))}
       </div>
-    </div>
+    </motion.div>
   );
 }

@@ -82,11 +82,13 @@ export async function GET(request: Request) {
         }
       });
 
-      return NextResponse.json({
+      const response = NextResponse.json({
         success: true,
         categories: rootCategories,
         pagination: { total: categories.length, page: 1, pages: 1 },
       });
+      response.headers.set("Cache-Control", "public, max-age=300, stale-while-revalidate=600");
+      return response;
     }
 
     const total = await Category.countDocuments(query);
@@ -96,7 +98,7 @@ export async function GET(request: Request) {
     });
     const totalActive = await Category.countDocuments({ isActive: true });
 
-    return NextResponse.json({
+    const response = NextResponse.json({
       success: true,
       categories,
       pagination: {
@@ -110,6 +112,8 @@ export async function GET(request: Request) {
         totalActive,
       },
     });
+    response.headers.set("Cache-Control", "public, max-age=300, stale-while-revalidate=600");
+    return response;
   } catch (error) {
     console.warn("Categories GET error:", error);
     return NextResponse.json({

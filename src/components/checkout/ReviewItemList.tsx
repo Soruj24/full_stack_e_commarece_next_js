@@ -1,5 +1,6 @@
 "use client";
 
+import { memo } from "react";
 import Image from "next/image";
 import { useLocalization } from "@/modules/common/hooks/LocalizationContext";
 import { formatPrice } from "@/lib/localization";
@@ -9,7 +10,7 @@ interface ReviewItemListProps {
   items: CartItemType[];
 }
 
-export function ReviewItemList({ items }: ReviewItemListProps) {
+export const ReviewItemList = memo(function ReviewItemList({ items }: ReviewItemListProps) {
   const { currency } = useLocalization();
 
   return (
@@ -34,4 +35,4 @@ export function ReviewItemList({ items }: ReviewItemListProps) {
       ))}
     </div>
   );
-}
+});

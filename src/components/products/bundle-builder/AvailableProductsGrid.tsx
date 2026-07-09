@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { Plus, ArrowRight } from "lucide-react";
@@ -21,7 +22,7 @@ export function AvailableProductsGrid({ products, onAddItem }: AvailableProducts
             onClick={() => onAddItem(product)}
           >
             <div className="aspect-square relative">
-              <img src={product.images?.[0] || "/placeholder.png"} alt={product.name} className="w-full h-full object-cover" />
+              <Image src={product.images?.[0] || "/placeholder.png"} alt={product.name} fill sizes="(max-width: 768px) 50vw, 25vw" className="w-full h-full object-cover" />
               <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                 <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center">
                   <Plus className="w-5 h-5" />

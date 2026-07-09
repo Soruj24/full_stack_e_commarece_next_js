@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, Suspense, useMemo } from "react";
+import dynamic from "next/dynamic";
 import { useSearchParams, useRouter } from "next/navigation";
-import { Suspense } from "react";
 import { toast } from "sonner";
 
 import { Tabs, TabsContent } from "@/components/ui/tabs";
@@ -17,7 +17,10 @@ import { UsersTabContent } from "@/components/admin/dashboard/UsersTabContent";
 import { InquiriesTabContent } from "@/components/admin/dashboard/InquiriesTabContent";
 import { AuditTabContent } from "@/components/admin/dashboard/AuditTabContent";
 import { AdminSettings } from "@/components/admin/dashboard/AdminSettings";
-import { AnalyticsTabContent } from "@/components/admin/dashboard/AnalyticsTabContent";
+const AnalyticsTabContent = dynamic(() => import("@/components/admin/dashboard/AnalyticsTabContent").then(mod => ({ default: mod.AnalyticsTabContent })), {
+  loading: () => <div className="h-96 bg-muted/20 animate-pulse rounded-[40px]" />,
+  ssr: false,
+});
 import { OrdersTabContent } from "@/components/admin/dashboard/OrdersTabContent";
 import { MarketingTabContent } from "@/components/admin/dashboard/MarketingTabContent";
 import { InviteUserDialog } from "@/components/admin/InviteUserDialog";
@@ -144,7 +147,7 @@ function AdminDashboardContent() {
 
       <DashboardStats
         activeUsers={stats?.activeUsers ?? 0}
-        totalAdmins={users.filter((u) => u.role === "admin").length}
+        totalAdmins={useMemo(() => users.filter((u) => u.role === "admin").length, [users])}
         bannedUsers={0}
       />
 

@@ -1,5 +1,5 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { auth } from '@/lib/auth';
+import { NextRequest, NextResponse } from "next/server";
+import { auth } from "@/lib/auth";
 import { dbConnect } from "@/core/config/database";
 import { AbandonedCart } from "@/core/database/models/AbandonedCart";
 

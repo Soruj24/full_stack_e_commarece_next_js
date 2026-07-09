@@ -9,6 +9,8 @@ import {
   abandonedCartTemplate,
 } from "./email-templates";
 
+const isProduction = process.env.NODE_ENV === "production";
+
 const transporter = nodemailer.createTransport({
   host: (process.env.SMTP_HOST || "smtp.gmail.com").trim(),
   port: parseInt((process.env.SMTP_PORT || "587").trim()),
@@ -17,15 +19,20 @@ const transporter = nodemailer.createTransport({
     user: (process.env.SMTP_USER || "").trim(),
     pass: (process.env.SMTP_PASS || "").trim(),
   },
-  tls: {
-    rejectUnauthorized: false,
-  },
+  ...(isProduction
+    ? {} // In production, use default TLS settings (rejectUnauthorized: true)
+    : {
+        tls: {
+          rejectUnauthorized: false, // Allow self-signed certs in development only
+        },
+      }),
 });
 
-transporter.verify(function (error, success) {
+transporter.verify(function (error) {
   if (error) {
     console.error("SMTP Connection Error:", error);
   } else {
+    // TODO: Remove console.log or replace with proper logging
     console.log("SMTP Server is ready to take our messages");
   }
 });
@@ -50,6 +57,7 @@ export async function sendEmail({
         subject,
         html,
       });
+      // TODO: Remove console.log or replace with proper logging
       console.log(`Email sent successfully to ${to}. Message ID: ${info.messageId}`);
       return info;
     } catch (error: unknown) {

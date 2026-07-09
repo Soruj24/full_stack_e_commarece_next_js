@@ -2,7 +2,7 @@ import { dbConnect } from "@/core/config/database";
 import { Payout } from "@/core/database/models/Payout";
 import { Vendor } from "@/core/database/models/Vendor";
 import { NextResponse } from "next/server";
-import { auth } from '@/lib/auth';
+import { auth } from "@/lib/auth";
 
 export async function GET(request: Request) {
   try {

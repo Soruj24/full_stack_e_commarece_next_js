@@ -40,7 +40,9 @@ export async function GET(request: Request) {
       });
     }
 
-    return NextResponse.json({ success: true, data: groupedFaqs });
+    const response = NextResponse.json({ success: true, data: groupedFaqs });
+    response.headers.set("Cache-Control", "public, max-age=300, stale-while-revalidate=600");
+    return response;
   } catch (error) {
     console.error("FAQ GET Error:", error);
     return NextResponse.json({ error: "Internal server error" }, { status: 500 });

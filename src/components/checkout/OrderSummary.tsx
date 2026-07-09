@@ -1,5 +1,6 @@
 "use client";
 
+import { memo } from "react";
 import Image from "next/image";
 import { ChevronRight, ShieldCheck } from "lucide-react";
 import { useLocalization } from "@/modules/common/hooks/LocalizationContext";
@@ -18,7 +19,7 @@ interface OrderSummaryProps {
   onToggle: () => void;
 }
 
-export function OrderSummary({
+export const OrderSummary = memo(function OrderSummary({
   cart,
   subtotal,
   couponDiscount,
@@ -145,4 +146,4 @@ export function OrderSummary({
       </div>
     </aside>
   );
-}
+});

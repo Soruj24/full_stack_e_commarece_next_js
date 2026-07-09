@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { Package, ChevronRight, Truck } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -52,7 +53,7 @@ export default function OrdersPage() {
                       <div className="flex flex-wrap gap-4 mb-6">
                         {order.items.map((item: any, i: number) => (
                           <div key={i} className="flex items-center gap-3 bg-muted/50 rounded-xl p-3">
-                            <img src={item.image} alt={item.name} className="w-16 h-16 rounded-lg object-cover" />
+                            <Image src={item.image} alt={item.name} width={64} height={64} className="w-16 h-16 rounded-lg object-cover" />
                             <div><p className="font-medium">{item.name}</p><p className="text-sm text-muted-foreground">Qty: {item.quantity}</p></div>
                           </div>
                         ))}

@@ -1,4 +1,4 @@
-import { auth } from '@/lib/auth';
+import { auth } from "@/lib/auth";
 import { dbConnect } from "@/core/config/database";
 import { ContactMessage } from "@/core/database/models/ContactMessage";
 import { NextResponse } from "next/server";

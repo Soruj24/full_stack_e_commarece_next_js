@@ -41,7 +41,9 @@ export async function GET() {
       maxQuantity: bundle.maxQuantityPerOrder,
     }));
 
-    return NextResponse.json({ success: true, bundles: formattedBundles });
+    const response = NextResponse.json({ success: true, bundles: formattedBundles });
+    response.headers.set("Cache-Control", "public, max-age=300, stale-while-revalidate=600");
+    return response;
   } catch (error) {
     console.warn("Error fetching bundles:", error);
     return NextResponse.json({ success: true, bundles: [] });
