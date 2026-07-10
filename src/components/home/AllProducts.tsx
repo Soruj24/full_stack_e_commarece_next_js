@@ -30,6 +30,8 @@ export function AllProducts() {
     fetchProducts();
   }, []);
 
+  const memoizedProducts = useMemo(() => products, [products]);
+
   if (loading) {
     return (
       <section className="py-24 bg-background flex justify-center items-center min-h-[400px]">
@@ -37,8 +39,6 @@ export function AllProducts() {
       </section>
     );
   }
-
-  const memoizedProducts = useMemo(() => products, [products]);
 
   if (memoizedProducts.length === 0) return null;
 

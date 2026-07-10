@@ -1,21 +1,17 @@
 "use client";
 
-import { TopNav } from "./TopNav";
-import Navbar from "./Navbar";
-import { AnnouncementBar } from "./AnnouncementBar";
 import { usePathname } from "next/navigation";
+import { UtilityBar } from "./UtilityBar";
+import { MainHeader } from "./MainHeader";
 
 export function Header() {
   const pathname = usePathname();
-  const isAdmin = pathname.startsWith("/admin");
-
-  if (isAdmin) return null;
+  if (pathname.startsWith("/admin")) return null;
 
   return (
-    <header className="w-full">
-      <AnnouncementBar />
-      <TopNav />
-      <Navbar />
+    <header className="w-full relative z-50">
+      <UtilityBar />
+      <MainHeader />
     </header>
   );
 }

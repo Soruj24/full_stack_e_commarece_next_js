@@ -14,6 +14,7 @@ export function useNavbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [megaMenuOpen, setMegaMenuOpen] = useState(false);
   const [cartDrawerOpen, setCartDrawerOpen] = useState(false);
+  const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
   const [categories, setCategories] = useState<ICategory[]>([]);
   const pathname = usePathname();
   const router = useRouter();
@@ -26,10 +27,15 @@ export function useNavbar() {
   }, []);
 
   useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 10);
-    window.addEventListener("scroll", handleScroll);
+    const handleScroll = () => setIsScrolled(window.scrollY > 20);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  useEffect(() => {
+    setMegaMenuOpen(false);
+    setMobileMenuOpen(false);
+  }, [pathname]);
 
   const handleLogout = async () => {
     try {
@@ -55,6 +61,8 @@ export function useNavbar() {
     setMegaMenuOpen,
     cartDrawerOpen,
     setCartDrawerOpen,
+    mobileSearchOpen,
+    setMobileSearchOpen,
     categories,
     pathname,
     handleLogout,

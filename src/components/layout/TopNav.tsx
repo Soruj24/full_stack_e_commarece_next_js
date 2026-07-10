@@ -1,38 +1,48 @@
 "use client";
 
 import Link from "next/link";
-import { Phone, Mail, Truck, Shield, RotateCcw } from "lucide-react";
+import { Phone, Truck, RotateCcw, Headphones } from "lucide-react";
+import { LanguageCurrencySwitcher } from "./LanguageCurrencySwitcher";
 
 export function TopNav() {
   return (
-    <div className="w-full bg-gradient-to-r from-primary via-purple-600 to-pink-500 text-primary-foreground py-2 text-sm hidden md:block">
-      <div className="container mx-auto px-4 flex justify-between items-center">
-        <div className="flex items-center gap-8">
-          <div className="flex items-center gap-2 hover:text-white/80 transition-colors cursor-pointer">
+    <div className="w-full bg-muted/40 border-b border-border/40 hidden md:block">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 h-9 flex items-center justify-between">
+        <div className="flex items-center gap-5">
+          <div className="flex items-center gap-1.5 text-muted-foreground">
             <Truck className="h-3.5 w-3.5" />
-            <span className="text-xs font-medium">Free Shipping on $50+</span>
+            <span className="text-[11px] font-medium">Free shipping on orders $50+</span>
           </div>
-          <div className="flex items-center gap-2 hover:text-white/80 transition-colors cursor-pointer">
+          <div className="w-px h-3 bg-border" />
+          <div className="flex items-center gap-1.5 text-muted-foreground">
             <RotateCcw className="h-3.5 w-3.5" />
-            <span className="text-xs font-medium">30-Day Returns</span>
-          </div>
-          <div className="flex items-center gap-2 hover:text-white/80 transition-colors cursor-pointer">
-            <Shield className="h-3.5 w-3.5" />
-            <span className="text-xs font-medium">Secure Checkout</span>
+            <span className="text-[11px] font-medium">30-day free returns</span>
           </div>
         </div>
 
-        <div className="flex items-center gap-6">
-          <Link href="/faq" className="hover:text-white/80 transition-colors text-xs font-medium">
+        <div className="flex items-center gap-4">
+          <Link
+            href="/faq"
+            className="text-[11px] font-medium text-muted-foreground hover:text-foreground transition-colors"
+          >
             Help Center
           </Link>
-          <Link href="/contact" className="hover:text-white/80 transition-colors text-xs font-medium">
+          <Link
+            href="/contact"
+            className="text-[11px] font-medium text-muted-foreground hover:text-foreground transition-colors"
+          >
             Contact Us
           </Link>
-          <div className="flex items-center gap-2 border-l border-primary-foreground/20 pl-6">
-            <Phone className="h-3.5 w-3.5" />
-            <span className="text-xs font-medium">+1 (555) 123-4567</span>
-          </div>
+          <div className="w-px h-3 bg-border" />
+          <a
+            href="tel:+15551234567"
+            className="flex items-center gap-1.5 text-muted-foreground hover:text-foreground transition-colors"
+          >
+            <Headphones className="h-3.5 w-3.5" />
+            <span className="text-[11px] font-medium">+1 (555) 123-4567</span>
+          </a>
+          <div className="w-px h-3 bg-border" />
+          <LanguageCurrencySwitcher />
         </div>
       </div>
     </div>

@@ -13,21 +13,23 @@ interface SearchInputProps {
   loading: boolean;
   isOpen: boolean;
   inputRef: React.RefObject<HTMLInputElement | null>;
+  compact?: boolean;
 }
 
 export function SearchInput({
   value, onChange, onFocus, onClear, onSearch,
-  loading, isOpen, inputRef,
+  loading, isOpen, inputRef, compact,
 }: SearchInputProps) {
   return (
-    <form onSubmit={onSearch} className="relative z-[110]">
+    <form onSubmit={onSearch} className="relative z-[110] w-full">
       <div className="relative flex items-center">
         <Search
           className={cn(
-            "absolute left-4 w-4 h-4 transition-all duration-300",
-            isOpen || value
-              ? "text-primary scale-110"
-              : "text-muted-foreground group-hover:text-primary",
+            "absolute transition-colors duration-200",
+            compact
+              ? "left-3 w-4 h-4 text-muted-foreground"
+              : "left-4 w-[18px] h-[18px] sm:left-5",
+            isOpen || value ? "text-foreground" : "",
           )}
         />
         <Input
@@ -35,24 +37,29 @@ export function SearchInput({
           value={value}
           onChange={(e) => onChange(e.target.value)}
           onFocus={onFocus}
-          placeholder="Search assets or protocols..."
-          className="pl-10 sm:pl-12 pr-12 sm:pr-16 h-12 sm:h-14 rounded-xl sm:rounded-2xl bg-muted/50 border-border/50 focus:bg-background focus:ring-primary/20 transition-all shadow-lg shadow-transparent focus:shadow-primary/10 text-sm sm:text-base"
+          placeholder="Search products..."
+          className={cn(
+            "transition-all duration-200 w-full",
+            compact
+              ? "pl-10 pr-9 h-10 rounded-xl bg-muted/40 border-border/30 focus:bg-background focus:border-foreground/20 text-[13px] placeholder:text-muted-foreground/50"
+              : "pl-12 sm:pl-14 pr-14 sm:pr-16 h-12 sm:h-14 rounded-2xl bg-muted/50 border-border/50 focus:bg-background focus:border-foreground/20 focus:shadow-lg focus:shadow-primary/5 text-[14px] placeholder:text-muted-foreground/40",
+          )}
         />
-        <div className="absolute right-3 sm:right-4 flex items-center gap-1.5 sm:gap-2">
+        <div className={cn(
+          "absolute flex items-center gap-1.5",
+          compact ? "right-2.5" : "right-3 sm:right-4",
+        )}>
           {loading ? (
-            <Loader2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 animate-spin text-primary" />
-          ) : (
-            <div className="hidden md:flex items-center gap-1 px-2 py-1 rounded-md bg-muted border border-border/50 text-[10px] font-black text-muted-foreground uppercase tracking-tighter">
+            <Loader2 className={cn("animate-spin text-muted-foreground", compact ? "w-4 h-4" : "w-4 h-4")} />
+          ) : !compact ? (
+            <div className="hidden md:flex items-center gap-1 px-2 py-1 rounded-lg bg-muted/80 border border-border/50 text-[10px] font-medium text-muted-foreground/60">
               <Command className="w-2.5 h-2.5" /> K
             </div>
-          )}
+          ) : null}
           {value && (
-            <button
-              type="button"
-              onClick={onClear}
-              className="p-1 hover:bg-muted rounded-full transition-colors"
-            >
-              <X className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-muted-foreground" />
+            <button type="button" onClick={onClear}
+              className="p-0.5 rounded-full hover:bg-muted transition-colors">
+              <X className={cn("text-muted-foreground/50 hover:text-foreground transition-colors", compact ? "w-3.5 h-3.5" : "w-4 h-4")} />
             </button>
           )}
         </div>

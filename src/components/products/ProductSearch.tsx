@@ -4,7 +4,11 @@ import { useProductSearch } from "@/modules/products/hooks/use-product-search";
 import { SearchInput } from "./search/SearchInput";
 import { SearchDropdown } from "./search/SearchDropdown";
 
-export function ProductSearch() {
+interface ProductSearchProps {
+  compact?: boolean;
+}
+
+export function ProductSearch({ compact }: ProductSearchProps) {
   const {
     query, setQuery, suggestions, loading, isOpen, setIsOpen,
     recentSearches, setRecentSearches, selectedIndex, setSelectedIndex,
@@ -24,6 +28,7 @@ export function ProductSearch() {
         loading={loading}
         isOpen={isOpen}
         inputRef={inputRef}
+        compact={compact}
       />
 
       <SearchDropdown
