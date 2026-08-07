@@ -9,16 +9,16 @@ export function FooterBottomBar() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-      <p className="text-slate-600 text-xs font-medium text-center md:text-left">
-        &copy; {currentYear} {settings?.siteName || "Shop"}. All rights reserved. Made with &hearts; for premium shoppers.
+    <div className="flex flex-col md:flex-row justify-between items-center gap-3">
+      <p className="text-muted-foreground text-[11px] text-center md:text-left">
+        &copy; {currentYear} {settings?.siteName || "Shop"}. All rights reserved.
       </p>
-      <div className="flex flex-wrap justify-center gap-6">
+      <div className="flex flex-wrap justify-center gap-4">
         {LEGAL_LINKS.map((link) => (
           <Link
             key={link.label}
             href={link.href}
-            className="text-xs font-bold text-slate-600 hover:text-violet-400 transition-colors uppercase tracking-wider"
+            className="text-[11px] font-medium text-muted-foreground hover:text-foreground transition-colors"
           >
             {link.label}
           </Link>

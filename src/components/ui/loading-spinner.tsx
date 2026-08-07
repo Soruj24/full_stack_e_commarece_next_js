@@ -14,15 +14,15 @@ export function LoadingSpinner({
   const sizeClasses = {
     xs: "h-3 w-3 border",
     sm: "h-4 w-4 border-2",
-    md: "h-6 w-6 border-2",
-    lg: "h-8 w-8 border-2",
-    xl: "h-12 w-12 border-3",
+    md: "h-5 w-5 border-2",
+    lg: "h-7 w-7 border-2",
+    xl: "h-10 w-10 border-[3px]",
   };
 
   const variantClasses = {
-    default: "border-primary/20 border-t-primary",
-    secondary: "border-muted-foreground/20 border-t-muted-foreground",
-    primary: "border-primary border-t-transparent",
+    default: "border-primary/15 border-t-primary",
+    secondary: "border-muted-foreground/15 border-t-muted-foreground",
+    primary: "border-primary/20 border-t-primary",
   };
 
   return (
@@ -47,7 +47,7 @@ export function LoadingDots({ className }: { className?: string }) {
       {[0, 1, 2].map((i) => (
         <div
           key={i}
-          className="w-2 h-2 rounded-full bg-current animate-bounce"
+          className="w-1.5 h-1.5 rounded-full bg-current animate-bounce"
           style={{ animationDelay: `${i * 0.15}s` }}
         />
       ))}
@@ -69,9 +69,9 @@ export function LoadingPulse({ className }: { className?: string }) {
 export function PageLoader({ text = "Loading..." }: { text?: string }) {
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-background/80 backdrop-blur-sm z-50">
-      <div className="text-center space-y-4">
+      <div className="text-center space-y-3">
         <LoadingSpinner size="lg" className="mx-auto" />
-        <p className="text-sm font-medium text-muted-foreground animate-pulse">
+        <p className="text-sm text-muted-foreground">
           {text}
         </p>
       </div>

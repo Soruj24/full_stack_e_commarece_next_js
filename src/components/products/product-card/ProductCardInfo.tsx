@@ -80,8 +80,8 @@ export function ProductCardInfo({
           </span>
         </div>
         <Button
-          variant="premium"
-          className="rounded-2xl font-black text-xs h-10 px-4 gap-2 shadow-lg shadow-primary/10 group/btn"
+          variant="default"
+          className="rounded-lg text-xs h-9 px-4 gap-2 group/btn"
           disabled={product.stock === 0}
           onClick={handleAddToCart}
         >

@@ -1,10 +1,8 @@
 "use client";
 
-import { memo, useCallback } from "react";
+import { memo } from "react";
 import Link from "next/link";
 import { Heart, ShoppingCart } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { ModeToggle } from "@/components/mode-toggle";
 import { NotificationDropdown } from "./NotificationDropdown";
 import { UserMenu } from "./UserMenu";
@@ -25,7 +23,7 @@ function ActionButton({ children, label, onClick, href }: {
   onClick?: () => void;
   href?: string;
 }) {
-  const cls = "relative flex items-center justify-center w-10 h-10 rounded-full hover:bg-muted/60 transition-colors";
+  const cls = "relative flex items-center justify-center w-9 h-9 rounded-lg hover:bg-accent transition-colors";
 
   if (href) {
     return (
@@ -52,15 +50,15 @@ export const HeaderActions = memo(function HeaderActions({
       </div>
 
       <ActionButton label="Wishlist" href="/wishlist">
-        <Heart className="w-[20px] h-[20px] text-muted-foreground" />
+        <Heart className="w-[18px] h-[18px] text-muted-foreground" />
       </ActionButton>
 
       <ActionButton label={`Cart, ${totalItems} items`} onClick={onCartOpen}>
-        <ShoppingCart className="w-[20px] h-[20px] text-muted-foreground" />
+        <ShoppingCart className="w-[18px] h-[18px] text-muted-foreground" />
         {totalItems > 0 && (
           <span
             ref={badgeRef}
-            className="absolute -top-0.5 -right-0.5 min-w-[18px] h-[18px] px-1 rounded-full bg-foreground text-background text-[10px] font-semibold flex items-center justify-center ring-2 ring-background transition-transform"
+            className="absolute -top-0.5 -right-0.5 min-w-[16px] h-[16px] px-1 rounded-full bg-primary text-primary-foreground text-[10px] font-semibold flex items-center justify-center ring-2 ring-background"
           >
             {totalItems > 99 ? "99+" : totalItems}
           </span>

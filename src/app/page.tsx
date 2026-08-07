@@ -11,15 +11,15 @@ import { StatsSection } from "@/components/home/StatsSection";
 import { BrandsSection } from "@/components/home/BrandsSection";
 
 const FlashSale = dynamic(() => import("@/components/home/FlashSale").then(mod => ({ default: mod.FlashSale })), {
-  loading: () => <div className="h-[200px] bg-muted/20 animate-pulse rounded-2xl" />,
+  loading: () => <div className="h-[200px] bg-muted/30 animate-pulse rounded-xl" />,
 });
 
 const TrendingProducts = dynamic(() => import("@/components/home/TrendingProducts").then(mod => ({ default: mod.TrendingProducts })), {
-  loading: () => <div className="h-[400px] bg-muted/20 animate-pulse rounded-2xl" />,
+  loading: () => <div className="h-[400px] bg-muted/30 animate-pulse rounded-xl" />,
 });
 
 const AllProducts = dynamic(() => import("@/components/home/AllProducts").then(mod => ({ default: mod.AllProducts })), {
-  loading: () => <div className="h-[600px] bg-muted/20 animate-pulse rounded-2xl" />,
+  loading: () => <div className="h-[600px] bg-muted/30 animate-pulse rounded-xl" />,
 });
 
 const CTASection = dynamic(() => import("@/components/home/CTASection").then(mod => ({ default: mod.CTASection })));
@@ -37,41 +37,78 @@ export default async function HomePage() {
   saleEndTime.setHours(saleEndTime.getHours() + 24);
 
   return (
-    <div className="flex flex-col min-h-screen bg-background">
+    <div className="flex flex-col min-h-screen">
       <EcommerceHero />
-      <BrandsSection />
-      <CategoryGrid />
-      <StatsSection />
 
-      <div className="container mx-auto px-2 py-5">
-        <FlashSale endTime={saleEndTime} />
-      </div>
+      <section className="py-16 sm:py-20">
+        <BrandsSection />
+      </section>
 
-      <HowItWorksSection />
-      <TrendingProducts />
+      <section className="py-16 sm:py-20 bg-surface/50">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <CategoryGrid />
+        </div>
+      </section>
+
+      <section className="py-16 sm:py-20">
+        <StatsSection />
+      </section>
+
+      <section className="py-16 sm:py-20">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <FlashSale endTime={saleEndTime} />
+        </div>
+      </section>
+
+      <section className="py-16 sm:py-20 bg-surface/50">
+        <HowItWorksSection />
+      </section>
+
+      <section className="py-16 sm:py-20">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <TrendingProducts />
+        </div>
+      </section>
+
       <DynamicBanners />
-      <AllProducts />
-      <TestimonialsSection />
 
-      <div className="bg-muted/30 py-5">
+      <section className="py-16 sm:py-20">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <AllProducts />
+        </div>
+      </section>
+
+      <section className="py-16 sm:py-20 bg-surface/50">
+        <TestimonialsSection />
+      </section>
+
+      <section className="py-16 sm:py-20">
         <ProductRecommendations />
-      </div>
+      </section>
 
-      <div id="recently-viewed" className="container mx-auto px-4 py-16">
-        <RecentlyViewedProducts
-          title="Recently Viewed Products"
-          maxProducts={6}
-          showClearButton
-        />
-      </div>
+      <section className="py-16 sm:py-20">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <RecentlyViewedProducts
+            title="Recently Viewed"
+            maxProducts={6}
+            showClearButton
+          />
+        </div>
+      </section>
 
-      <TrustSection />
-      <Newsletter />
+      <section className="py-16 sm:py-20 bg-surface/50">
+        <TrustSection />
+      </section>
+
+      <section className="py-16 sm:py-20">
+        <Newsletter />
+      </section>
+
       <FeaturesSection />
 
-      <div className="py-5">
+      <section className="py-16 sm:py-20">
         <FAQSection />
-      </div>
+      </section>
 
       {!session && <CTASection />}
       <Footer />

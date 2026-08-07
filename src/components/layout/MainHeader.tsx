@@ -3,7 +3,6 @@
 import { useEffect, useRef, useCallback } from "react";
 import { ShoppingCart, Heart, Search, User } from "lucide-react";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useCart } from "@/modules/cart/context/CartContext";
 import { useNavbar } from "@/modules/common/hooks/use-navbar";
@@ -48,37 +47,34 @@ export function MainHeader() {
     <>
       <nav
         className={cn(
-          "sticky top-0 z-50 w-full transition-all duration-300 ease-out",
+          "sticky top-0 z-50 w-full transition-all duration-200",
           isScrolled
-            ? "bg-background/90 backdrop-blur-xl border-b border-border/30 shadow-[0_1px_3px_rgba(0,0,0,0.04)]"
-            : "bg-background border-b border-border/20",
+            ? "bg-background/95 backdrop-blur-lg border-b border-border/40 shadow-[0_1px_2px_rgba(0,0,0,0.03)]"
+            : "bg-background border-b border-border/40",
         )}
         role="navigation"
         aria-label="Main navigation"
       >
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className={cn(
-            "flex items-center justify-between transition-all duration-300 ease-out",
-            isScrolled ? "h-14" : "h-[72px]",
+            "flex items-center justify-between transition-all duration-200",
+            isScrolled ? "h-14" : "h-16",
           )}>
-            {/* Left — Logo */}
             <NavLogo />
 
-            {/* Center — Navigation */}
             <NavLinks pathname={pathname} megaMenuOpen={megaMenuOpen} setMegaMenuOpen={setMegaMenuOpen} />
 
-            {/* Right — Search + Actions */}
-            <div className="flex items-center gap-2">
-              <div className="hidden lg:block w-80">
+            <div className="flex items-center gap-1.5">
+              <div className="hidden lg:block w-72">
                 <SearchBar />
               </div>
 
               <button
                 onClick={() => setMobileSearchOpen(true)}
-                className="lg:hidden flex items-center justify-center w-10 h-10 rounded-full hover:bg-muted/60 transition-colors"
+                className="lg:hidden flex items-center justify-center w-9 h-9 rounded-lg hover:bg-accent transition-colors"
                 aria-label="Search"
               >
-                <Search className="w-[20px] h-[20px] text-muted-foreground" />
+                <Search className="w-[18px] h-[18px] text-muted-foreground" />
               </button>
 
               <HeaderActions
@@ -92,13 +88,13 @@ export function MainHeader() {
 
               <button
                 onClick={() => setMobileMenuOpen(true)}
-                className="lg:hidden flex items-center justify-center w-10 h-10 rounded-full hover:bg-muted/60 transition-colors"
+                className="lg:hidden flex items-center justify-center w-9 h-9 rounded-lg hover:bg-accent transition-colors"
                 aria-label="Open menu"
               >
-                <div className="flex flex-col gap-[5px] w-[18px]">
-                  <span className="block h-[1.5px] w-full bg-foreground/70 rounded-full" />
-                  <span className="block h-[1.5px] w-3/4 bg-foreground/70 rounded-full" />
-                  <span className="block h-[1.5px] w-full bg-foreground/70 rounded-full" />
+                <div className="flex flex-col gap-[4px] w-[16px]">
+                  <span className="block h-[1.5px] w-full bg-foreground/60 rounded-full" />
+                  <span className="block h-[1.5px] w-3/4 bg-foreground/60 rounded-full" />
+                  <span className="block h-[1.5px] w-full bg-foreground/60 rounded-full" />
                 </div>
               </button>
             </div>

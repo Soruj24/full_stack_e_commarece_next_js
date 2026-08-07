@@ -9,8 +9,8 @@ function Skeleton({
     <div
       data-slot="skeleton"
       className={cn(
-        "bg-accent animate-pulse rounded-xl",
-        variant === "rounded" && "rounded-2xl",
+        "bg-muted animate-pulse rounded-lg",
+        variant === "rounded" && "rounded-xl",
         variant === "circular" && "rounded-full",
         className
       )}

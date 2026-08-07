@@ -27,31 +27,22 @@ function isActive(pathname: string, href: string) {
 export function NavLinks({ pathname, megaMenuOpen, setMegaMenuOpen }: NavLinksProps) {
   return (
     <div className="hidden lg:flex items-center gap-0.5">
-      {/* Shop with mega menu */}
       <div className="relative">
         <button
           onClick={() => setMegaMenuOpen(!megaMenuOpen)}
           onMouseEnter={() => setMegaMenuOpen(true)}
           className={cn(
-            "flex items-center gap-1 px-3.5 py-2 text-[13px] font-medium rounded-lg transition-colors relative group",
-            megaMenuOpen ? "text-foreground" : "text-muted-foreground hover:text-foreground",
+            "flex items-center gap-1 px-3 py-1.5 text-[13px] font-medium rounded-md transition-colors",
+            megaMenuOpen ? "text-foreground bg-accent/50" : "text-muted-foreground hover:text-foreground hover:bg-accent/50",
           )}
           aria-expanded={megaMenuOpen}
           aria-haspopup="true"
         >
           Shop
-          <ChevronDown className={cn("w-3.5 h-3.5 transition-transform duration-200", megaMenuOpen && "rotate-180")} />
-          <span className={cn(
-            "absolute bottom-0.5 left-3.5 right-3.5 h-[1.5px] bg-foreground rounded-full origin-left transition-transform duration-200",
-            megaMenuOpen ? "scale-x-100" : "scale-x-0",
-          )} />
+          <ChevronDown className={cn("w-3.5 h-3.5 transition-transform duration-200 opacity-50", megaMenuOpen && "rotate-180")} />
         </button>
       </div>
 
-      {/* Separator */}
-      <span className="w-px h-4 bg-border/50 mx-1" />
-
-      {/* Regular links */}
       {links.map((link) => {
         const active = isActive(pathname, link.href);
         return (
@@ -59,15 +50,11 @@ export function NavLinks({ pathname, megaMenuOpen, setMegaMenuOpen }: NavLinksPr
             key={link.name}
             href={link.href}
             className={cn(
-              "px-3 py-2 text-[13px] font-medium rounded-lg transition-colors relative group",
-              active ? "text-foreground" : "text-muted-foreground hover:text-foreground",
+              "px-3 py-1.5 text-[13px] font-medium rounded-md transition-colors",
+              active ? "text-foreground" : "text-muted-foreground hover:text-foreground hover:bg-accent/50",
             )}
           >
             {link.name}
-            <span className={cn(
-              "absolute bottom-0.5 left-3 right-3 h-[1.5px] bg-foreground rounded-full origin-left transition-transform duration-200",
-              active ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100",
-            )} />
           </Link>
         );
       })}

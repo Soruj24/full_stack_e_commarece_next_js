@@ -191,17 +191,9 @@ export default async function RootLayout({
                 disableTransitionOnChange
               >
                 <NotificationLayout>
-                  <div className="min-h-screen flex flex-col bg-background text-foreground selection:bg-primary/30 selection:text-primary relative overflow-x-hidden">
-                    <div className="fixed inset-0 pointer-events-none z-0">
-                      <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-primary/5 rounded-full blur-[120px] animate-pulse" />
-                      <div
-                        className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-primary/5 rounded-full blur-[120px] animate-pulse"
-                        style={{ animationDelay: "2s" }}
-                      />
-                    </div>
-
+                  <div className="min-h-screen flex flex-col bg-background text-foreground selection:bg-primary/15 selection:text-foreground relative overflow-x-hidden">
                     <Header />
-                    <main className="flex-grow relative z-10">
+                    <main className="flex-grow">
                       <PageTransitionClient>{children}</PageTransitionClient>
                     </main>
                     <LiveChat />
