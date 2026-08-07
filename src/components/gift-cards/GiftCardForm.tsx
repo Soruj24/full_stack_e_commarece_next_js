@@ -44,11 +44,13 @@ export function GiftCardForm({ onApply, appliedCode, onRemove, maxAmount }: Gift
 
     try {
       const res = await fetch(`/api/gift-cards/${encodeURIComponent(code.trim())}`);
-      const data = await res.json();
 
       if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
         throw new Error(data.error || "Invalid gift card");
       }
+
+      const data = await res.json();
 
       if (!data.giftCard.isValid) {
         throw new Error("This gift card is no longer valid");

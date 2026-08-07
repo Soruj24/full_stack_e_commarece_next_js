@@ -36,6 +36,7 @@ export function useSupportTicketsPage() {
     setLoading(true);
     try {
       const res = await fetch("/api/tickets");
+      if (!res.ok) return;
       const data = await res.json();
       if (data.success) setTickets(data.tickets);
     } catch { toast.error("Failed to load tickets"); }
@@ -49,8 +50,8 @@ export function useSupportTicketsPage() {
     setSubmitting(true);
     try {
       const res = await fetch("/api/tickets", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(formData) });
+      if (!res.ok) { const data = await res.json().catch(() => ({})); throw new Error(data.error || "Failed to submit"); }
       const data = await res.json();
-      if (!res.ok) throw new Error(data.error);
       toast.success("Ticket submitted! We'll respond soon.");
       setIsCreateOpen(false);
       setFormData({ subject: "", category: "", message: "", email: "", name: "" });

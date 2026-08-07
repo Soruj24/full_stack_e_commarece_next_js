@@ -17,6 +17,7 @@ export function useAdminFaqs() {
     setLoading(true);
     try {
       const res = await fetch("/api/faqs");
+      if (!res.ok) return;
       const data = await res.json();
       if (data.success) setFaqs(data.data.flatMap((cat: { faqs: FaqItem[] }) => cat.faqs));
     } catch { toast.error("Failed to fetch FAQs"); }
@@ -32,8 +33,8 @@ export function useAdminFaqs() {
       const url = editingFaq ? `/api/faqs/${editingFaq._id}` : "/api/faqs";
       const method = editingFaq ? "PUT" : "POST";
       const res = await fetch(url, { method, headers: { "Content-Type": "application/json" }, body: JSON.stringify(formData) });
+      if (!res.ok) { const data = await res.json().catch(() => ({})); throw new Error(data.error || "Failed to save"); }
       const data = await res.json();
-      if (!res.ok) throw new Error(data.error);
       toast.success(editingFaq ? "FAQ updated" : "FAQ created");
       setIsCreateOpen(false);
       setEditingFaq(null);

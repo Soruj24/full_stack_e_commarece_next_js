@@ -1,10 +1,14 @@
 import { Notification } from "@/modules/notifications/context/NotificationContext";
 
 export async function fetchNotifications(userId: string) {
-  const response = await fetch(`/api/notifications?userId=${userId}`);
-  if (!response.ok) throw new Error("Failed to fetch notifications");
-  const data = await response.json();
-  return data.notifications || [];
+  try {
+    const response = await fetch(`/api/notifications?userId=${userId}`);
+    if (!response.ok) return [];
+    const data = await response.json();
+    return data.notifications || [];
+  } catch {
+    return [];
+  }
 }
 
 export async function markAsRead(id: string) {

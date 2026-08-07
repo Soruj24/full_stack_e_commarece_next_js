@@ -1,4 +1,5 @@
 import type { User, ContactMessage, IAuditLog } from "@/shared/types";
+import { csrfFetch } from "@/lib/security/csrf-client";
 
 interface AdminStats {
   totalRevenue: number;
@@ -28,44 +29,52 @@ interface AdminSettings {
 
 export type { AdminStats, AdminSettings };
 
+async function safeJson(res: Response) {
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({ error: `HTTP ${res.status}` }));
+    throw new Error(err.error || `HTTP ${res.status}`);
+  }
+  return res.json();
+}
+
 export async function fetchUsers(): Promise<User[]> {
   const res = await fetch("/api/admin/users");
-  const data = await res.json();
+  const data = await safeJson(res);
   if (data.success) return data.users;
   return [];
 }
 
 export async function fetchContactMessages(): Promise<ContactMessage[]> {
   const res = await fetch("/api/contact");
-  const data = await res.json();
+  const data = await safeJson(res);
   if (Array.isArray(data)) return data;
   return [];
 }
 
 export async function fetchSettings(): Promise<AdminSettings | null> {
   const res = await fetch("/api/admin/settings");
-  const data = await res.json();
+  const data = await safeJson(res);
   if (data.success) return data.settings;
   return null;
 }
 
 export async function fetchAuditLogs(): Promise<IAuditLog[]> {
   const res = await fetch("/api/admin/audit-logs");
-  const data = await res.json();
+  const data = await safeJson(res);
   if (data.success) return data.logs;
   return [];
 }
 
 export async function fetchActivityData(): Promise<{ date: string; count: number }[]> {
   const res = await fetch("/api/admin/activity");
-  const data = await res.json();
+  const data = await safeJson(res);
   if (data.success) return data.data;
   return [];
 }
 
 export async function fetchAnalytics(): Promise<AdminStats | null> {
   const res = await fetch("/api/admin/analytics");
-  const data = await res.json();
+  const data = await safeJson(res);
   if (data.summary) {
     return {
       totalRevenue: data.summary.revenue,
@@ -80,7 +89,7 @@ export async function fetchAnalytics(): Promise<AdminStats | null> {
 }
 
 export async function deleteUser(userId: string): Promise<boolean> {
-  const res = await fetch("/api/admin/users", {
+  const res = await csrfFetch("/api/admin/users", {
     method: "DELETE",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ userId }),
@@ -89,7 +98,7 @@ export async function deleteUser(userId: string): Promise<boolean> {
 }
 
 export async function changeUserRole(userId: string, role: string): Promise<boolean> {
-  const res = await fetch("/api/admin/users", {
+  const res = await csrfFetch("/api/admin/users", {
     method: "PATCH",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ userId, role }),
@@ -98,7 +107,7 @@ export async function changeUserRole(userId: string, role: string): Promise<bool
 }
 
 export async function updateUserStatus(userId: string, status: string): Promise<boolean> {
-  const res = await fetch("/api/admin/users", {
+  const res = await csrfFetch("/api/admin/users", {
     method: "PATCH",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ userId, status }),
@@ -107,31 +116,31 @@ export async function updateUserStatus(userId: string, status: string): Promise<
 }
 
 export async function deleteContactMessage(id: string): Promise<boolean> {
-  const res = await fetch(`/api/contact?id=${id}`, { method: "DELETE" });
+  const res = await csrfFetch(`/api/contact?id=${id}`, { method: "DELETE" });
   return res.ok;
 }
 
 export async function updateSettings(settings: AdminSettings): Promise<{ success: boolean; error?: string }> {
-  const res = await fetch("/api/admin/settings", {
+  const res = await csrfFetch("/api/admin/settings", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(settings),
   });
-  return res.json();
+  return safeJson(res);
 }
 
 export async function setup2FA(): Promise<{ qrCodeUrl: string; secret: string } | null> {
-  const res = await fetch("/api/auth/2fa/setup", { method: "POST" });
-  const data = await res.json();
+  const res = await csrfFetch("/api/auth/2fa/setup", { method: "POST" });
+  const data = await safeJson(res);
   if (data.qrCodeUrl) return data;
   return null;
 }
 
 export async function verify2FA(token: string): Promise<{ success: boolean; error?: string }> {
-  const res = await fetch("/api/auth/2fa/verify", {
+  const res = await csrfFetch("/api/auth/2fa/verify", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ token }),
   });
-  return res.json();
+  return safeJson(res);
 }

@@ -1,13 +1,28 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import {
-  LayoutDashboard, ShoppingBag, Package, Heart, MapPin, CreditCard,
-  Bell, Settings, Shield, User, Download, FileText, RotateCcw,
-  HelpCircle, Menu, X, ChevronRight, LogOut,
+  LayoutDashboard,
+  ShoppingBag,
+  Package,
+  Heart,
+  MapPin,
+  CreditCard,
+  Bell,
+  Settings,
+  Shield,
+  User,
+  Download,
+  FileText,
+  RotateCcw,
+  HelpCircle,
+  Menu,
+  X,
+  ChevronRight,
+  LogOut,
 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { cn } from "@/lib/utils";
@@ -17,9 +32,7 @@ import { motion, AnimatePresence } from "framer-motion";
 const sidebarSections = [
   {
     label: "Overview",
-    items: [
-      { label: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
-    ],
+    items: [{ label: "Dashboard", href: "/dashboard", icon: LayoutDashboard }],
   },
   {
     label: "Shopping",
@@ -35,7 +48,11 @@ const sidebarSections = [
     items: [
       { label: "My Profile", href: "/dashboard/profile", icon: User },
       { label: "Addresses", href: "/dashboard/addresses", icon: MapPin },
-      { label: "Payment Methods", href: "/dashboard/payments", icon: CreditCard },
+      {
+        label: "Payment Methods",
+        href: "/dashboard/payments",
+        icon: CreditCard,
+      },
       { label: "Security", href: "/dashboard/security", icon: Shield },
     ],
   },
@@ -50,18 +67,36 @@ const sidebarSections = [
     label: "Activity",
     items: [
       { label: "Notifications", href: "/dashboard/notifications", icon: Bell },
-      { label: "Support Tickets", href: "/dashboard/support/tickets", icon: HelpCircle },
-      { label: "Account Settings", href: "/dashboard/settings", icon: Settings },
+      {
+        label: "Support Tickets",
+        href: "/dashboard/support/tickets",
+        icon: HelpCircle,
+      },
+      {
+        label: "Account Settings",
+        href: "/dashboard/settings",
+        icon: Settings,
+      },
     ],
   },
 ];
 
-export default function CustomerDashboardLayout({ children }: { children: React.ReactNode }) {
+export default function CustomerDashboardLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const pathname = usePathname();
   const router = useRouter();
   const { data: session, status } = useSession();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [collapsed, setCollapsed] = useState(false);
+
+  useEffect(() => {
+    if (status === "unauthenticated") {
+      router.push("/login?redirect=/dashboard");
+    }
+  }, [status, router]);
 
   if (status === "loading") {
     return (
@@ -72,7 +107,6 @@ export default function CustomerDashboardLayout({ children }: { children: React.
   }
 
   if (!session) {
-    router.push("/login?redirect=/dashboard");
     return null;
   }
 
@@ -82,19 +116,26 @@ export default function CustomerDashboardLayout({ children }: { children: React.
       <aside
         className={cn(
           "hidden lg:flex flex-col bg-card border-r border-border/50 transition-all duration-300 sticky top-0 h-screen overflow-hidden",
-          collapsed ? "w-20" : "w-72"
+          collapsed ? "w-20" : "w-72",
         )}
       >
         {/* Sidebar Header */}
         <div className="flex items-center justify-between p-4 border-b border-border/50">
-          <div className={cn("flex items-center gap-3", collapsed && "justify-center w-full")}>
+          <div
+            className={cn(
+              "flex items-center gap-3",
+              collapsed && "justify-center w-full",
+            )}
+          >
             <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-primary to-purple-600 flex items-center justify-center shadow-lg shadow-primary/20">
               <span className="text-white font-black text-lg">N</span>
             </div>
             {!collapsed && (
               <div>
                 <h3 className="font-black text-sm tracking-tight">Nexus</h3>
-                <p className="text-[10px] text-muted-foreground font-bold uppercase tracking-wider">Customer Dashboard</p>
+                <p className="text-[10px] text-muted-foreground font-bold uppercase tracking-wider">
+                  Customer Dashboard
+                </p>
               </div>
             )}
           </div>
@@ -102,7 +143,7 @@ export default function CustomerDashboardLayout({ children }: { children: React.
             onClick={() => setCollapsed(!collapsed)}
             className={cn(
               "p-1.5 rounded-xl hover:bg-muted transition-colors",
-              collapsed && "hidden"
+              collapsed && "hidden",
             )}
           >
             <ChevronRight className="w-4 h-4 text-muted-foreground" />
@@ -121,7 +162,9 @@ export default function CustomerDashboardLayout({ children }: { children: React.
               <div className="space-y-1">
                 {section.items.map((item) => {
                   const Icon = item.icon;
-                  const isActive = pathname === item.href || pathname.startsWith(item.href + "/");
+                  const isActive =
+                    pathname === item.href ||
+                    pathname.startsWith(item.href + "/");
                   return (
                     <Link
                       key={item.href}
@@ -132,11 +175,18 @@ export default function CustomerDashboardLayout({ children }: { children: React.
                         collapsed && "justify-center px-2",
                         isActive
                           ? "bg-primary text-primary-foreground shadow-lg shadow-primary/20 font-bold"
-                          : "text-muted-foreground hover:bg-muted hover:text-foreground font-medium"
+                          : "text-muted-foreground hover:bg-muted hover:text-foreground font-medium",
                       )}
                       title={collapsed ? item.label : undefined}
                     >
-                      <Icon className={cn("w-5 h-5 shrink-0", isActive ? "text-primary-foreground" : "text-muted-foreground")} />
+                      <Icon
+                        className={cn(
+                          "w-5 h-5 shrink-0",
+                          isActive
+                            ? "text-primary-foreground"
+                            : "text-muted-foreground",
+                        )}
+                      />
                       {!collapsed && (
                         <span className="text-sm truncate">{item.label}</span>
                       )}
@@ -149,18 +199,33 @@ export default function CustomerDashboardLayout({ children }: { children: React.
         </nav>
 
         {/* Sidebar Footer */}
-        <div className={cn("p-3 border-t border-border/50", collapsed && "flex flex-col items-center")}>
-          <div className={cn("flex items-center gap-3 p-3 rounded-2xl bg-muted/50", collapsed && "justify-center p-2")}>
+        <div
+          className={cn(
+            "p-3 border-t border-border/50",
+            collapsed && "flex flex-col items-center",
+          )}
+        >
+          <div
+            className={cn(
+              "flex items-center gap-3 p-3 rounded-2xl bg-muted/50",
+              collapsed && "justify-center p-2",
+            )}
+          >
             <Avatar className="w-9 h-9 rounded-xl border-2 border-background shrink-0">
               <AvatarImage src={session.user.image || ""} />
               <AvatarFallback className="bg-gradient-to-br from-primary to-purple-500 text-primary-foreground text-sm font-bold rounded-xl">
-                {session.user.name?.charAt(0) || session.user.email?.charAt(0).toUpperCase()}
+                {session.user.name?.charAt(0) ||
+                  session.user.email?.charAt(0).toUpperCase()}
               </AvatarFallback>
             </Avatar>
             {!collapsed && (
               <div className="flex-1 min-w-0">
-                <p className="text-sm font-bold truncate">{session.user.name || "User"}</p>
-                <p className="text-[10px] text-muted-foreground truncate">{session.user.email}</p>
+                <p className="text-sm font-bold truncate">
+                  {session.user.name || "User"}
+                </p>
+                <p className="text-[10px] text-muted-foreground truncate">
+                  {session.user.email}
+                </p>
               </div>
             )}
           </div>
@@ -201,7 +266,9 @@ export default function CustomerDashboardLayout({ children }: { children: React.
                   </div>
                   <div>
                     <h3 className="font-black text-sm">Nexus</h3>
-                    <p className="text-[10px] text-muted-foreground font-bold uppercase tracking-wider">Dashboard</p>
+                    <p className="text-[10px] text-muted-foreground font-bold uppercase tracking-wider">
+                      Dashboard
+                    </p>
                   </div>
                 </div>
                 <button
@@ -221,7 +288,9 @@ export default function CustomerDashboardLayout({ children }: { children: React.
                     <div className="space-y-1">
                       {section.items.map((item) => {
                         const Icon = item.icon;
-                        const isActive = pathname === item.href || pathname.startsWith(item.href + "/");
+                        const isActive =
+                          pathname === item.href ||
+                          pathname.startsWith(item.href + "/");
                         return (
                           <Link
                             key={item.href}
@@ -231,10 +300,17 @@ export default function CustomerDashboardLayout({ children }: { children: React.
                               "flex items-center gap-3 px-3 py-2.5 rounded-2xl transition-all duration-200",
                               isActive
                                 ? "bg-primary text-primary-foreground shadow-lg shadow-primary/20 font-bold"
-                                : "text-muted-foreground hover:bg-muted hover:text-foreground font-medium"
+                                : "text-muted-foreground hover:bg-muted hover:text-foreground font-medium",
                             )}
                           >
-                            <Icon className={cn("w-5 h-5", isActive ? "text-primary-foreground" : "text-muted-foreground")} />
+                            <Icon
+                              className={cn(
+                                "w-5 h-5",
+                                isActive
+                                  ? "text-primary-foreground"
+                                  : "text-muted-foreground",
+                              )}
+                            />
                             <span className="text-sm">{item.label}</span>
                           </Link>
                         );
@@ -249,12 +325,17 @@ export default function CustomerDashboardLayout({ children }: { children: React.
                   <Avatar className="w-9 h-9 rounded-xl border-2 border-background shrink-0">
                     <AvatarImage src={session.user.image || ""} />
                     <AvatarFallback className="bg-gradient-to-br from-primary to-purple-500 text-primary-foreground text-sm font-bold rounded-xl">
-                      {session.user.name?.charAt(0) || session.user.email?.charAt(0).toUpperCase()}
+                      {session.user.name?.charAt(0) ||
+                        session.user.email?.charAt(0).toUpperCase()}
                     </AvatarFallback>
                   </Avatar>
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm font-bold truncate">{session.user.name || "User"}</p>
-                    <p className="text-[10px] text-muted-foreground truncate">{session.user.email}</p>
+                    <p className="text-sm font-bold truncate">
+                      {session.user.name || "User"}
+                    </p>
+                    <p className="text-[10px] text-muted-foreground truncate">
+                      {session.user.email}
+                    </p>
                   </div>
                 </div>
                 <button
@@ -290,7 +371,8 @@ export default function CustomerDashboardLayout({ children }: { children: React.
             <Avatar className="w-9 h-9 rounded-xl border-2 border-border">
               <AvatarImage src={session.user.image || ""} />
               <AvatarFallback className="bg-muted text-xs font-bold">
-                {session.user.name?.charAt(0) || session.user.email?.charAt(0).toUpperCase()}
+                {session.user.name?.charAt(0) ||
+                  session.user.email?.charAt(0).toUpperCase()}
               </AvatarFallback>
             </Avatar>
           </div>

@@ -1,4 +1,5 @@
 import { Vendor } from "@/modules/vendor/types/vendor";
+import { csrfFetch } from "@/lib/security/csrf-client";
 
 interface VendorApiResponse {
   success: boolean;
@@ -15,6 +16,7 @@ export async function fetchVendors(
         ? `/api/vendors?status=${statusFilter}`
         : "/api/vendors";
     const res = await fetch(url);
+    if (!res.ok) return [];
     const data: VendorApiResponse = await res.json();
     if (data.success && Array.isArray(data.vendors)) {
       return data.vendors;
@@ -35,11 +37,12 @@ export async function updateVendorStatus(
     body.rejectedReason = rejectedReason;
   }
 
-  const res = await fetch(`/api/vendors/${vendorId}`, {
+  const res = await csrfFetch(`/api/vendors/${vendorId}`, {
     method: "PATCH",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(body),
   });
 
+  if (!res.ok) return { success: false, error: `HTTP ${res.status}` };
   return res.json();
 }

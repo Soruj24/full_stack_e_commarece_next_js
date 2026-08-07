@@ -8,6 +8,7 @@ interface SearchResponse {
 
 export async function fetchSuggestionsAPI(searchQuery: string) {
   const res = await fetch(`/api/search/suggestions?q=${encodeURIComponent(searchQuery)}`);
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
   return res.json();
 }
 
@@ -24,12 +25,14 @@ export async function performSearchAPI(query: string, filters: SearchFilters, pa
   params.set("page", page.toString());
   params.set("limit", "20");
   const res = await fetch(`/api/search?${params.toString()}`);
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
   return res.json();
 }
 
 export async function fetchSearchSuggestions(query: string): Promise<SearchSuggestions | null> {
   try {
     const res = await fetch(`/api/products/search?q=${query}`);
+    if (!res.ok) return null;
     const data: SearchResponse = await res.json();
     if (data.success && data.suggestions) {
       return data.suggestions;

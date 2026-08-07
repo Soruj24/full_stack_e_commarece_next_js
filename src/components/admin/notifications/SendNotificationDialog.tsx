@@ -96,9 +96,8 @@ export function SendNotificationDialog({
         body: JSON.stringify(body),
       });
 
-      const data = await res.json();
-
       if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
         throw new Error(data.error || "Failed to send notification");
       }
 

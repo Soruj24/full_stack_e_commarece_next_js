@@ -79,9 +79,8 @@ export function RoleFormDialog({
         body: JSON.stringify(formData),
       });
 
-      const data = await res.json();
-
       if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
         throw new Error(data.error || "Failed to save role");
       }
 

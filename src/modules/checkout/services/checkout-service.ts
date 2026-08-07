@@ -1,3 +1,5 @@
+import { csrfFetch } from "@/lib/security/csrf-client";
+
 export interface PaymentSettings {
   stripe: boolean; paypal: boolean; cod: boolean;
   bkash: boolean; nagad: boolean; rocket: boolean;
@@ -6,6 +8,7 @@ export interface PaymentSettings {
 export async function fetchPaymentSettings(): Promise<PaymentSettings> {
   try {
     const res = await fetch("/api/settings");
+    if (!res.ok) return { stripe: true, paypal: true, cod: true, bkash: true, nagad: true, rocket: true };
     const data = await res.json();
     if (data.success && data.settings) {
       return {
@@ -24,11 +27,14 @@ export async function fetchPaymentSettings(): Promise<PaymentSettings> {
 export interface CouponResult { success: boolean; discount?: number; error?: string }
 
 export async function validateCoupon(code: string, cartTotal: number): Promise<CouponResult> {
-  const res = await fetch("/api/coupons/validate", {
+  const res = await csrfFetch("/api/coupons/validate", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ code, cartTotal }),
   });
+  if (!res.ok) {
+    return { success: false, error: `HTTP ${res.status}` };
+  }
   const data = await res.json();
   if (data.success) {
     return { success: true, discount: data.coupon.discount };
@@ -37,7 +43,7 @@ export async function validateCoupon(code: string, cartTotal: number): Promise<C
 }
 
 export async function createPaymentIntent(amount: number, currency: string, itemCount: number) {
-  const res = await fetch("/api/payments/create-intent", {
+  const res = await csrfFetch("/api/payments/create-intent", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
@@ -46,16 +52,24 @@ export async function createPaymentIntent(amount: number, currency: string, item
       metadata: { orderItems: itemCount },
     }),
   });
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({ error: `HTTP ${res.status}` }));
+    throw new Error(err.error || "Payment intent creation failed");
+  }
   return res.json();
 }
 
 export async function placeOrder(orderData: Record<string, unknown>, isGuest: boolean) {
   const endpoint = isGuest ? "/api/orders/guest" : "/api/orders";
-  const res = await fetch(endpoint, {
+  const res = await csrfFetch(endpoint, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(orderData),
   });
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({ error: `HTTP ${res.status}` }));
+    return { status: res.status, data: { success: false, error: err.error || "Order failed" } };
+  }
   const data = await res.json();
   return { status: res.status, data };
 }

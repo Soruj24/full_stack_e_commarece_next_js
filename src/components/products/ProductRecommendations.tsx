@@ -16,12 +16,10 @@ export function ProductRecommendations() {
     const fetchRecommendations = async () => {
       try {
         const res = await fetch("/api/products/recommendations");
-        const data = await res.json();
         if (!res.ok) {
-          throw new Error(
-            (data && data.error) || "Failed to fetch recommendations",
-          );
+          throw new Error("Failed to fetch recommendations");
         }
+        const data = await res.json();
         const list = Array.isArray(data)
           ? data
           : Array.isArray((data as { products?: IProduct[] }).products)

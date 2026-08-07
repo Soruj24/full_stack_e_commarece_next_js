@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import crypto from "crypto";
 
-const CSRF_COOKIE = "__Host-csrf-token";
+const CSRF_COOKIE = "csrf-token";
 const CSRF_HEADER = "x-csrf-token";
 const SAFE_METHODS = ["GET", "HEAD", "OPTIONS"];
 
@@ -13,7 +13,7 @@ export function generateCsrfToken(): string {
 export function setCsrfCookie(response: NextResponse): NextResponse {
   const token = generateCsrfToken();
   response.cookies.set(CSRF_COOKIE, token, {
-    httpOnly: true,
+    httpOnly: false,
     secure: process.env.NODE_ENV === "production",
     sameSite: "strict",
     path: "/",

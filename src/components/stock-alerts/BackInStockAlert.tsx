@@ -33,9 +33,8 @@ export function BackInStockAlert({ productId, productName, currentStock, userEma
         body: JSON.stringify({ productId, email }),
       });
 
-      const data = await res.json();
-
       if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
         throw new Error(data.error || "Failed to subscribe");
       }
 

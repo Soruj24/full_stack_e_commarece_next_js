@@ -6,6 +6,10 @@ const BASE = "/api/products";
 
 export async function fetchProduct(id: string) {
   const res = await fetch(`${BASE}/${id}`);
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({ error: `HTTP ${res.status}` }));
+    throw new Error(err.error || "Failed to fetch product");
+  }
   const data = await res.json();
   if (data.success) return data.product;
   throw new Error(data.error || "Failed to fetch product");

@@ -1,3 +1,13 @@
+const CSRF_COOKIE = "csrf-token";
+const CSRF_HEADER = "x-csrf-token";
+const SAFE_METHODS = ["GET", "HEAD", "OPTIONS"];
+
+function getCsrfToken(): string | null {
+  if (typeof document === "undefined") return null;
+  const match = document.cookie.match(new RegExp(`(?:^|;\\s*)${CSRF_COOKIE}=([^;]*)`));
+  return match ? decodeURIComponent(match[1]) : null;
+}
+
 type RequestOptions = {
   method?: string;
   body?: unknown;
@@ -21,12 +31,21 @@ class ApiClient {
       url += `?${searchParams.toString()}`;
     }
 
+    const requestHeaders: Record<string, string> = {
+      "Content-Type": "application/json",
+      ...headers,
+    };
+
+    if (!SAFE_METHODS.includes(method.toUpperCase())) {
+      const csrfToken = getCsrfToken();
+      if (csrfToken) {
+        requestHeaders[CSRF_HEADER] = csrfToken;
+      }
+    }
+
     const response = await fetch(url, {
       method,
-      headers: {
-        "Content-Type": "application/json",
-        ...headers,
-      },
+      headers: requestHeaders,
       body: body ? JSON.stringify(body) : undefined,
     });
 

@@ -15,6 +15,7 @@ export function useResetPassword(token: string) {
     const validate = async () => {
       try {
         const res = await fetch(`/api/auth/validate-token?token=${token}`);
+        if (!res.ok) { setError("Invalid or expired password reset link. Please request a new one."); return; }
         const data = await res.json();
         if (data.valid) setIsValidToken(true);
         else setError("Invalid or expired password reset link. Please request a new one.");
@@ -42,8 +43,8 @@ export function useResetPassword(token: string) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ token, password }),
       });
+      if (!res.ok) { const data = await res.json().catch(() => ({})); throw new Error(data.error || "Failed to reset password"); }
       const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Failed to reset password");
       setMessage("Password updated successfully! Redirecting to login...");
       setTimeout(() => router.push("/login"), 2000);
     } catch (err) {

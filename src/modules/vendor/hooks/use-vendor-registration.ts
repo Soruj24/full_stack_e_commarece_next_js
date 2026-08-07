@@ -36,6 +36,7 @@ export function useVendorRegistration() {
     const checkVendor = async () => {
       try {
         const res = await fetch("/api/vendors");
+        if (!res.ok) return;
         const data = await res.json();
         if (data.success && data.vendors?.length > 0) setExistingVendor(data.vendors[0]);
       } catch { /* no vendor */ }
@@ -64,8 +65,8 @@ export function useVendorRegistration() {
           address: { street: formData.street, city: formData.city, state: formData.state, zipCode: formData.zipCode, country: formData.country },
         }),
       });
+      if (!res.ok) { const data = await res.json().catch(() => ({})); throw new Error(data.error || "Failed to submit application"); }
       const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Failed to submit application");
       toast.success("Application submitted! We'll review it soon.");
       router.push("/vendor/dashboard");
     } catch (err) {

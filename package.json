@@ -13,7 +13,7 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:ci": "vitest run --reporter=verbose",
-    "seed": "tsx seed.ts",
+    "seed": "tsx src/core/database/seed/seed.ts",
     "docker:build": "docker compose build",
     "docker:up": "docker compose up",
     "docker:prod": "docker compose -f docker-compose.prod.yml up -d"

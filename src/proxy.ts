@@ -108,16 +108,16 @@ export const proxy = auth(async (req) => {
     }
   }
 
-  // Auth checks
-  if (isLoggedIn && status === "banned" && nextUrl.pathname !== "/banned") {
+  // Auth checks — redirects only for page routes, never for API routes
+  if (isLoggedIn && status === "banned" && nextUrl.pathname !== "/banned" && !isApiRoute) {
     return NextResponse.redirect(new URL("/banned", nextUrl));
   }
 
-  if (isLoggedIn && (nextUrl.pathname === LOGIN || nextUrl.pathname === "/register")) {
+  if (isLoggedIn && (nextUrl.pathname === LOGIN || nextUrl.pathname === "/register") && !isApiRoute) {
     return NextResponse.redirect(new URL("/dashboard", nextUrl));
   }
 
-  if (isAdminRoute && role !== "admin") {
+  if (isAdminRoute && role !== "admin" && !isApiRoute) {
     return NextResponse.redirect(new URL("/dashboard", nextUrl));
   }
 
