@@ -26,20 +26,29 @@ function isActive(pathname: string, href: string) {
 
 export function NavLinks({ pathname, megaMenuOpen, setMegaMenuOpen }: NavLinksProps) {
   return (
-    <div className="hidden lg:flex items-center gap-0.5">
+    <div className="hidden lg:flex items-center gap-0.5" role="menubar">
       <div className="relative">
         <button
           onClick={() => setMegaMenuOpen(!megaMenuOpen)}
           onMouseEnter={() => setMegaMenuOpen(true)}
           className={cn(
-            "flex items-center gap-1 px-3 py-1.5 text-[13px] font-medium rounded-md transition-colors",
-            megaMenuOpen ? "text-foreground bg-accent/50" : "text-muted-foreground hover:text-foreground hover:bg-accent/50",
+            "nav-link-group flex items-center gap-1 px-3 py-1.5 text-[13px] font-medium rounded-lg transition-colors duration-150",
+            megaMenuOpen
+              ? "text-foreground"
+              : "text-muted-foreground hover:text-foreground",
           )}
           aria-expanded={megaMenuOpen}
           aria-haspopup="true"
+          role="menuitem"
+          data-active={megaMenuOpen}
         >
           Shop
-          <ChevronDown className={cn("w-3.5 h-3.5 transition-transform duration-200 opacity-50", megaMenuOpen && "rotate-180")} />
+          <ChevronDown
+            className={cn(
+              "w-3.5 h-3.5 transition-transform duration-200 opacity-50",
+              megaMenuOpen && "rotate-180",
+            )}
+          />
         </button>
       </div>
 
@@ -50,9 +59,14 @@ export function NavLinks({ pathname, megaMenuOpen, setMegaMenuOpen }: NavLinksPr
             key={link.name}
             href={link.href}
             className={cn(
-              "px-3 py-1.5 text-[13px] font-medium rounded-md transition-colors",
-              active ? "text-foreground" : "text-muted-foreground hover:text-foreground hover:bg-accent/50",
+              "nav-link-group px-3 py-1.5 text-[13px] font-medium rounded-lg transition-colors duration-150",
+              active
+                ? "text-foreground nav-active-indicator"
+                : "text-muted-foreground hover:text-foreground",
             )}
+            role="menuitem"
+            data-active={active}
+            aria-current={active ? "page" : undefined}
           >
             {link.name}
           </Link>

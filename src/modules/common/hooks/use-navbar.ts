@@ -15,6 +15,7 @@ export function useNavbar() {
   const [megaMenuOpen, setMegaMenuOpen] = useState(false);
   const [cartDrawerOpen, setCartDrawerOpen] = useState(false);
   const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
+  const [commandSearchOpen, setCommandSearchOpen] = useState(false);
   const [categories, setCategories] = useState<ICategory[]>([]);
   const pathname = usePathname();
   const router = useRouter();
@@ -36,6 +37,20 @@ export function useNavbar() {
     setMegaMenuOpen(false);
     setMobileMenuOpen(false);
   }, [pathname]);
+
+  // Keyboard shortcuts
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      const isMod = e.metaKey || e.ctrlKey;
+      // Cmd+K / Ctrl+K — open command search
+      if (isMod && e.key === "k") {
+        e.preventDefault();
+        setCommandSearchOpen((prev) => !prev);
+      }
+    };
+    document.addEventListener("keydown", handler);
+    return () => document.removeEventListener("keydown", handler);
+  }, []);
 
   const handleLogout = async () => {
     try {
@@ -63,6 +78,8 @@ export function useNavbar() {
     setCartDrawerOpen,
     mobileSearchOpen,
     setMobileSearchOpen,
+    commandSearchOpen,
+    setCommandSearchOpen,
     categories,
     pathname,
     handleLogout,

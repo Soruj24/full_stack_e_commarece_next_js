@@ -1,6 +1,6 @@
 "use client";
 
-import { Search } from "lucide-react";
+import { Search, Command } from "lucide-react";
 import { ProductSearch } from "@/components/products/ProductSearch";
 
 export function SearchBar() {

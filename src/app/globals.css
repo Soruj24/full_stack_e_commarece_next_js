@@ -255,4 +255,110 @@
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
   }
+
+  /* Navbar premium animations */
+  .nav-active-indicator {
+    position: relative;
+  }
+  .nav-active-indicator::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 16px;
+    height: 2px;
+    background: currentColor;
+    border-radius: 999px;
+    opacity: 0.9;
+  }
+
+  .nav-link-group {
+    position: relative;
+  }
+  .nav-link-group::before {
+    content: '';
+    position: absolute;
+    inset: 4px -4px;
+    border-radius: 6px;
+    background: transparent;
+    transition: background 0.15s ease;
+    z-index: -1;
+  }
+  .nav-link-group:hover::before {
+    background: oklch(0.5 0 0 / 0.04);
+  }
+  .dark .nav-link-group:hover::before {
+    background: oklch(0.8 0 0 / 0.06);
+  }
+  .nav-link-group[data-active="true"]::before {
+    background: oklch(0.5 0 0 / 0.04);
+  }
+  .dark .nav-link-group[data-active="true"]::before {
+    background: oklch(0.8 0 0 / 0.06);
+  }
+
+  /* Mega menu backdrop */
+  .mega-backdrop {
+    backdrop-filter: blur(12px) saturate(120%);
+    -webkit-backdrop-filter: blur(12px) saturate(120%);
+  }
+
+  /* Command search overlay */
+  .command-overlay {
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+
+  /* Premium focus ring */
+  .focus-premium {
+    outline: none;
+  }
+  .focus-premium:focus-visible {
+    box-shadow: 0 0 0 2px oklch(0.45 0.18 262 / 0.2);
+  }
+  .dark .focus-premium:focus-visible {
+    box-shadow: 0 0 0 2px oklch(0.62 0.19 262 / 0.25);
+  }
+
+  /* Tooltip */
+  .tooltip-trigger {
+    position: relative;
+  }
+  .tooltip-trigger::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: calc(100% + 6px);
+    left: 50%;
+    transform: translateX(-50%) translateY(4px);
+    padding: 4px 8px;
+    background: oklch(0.15 0 0);
+    color: oklch(0.95 0 0);
+    font-size: 11px;
+    font-weight: 500;
+    white-space: nowrap;
+    border-radius: 6px;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.15s ease, transform 0.15s ease;
+    z-index: 100;
+  }
+  .dark .tooltip-trigger::after {
+    background: oklch(0.9 0 0);
+    color: oklch(0.15 0 0);
+  }
+  .tooltip-trigger:hover::after {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+
+  /* Smooth navbar transition */
+  .navbar-glass {
+    background: oklch(1 0 0 / 0.8);
+    backdrop-filter: blur(16px) saturate(180%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+  }
+  .dark .navbar-glass {
+    background: oklch(0.13 0 0 / 0.8);
+  }
 }
