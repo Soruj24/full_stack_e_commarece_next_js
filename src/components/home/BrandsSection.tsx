@@ -3,91 +3,54 @@
 import { motion } from "framer-motion";
 
 const brands = [
-  { name: "Apple", short: "apple", color: "#a8b3cf" },
-  { name: "Samsung", short: "samsung", color: "#a8b3cf" },
-  { name: "Sony", short: "sony", color: "#a8b3cf" },
-  { name: "Nike", short: "nike", color: "#a8b3cf" },
-  { name: "Adidas", short: "adidas", color: "#a8b3cf" },
-  { name: "LG", short: "lg", color: "#a8b3cf" },
-  { name: "Dell", short: "dell", color: "#a8b3cf" },
-  { name: "HP", short: "hp", color: "#a8b3cf" },
-  { name: "Bose", short: "bose", color: "#a8b3cf" },
-  { name: "Canon", short: "canon", color: "#a8b3cf" },
-  { name: "Lenovo", short: "lenovo", color: "#a8b3cf" },
-  { name: "Asus", short: "asus", color: "#a8b3cf" },
+  { name: "Apple" },
+  { name: "Samsung" },
+  { name: "Sony" },
+  { name: "Nike" },
+  { name: "Adidas" },
+  { name: "LG" },
+  { name: "Dell" },
+  { name: "HP" },
+  { name: "Bose" },
+  { name: "Canon" },
+  { name: "Lenovo" },
+  { name: "Asus" },
 ];
 
-// Duplicate for seamless loop
 const doubled = [...brands, ...brands];
 
 export function BrandsSection() {
   return (
-    <section
-      className="py-16 relative overflow-hidden"
-      style={{
-        background: "linear-gradient(180deg, #050508 0%, #08060e 100%)",
-        borderTop: "1px solid rgba(139, 92, 246, 0.1)",
-        borderBottom: "1px solid rgba(139, 92, 246, 0.1)",
-      }}
-    >
-      <div className="container mx-auto px-4 mb-10">
+    <section className="py-14 border-y border-border/40 bg-surface/30 overflow-hidden">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 mb-10">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
           viewport={{ once: true }}
           className="text-center"
         >
-          <p
-            className="text-xs font-black uppercase tracking-[0.35em] mb-1"
-            style={{ color: "rgba(167, 139, 250, 0.6)" }}
-          >
+          <p className="text-[11px] font-semibold text-muted-foreground/40 uppercase tracking-[0.2em] mb-2">
             Trusted By
           </p>
-          <h3 className="text-2xl font-black text-white">
-            World&apos;s Leading{" "}
-            <span
-              className="text-transparent bg-clip-text"
-              style={{ backgroundImage: "linear-gradient(135deg, #818cf8, #a78bfa, #e879f9)" }}
-            >
-              Brands
-            </span>
+          <h3 className="text-2xl font-semibold text-foreground">
+            World&apos;s Leading Brands
           </h3>
         </motion.div>
       </div>
 
-      {/* Marquee with edge fade */}
       <div className="relative">
-        {/* Left fade */}
-        <div
-          className="absolute left-0 top-0 bottom-0 w-32 z-10 pointer-events-none"
-          style={{ background: "linear-gradient(90deg, #050508 0%, transparent 100%)" }}
-        />
-        {/* Right fade */}
-        <div
-          className="absolute right-0 top-0 bottom-0 w-32 z-10 pointer-events-none"
-          style={{ background: "linear-gradient(-90deg, #050508 0%, transparent 100%)" }}
-        />
+        <div className="absolute left-0 top-0 bottom-0 w-24 z-10 pointer-events-none bg-gradient-to-r from-background to-transparent" />
+        <div className="absolute right-0 top-0 bottom-0 w-24 z-10 pointer-events-none bg-gradient-to-l from-background to-transparent" />
 
         <div className="overflow-hidden">
-          <div className="flex animate-marquee gap-12 items-center" style={{ width: "max-content" }}>
+          <div className="flex animate-marquee gap-8 items-center" style={{ width: "max-content" }}>
             {doubled.map((brand, index) => (
               <div
                 key={`${brand.name}-${index}`}
-                className="flex items-center gap-2 px-6 py-3 rounded-2xl shrink-0 group cursor-pointer transition-all duration-300"
-                style={{
-                  background: "rgba(255,255,255,0.025)",
-                  border: "1px solid rgba(255,255,255,0.05)",
-                }}
+                className="flex items-center gap-2 px-5 py-2.5 rounded-lg shrink-0 border border-border/30 bg-surface/50 hover:border-border/60 hover:bg-surface transition-all duration-200 cursor-default"
               >
-                <div
-                  className="w-2 h-2 rounded-full"
-                  style={{ background: "linear-gradient(135deg, #818cf8, #a78bfa)" }}
-                />
-                <span
-                  className="text-base font-black uppercase tracking-widest transition-colors duration-300 group-hover:text-violet-400"
-                  style={{ color: "rgba(148, 163, 184, 0.6)" }}
-                >
+                <span className="text-sm font-medium text-muted-foreground tracking-wide">
                   {brand.name}
                 </span>
               </div>
@@ -95,29 +58,17 @@ export function BrandsSection() {
           </div>
         </div>
 
-        {/* Second row, reversed direction */}
-        <div className="overflow-hidden mt-4">
+        <div className="overflow-hidden mt-3">
           <div
-            className="flex gap-12 items-center"
+            className="flex gap-8 items-center"
             style={{ width: "max-content", animation: "marquee 35s linear infinite reverse" }}
           >
             {doubled.map((brand, index) => (
               <div
                 key={`r-${brand.name}-${index}`}
-                className="flex items-center gap-2 px-6 py-3 rounded-2xl shrink-0 group cursor-pointer transition-all duration-300"
-                style={{
-                  background: "rgba(255,255,255,0.02)",
-                  border: "1px solid rgba(255,255,255,0.04)",
-                }}
+                className="flex items-center gap-2 px-5 py-2.5 rounded-lg shrink-0 border border-border/30 bg-surface/50 hover:border-border/60 hover:bg-surface transition-all duration-200 cursor-default"
               >
-                <div
-                  className="w-2 h-2 rounded-full"
-                  style={{ background: "linear-gradient(135deg, #e879f9, #a78bfa)" }}
-                />
-                <span
-                  className="text-sm font-black uppercase tracking-widest transition-colors duration-300 group-hover:text-fuchsia-400"
-                  style={{ color: "rgba(148, 163, 184, 0.4)" }}
-                >
+                <span className="text-sm font-medium text-muted-foreground/60 tracking-wide">
                   {brand.name}
                 </span>
               </div>

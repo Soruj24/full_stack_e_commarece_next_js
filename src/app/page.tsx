@@ -11,7 +11,7 @@ import { StatsSection } from "@/components/home/StatsSection";
 import { BrandsSection } from "@/components/home/BrandsSection";
 
 const FlashSale = dynamic(() => import("@/components/home/FlashSale").then(mod => ({ default: mod.FlashSale })), {
-  loading: () => <div className="h-[200px] bg-muted/30 animate-pulse rounded-xl" />,
+  loading: () => <div className="h-[140px] bg-muted/30 animate-pulse rounded-xl" />,
 });
 
 const TrendingProducts = dynamic(() => import("@/components/home/TrendingProducts").then(mod => ({ default: mod.TrendingProducts })), {
@@ -19,7 +19,7 @@ const TrendingProducts = dynamic(() => import("@/components/home/TrendingProduct
 });
 
 const AllProducts = dynamic(() => import("@/components/home/AllProducts").then(mod => ({ default: mod.AllProducts })), {
-  loading: () => <div className="h-[600px] bg-muted/30 animate-pulse rounded-xl" />,
+  loading: () => <div className="h-[500px] bg-muted/30 animate-pulse rounded-xl" />,
 });
 
 const CTASection = dynamic(() => import("@/components/home/CTASection").then(mod => ({ default: mod.CTASection })));
@@ -40,77 +40,56 @@ export default async function HomePage() {
     <div className="flex flex-col min-h-screen">
       <EcommerceHero />
 
-      <section className="py-16 sm:py-20">
-        <BrandsSection />
-      </section>
+      <BrandsSection />
 
-      <section className="py-16 sm:py-20 bg-surface/50">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <CategoryGrid />
-        </div>
-      </section>
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <CategoryGrid />
+      </div>
 
-      <section className="py-16 sm:py-20">
-        <StatsSection />
-      </section>
+      <StatsSection />
 
-      <section className="py-16 sm:py-20">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <FlashSale endTime={saleEndTime} />
-        </div>
-      </section>
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <FlashSale endTime={saleEndTime} />
+      </div>
 
-      <section className="py-16 sm:py-20 bg-surface/50">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <HowItWorksSection />
-      </section>
+      </div>
 
-      <section className="py-16 sm:py-20">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <TrendingProducts />
-        </div>
-      </section>
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <TrendingProducts />
+      </div>
 
       <DynamicBanners />
 
-      <section className="py-16 sm:py-20">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <AllProducts />
-        </div>
-      </section>
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <AllProducts />
+      </div>
 
-      <section className="py-16 sm:py-20 bg-surface/50">
-        <TestimonialsSection />
-      </section>
+      <TestimonialsSection />
 
-      <section className="py-16 sm:py-20">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <ProductRecommendations />
-      </section>
+      </div>
 
-      <section className="py-16 sm:py-20">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <RecentlyViewedProducts
-            title="Recently Viewed"
-            maxProducts={6}
-            showClearButton
-          />
-        </div>
-      </section>
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <RecentlyViewedProducts
+          title="Recently Viewed"
+          maxProducts={6}
+          showClearButton
+        />
+      </div>
 
-      <section className="py-16 sm:py-20 bg-surface/50">
-        <TrustSection />
-      </section>
+      <TrustSection />
 
-      <section className="py-16 sm:py-20">
-        <Newsletter />
-      </section>
+      <Newsletter />
 
       <FeaturesSection />
 
-      <section className="py-16 sm:py-20">
-        <FAQSection />
-      </section>
+      <FAQSection />
 
       {!session && <CTASection />}
+
       <Footer />
     </div>
   );

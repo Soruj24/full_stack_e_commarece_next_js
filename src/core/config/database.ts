@@ -1,8 +1,6 @@
 import mongoose from "mongoose";
 import dns from "node:dns/promises";
 
-const MONGODB_URI = process.env.MONGODB_URI!;
-
 dns.setServers(["1.1.1.1", "8.8.8.8"]);
 
 
@@ -28,6 +26,11 @@ export async function dbConnect() {
 
   if (cached.promise) {
     return cached.promise;
+  }
+
+  const MONGODB_URI = process.env.MONGODB_URI;
+  if (!MONGODB_URI) {
+    throw new Error("Please define the MONGODB_URI environment variable in .env");
   }
 
   cached.promise = mongoose.connect(MONGODB_URI, {

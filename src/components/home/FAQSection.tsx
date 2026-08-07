@@ -42,60 +42,62 @@ export function FAQSection() {
   );
 
   return (
-    <section className="py-20 bg-muted/30">
-      <div className="container mx-auto px-4">
-        <div className="text-center mb-16">
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 rounded-full text-primary font-black text-xs uppercase tracking-widest mb-4">
-            <HelpCircle className="w-4 h-4" />
-            Got Questions?
+    <section className="py-20 sm:py-28">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-12">
+          <div className="inline-flex items-center gap-2 text-[11px] font-semibold text-primary/60 uppercase tracking-[0.15em] mb-3">
+            <HelpCircle className="w-3.5 h-3.5" />
+            FAQ
           </div>
-          <h2 className="text-4xl font-black tracking-tight mb-4">Frequently Asked Questions</h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
-            Find quick answers to common questions about our products, shipping, and loyalty program.
+          <h2 className="text-3xl md:text-4xl font-semibold tracking-tight text-foreground mb-3">
+            Frequently Asked Questions
+          </h2>
+          <p className="text-muted-foreground text-base max-w-xl mx-auto">
+            Find quick answers to common questions about our products, shipping, and more.
           </p>
         </div>
 
-        <div className="max-w-3xl mx-auto">
+        <div className="max-w-2xl mx-auto">
           {mounted ? (
-            <Accordion type="single" collapsible className="w-full space-y-4">
+            <Accordion type="single" collapsible className="w-full space-y-3">
               {faqs.map((faq, i) => (
-                <AccordionItem 
-                  key={i} 
+                <AccordionItem
+                  key={i}
                   value={`item-${i}`}
-                  className="bg-card border border-border/50 rounded-2xl px-6 overflow-hidden"
+                  className="bg-card border border-border/50 rounded-xl px-5 overflow-hidden"
                 >
-                  <AccordionTrigger className="font-bold text-lg hover:no-underline hover:text-primary transition-colors py-6">
+                  <AccordionTrigger className="font-medium text-[15px] hover:no-underline hover:text-primary transition-colors py-5">
                     {faq.question}
                   </AccordionTrigger>
-                  <AccordionContent className="text-muted-foreground leading-relaxed pb-6">
+                  <AccordionContent className="text-muted-foreground text-[13px] leading-relaxed pb-5">
                     {faq.answer}
                   </AccordionContent>
                 </AccordionItem>
               ))}
             </Accordion>
           ) : (
-            <div className="w-full space-y-4">
+            <div className="w-full space-y-3">
               {faqs.map((faq, i) => (
-                <div key={i} className="bg-card border border-border/50 rounded-2xl px-6 py-6">
-                  <div className="font-bold text-lg">{faq.question}</div>
+                <div key={i} className="bg-card border border-border/50 rounded-xl px-5 py-5">
+                  <div className="font-medium text-[15px]">{faq.question}</div>
                 </div>
               ))}
             </div>
           )}
         </div>
 
-        <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="mt-14 grid grid-cols-1 md:grid-cols-3 gap-4">
           {[
-            { icon: Mail, title: "Email Support", desc: "support@example.com", color: "bg-blue-500" },
-            { icon: MessageSquare, title: "Live Chat", desc: "Available 24/7", color: "bg-green-500" },
-            { icon: Phone, title: "Phone Support", desc: "+1 (555) 000-0000", color: "bg-purple-500" }
+            { icon: Mail, title: "Email Support", desc: "support@example.com", color: "text-primary", bg: "bg-primary/5" },
+            { icon: MessageSquare, title: "Live Chat", desc: "Available 24/7", color: "text-emerald-500", bg: "bg-emerald-500/5" },
+            { icon: Phone, title: "Phone Support", desc: "+1 (555) 000-0000", color: "text-violet-500", bg: "bg-violet-500/5" }
           ].map((item, i) => (
-            <div key={i} className="bg-card border border-border/50 rounded-3xl p-8 text-center hover:border-primary/30 transition-all group">
-              <div className={`w-12 h-12 ${item.color} rounded-2xl flex items-center justify-center mx-auto mb-4 text-white shadow-lg`}>
-                <item.icon className="w-6 h-6" />
+            <div key={i} className="bg-card border border-border/50 rounded-xl p-6 text-center hover:border-border/80 hover:shadow-sm transition-all duration-200">
+              <div className={`w-10 h-10 ${item.bg} rounded-xl flex items-center justify-center mx-auto mb-3`}>
+                <item.icon className={`w-5 h-5 ${item.color}`} />
               </div>
-              <h4 className="font-bold text-lg mb-1">{item.title}</h4>
-              <p className="text-muted-foreground">{item.desc}</p>
+              <h4 className="font-semibold text-[14px] text-foreground mb-1">{item.title}</h4>
+              <p className="text-muted-foreground text-[13px]">{item.desc}</p>
             </div>
           ))}
         </div>

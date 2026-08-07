@@ -1,5 +1,5 @@
 import { loadEnvConfig } from "@next/env";
-import mongoose from "mongoose";
+import { dbConnect } from "@/core/config/database";
 import { User } from "@/core/database/models/User";
 import { Category } from "@/core/database/models/Category";
 import { Product } from "@/core/database/models/Product";
@@ -11,9 +11,7 @@ import type { ICategory } from "@/shared/types";
 const projectDir = process.cwd();
 loadEnvConfig(projectDir);
 
-const MONGODB_URI = process.env.MONGODB_URI;
-
-if (!MONGODB_URI) {
+if (!process.env.MONGODB_URI) {
   throw new Error("Please define MONGODB_URI in your .env file");
 }
 
@@ -69,11 +67,10 @@ function getRandomInt(min: number, max: number) {
 }
 
 function generateProduct(category: ICategory, index: number) {
-  const baseName = category.name.split(" ")[0] || "Item"; // Simple noun based on category
+  const baseName = category.name.split(" ")[0] || "Item";
   const name = `${getRandomElement(adjectives)} ${baseName} ${getRandomElement(brands)}`;
   const price = parseFloat((Math.random() * 200 + 10).toFixed(2));
 
-  // Use category image as base, or a default fallback
   const productImage = category.image || "/placeholder-product.svg";
 
   return {
@@ -83,9 +80,9 @@ function generateProduct(category: ICategory, index: number) {
     price: price,
     category: category._id,
     stock: getRandomInt(0, 200),
-    images: [productImage], // Use the category image for now to ensure visibility
-    isFeatured: Math.random() > 0.8, // 20% chance to be featured
-    rating: parseFloat((Math.random() * 2 + 3).toFixed(1)), // Rating between 3.0 and 5.0
+    images: [productImage],
+    isFeatured: Math.random() > 0.8,
+    rating: parseFloat((Math.random() * 2 + 3).toFixed(1)),
     numReviews: getRandomInt(0, 500),
     tags: [category.slug, "new-arrival", "bestseller"],
     sku: `${(category.slug || "GEN").toUpperCase().substring(0, 3)}-${getRandomInt(1000, 9999)}`,
@@ -100,20 +97,10 @@ function generateProduct(category: ICategory, index: number) {
 export async function seed() {
   try {
     console.log("Connecting to MongoDB...");
-
-    await mongoose.connect(MONGODB_URI!);
+    await dbConnect();
     console.log("Connected to MongoDB");
 
     console.log("Clearing existing data...");
-
-    // Cleanup
-    try {
-      await User.collection.dropIndex("username_1");
-    } catch {}
-    try {
-      await Product.collection.dropIndex("sku_1");
-    } catch {}
-
     await User.deleteMany({});
     await Category.deleteMany({});
     await Product.deleteMany({});
@@ -289,7 +276,7 @@ export async function seed() {
 
     const productsToCreate = [];
 
-    // 1. Explicitly recreate the Cyberpunk Headset to avoid breaking previous links
+    // 1. Explicitly recreate the Cyberpunk Headset
     productsToCreate.push({
       _id: "6974e685902080fcc7f02ad8",
       name: "Cyberpunk Headset",
@@ -313,7 +300,6 @@ export async function seed() {
     });
 
     // 2. Generate ~200 random products
-    // Distribute them among categories
     const totalRandomProducts = 200;
 
     for (let i = 0; i < totalRandomProducts; i++) {
@@ -322,10 +308,6 @@ export async function seed() {
     }
 
     // Insert all products
-    // We use insertMany for better performance, but since we have a custom _id in one, we need to be careful.
-    // However, Mongoose insertMany handles explicit _id fine.
-
-    // Note: Mongoose might throw validation error if _id is duplicate, but we just cleared the DB.
     await Product.insertMany(productsToCreate);
 
     console.log(`Created ${productsToCreate.length} products.`);
@@ -366,8 +348,7 @@ export async function seed() {
     console.error("Error seeding database:", error);
     process.exit(1);
   } finally {
-    await mongoose.disconnect();
-    console.log("Disconnected from MongoDB");
+    process.exit(0);
   }
 }
 

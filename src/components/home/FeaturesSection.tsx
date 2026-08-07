@@ -8,79 +8,83 @@ const features = [
     icon: Shield,
     title: "Secure Shopping",
     description: "SSL encrypted checkout with 256-bit encryption. Your data is always protected.",
-    color: "from-green-500 to-emerald-500",
+    color: "text-emerald-500",
+    bg: "bg-emerald-500/5",
   },
   {
     icon: Truck,
     title: "Fast Delivery",
     description: "Express shipping available. Most orders delivered within 2-5 business days.",
-    color: "from-blue-500 to-cyan-500",
+    color: "text-primary",
+    bg: "bg-primary/5",
   },
   {
     icon: BadgeCheck,
     title: "Quality Guarantee",
     description: "Handpicked products with quality assurance. Only the best reaches our shelves.",
-    color: "from-purple-500 to-pink-500",
+    color: "text-violet-500",
+    bg: "bg-violet-500/5",
   },
   {
     icon: RotateCcw,
     title: "Easy Returns",
     description: "30-day hassle-free return policy. Not satisfied? Get a full refund.",
-    color: "from-orange-500 to-red-500",
+    color: "text-amber-500",
+    bg: "bg-amber-500/5",
   },
   {
     icon: CreditCard,
     title: "Flexible Payment",
     description: "Multiple payment options including installment plans. Shop your way.",
-    color: "from-yellow-500 to-amber-500",
+    color: "text-rose-500",
+    bg: "bg-rose-500/5",
   },
   {
     icon: Headphones,
     title: "Expert Support",
     description: "24/7 customer service by real humans. We're here to help anytime.",
-    color: "from-indigo-500 to-violet-500",
+    color: "text-blue-500",
+    bg: "bg-blue-500/5",
   },
 ];
 
 export function FeaturesSection() {
   return (
-    <section className="py-24 bg-muted/30 relative overflow-hidden">
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-primary/5 via-transparent to-transparent" />
-      
-      <div className="container mx-auto px-4 relative z-10">
+    <section className="py-20 sm:py-28 bg-surface/40 border-y border-border/30">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          className="text-center mb-14"
         >
-          <span className="inline-block px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-bold uppercase tracking-wider mb-4">
+          <p className="text-[11px] font-semibold text-primary/60 uppercase tracking-[0.15em] mb-3">
             Why Choose Us
-          </span>
-          <h2 className="text-4xl md:text-5xl font-black tracking-tight mb-4">
+          </p>
+          <h2 className="text-3xl md:text-4xl font-semibold tracking-tight text-foreground">
             The Shop Experience
           </h2>
-          <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+          <p className="text-muted-foreground text-base mt-3 max-w-xl mx-auto">
             We are committed to providing the best shopping experience with these premium benefits.
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {features.map((feature, index) => (
             <motion.div
               key={feature.title}
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
+              transition={{ duration: 0.4, delay: index * 0.06 }}
               viewport={{ once: true }}
-              className="group relative bg-card border border-border rounded-3xl p-8 hover:border-primary/30 transition-all duration-300 hover:shadow-xl hover:shadow-primary/5"
+              className="group bg-card border border-border/50 rounded-xl p-6 hover:border-border/80 hover:shadow-sm transition-all duration-200"
             >
-              <div className={`w-16 h-16 rounded-3xl bg-gradient-to-r ${feature.color} flex items-center justify-center mb-6 shadow-lg group-hover:scale-110 transition-transform duration-300`}>
-                <feature.icon className="w-8 h-8 text-white" />
+              <div className={`w-11 h-11 rounded-xl ${feature.bg} flex items-center justify-center mb-4`}>
+                <feature.icon className={`w-5 h-5 ${feature.color}`} />
               </div>
-              <h3 className="text-xl font-bold mb-3">{feature.title}</h3>
-              <p className="text-muted-foreground leading-relaxed">{feature.description}</p>
+              <h3 className="text-[15px] font-semibold text-foreground mb-1.5">{feature.title}</h3>
+              <p className="text-muted-foreground text-[13px] leading-relaxed">{feature.description}</p>
             </motion.div>
           ))}
         </div>

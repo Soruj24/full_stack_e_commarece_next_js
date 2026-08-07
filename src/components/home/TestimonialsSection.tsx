@@ -13,69 +13,42 @@ export function TestimonialsSection() {
   ];
 
   return (
-    <section
-      className="py-24 relative overflow-hidden"
-      style={{ background: "linear-gradient(180deg, #07050f 0%, #0a0514 50%, #07050f 100%)" }}
-    >
-      <div
-        className="absolute inset-0"
-        style={{
-          backgroundImage:
-            "linear-gradient(rgba(139, 92, 246, 0.02) 1px, transparent 1px), " +
-            "linear-gradient(90deg, rgba(139, 92, 246, 0.02) 1px, transparent 1px)",
-          backgroundSize: "60px 60px",
-        }}
-      />
-
-      <div className="container mx-auto px-4 relative z-10">
+    <section className="py-20 sm:py-28 bg-surface/40">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="text-center mb-16"
+          className="text-center mb-14"
         >
-          <div
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold mb-5"
-            style={{
-              background: "rgba(139, 92, 246, 0.12)",
-              border: "1px solid rgba(139, 92, 246, 0.25)",
-              color: "#a78bfa",
-            }}
-          >
-            <Star className="w-4 h-4 fill-current" />
+          <div className="inline-flex items-center gap-2 text-[11px] font-semibold text-primary/60 uppercase tracking-[0.15em] mb-3">
+            <Star className="w-3.5 h-3.5 fill-primary/60" />
             Customer Reviews
           </div>
-          <h2 className="text-4xl md:text-5xl font-black tracking-tight text-white mb-4">
-            What Our{" "}
-            <span
-              className="text-transparent bg-clip-text"
-              style={{ backgroundImage: "linear-gradient(135deg, #818cf8 0%, #a78bfa 50%, #e879f9 100%)" }}
-            >
-              Customers Say
-            </span>
+          <h2 className="text-3xl md:text-4xl font-semibold tracking-tight text-foreground mb-3">
+            What Our Customers Say
           </h2>
-          <p className="text-slate-400 text-lg max-w-2xl mx-auto">
-            Don&apos;t just take our word for it. Here&apos;s what real customers say about their experience.
+          <p className="text-muted-foreground text-base max-w-xl mx-auto">
+            Don&apos;t just take our word for it. Here&apos;s what real customers say.
           </p>
 
-          <div className="flex flex-wrap justify-center gap-6 mt-8">
+          <div className="flex flex-wrap justify-center gap-4 mt-8">
             {summary.map((s) => (
               <div
                 key={s.label}
-                className="px-6 py-3 rounded-2xl"
-                style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)" }}
+                className="px-5 py-3 rounded-xl bg-card border border-border/50"
               >
-                <p className="text-xl font-black text-violet-400">{s.value}</p>
-                <p className="text-xs text-slate-500 mt-0.5">{s.label}</p>
+                <p className="text-lg font-semibold text-foreground">{s.value}</p>
+                <p className="text-[11px] text-muted-foreground mt-0.5">{s.label}</p>
               </div>
             ))}
           </div>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {testimonials.map((t, i) => (
-            <TestimonialCard key={t.id} t={t} delay={i * 0.08} />
+            <TestimonialCard key={t.id} t={t} delay={i * 0.06} />
           ))}
         </div>
       </div>
