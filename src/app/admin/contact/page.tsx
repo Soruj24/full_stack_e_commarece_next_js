@@ -30,21 +30,17 @@ export default function ContactPage() {
         <ContactStats stats={stats} />
 
         <div className="bg-card border border-border/60 rounded-xl overflow-hidden">
-          <div className="p-6 border-b border-border/60">
-            <div className="flex flex-col md:flex-row gap-4">
-              <div className="relative flex-1">
-                <select
-                  className="w-full h-10 px-3 rounded-md border border-input bg-background"
-                  value={statusFilter}
-                  onChange={(e) => setStatusFilter(e.target.value)}
-                >
-                  <option value="all">All Status</option>
-                  <option value="pending">Pending</option>
-                  <option value="read">Read</option>
-                  <option value="replied">Replied</option>
-                </select>
-              </div>
-            </div>
+          <div className="p-4 border-b border-border/60">
+            <select
+              className="h-9 px-3 rounded-lg border border-border/60 bg-muted/50 text-sm focus:outline-none"
+              value={statusFilter}
+              onChange={(e) => setStatusFilter(e.target.value)}
+            >
+              <option value="all">All Status</option>
+              <option value="pending">Pending</option>
+              <option value="read">Read</option>
+              <option value="replied">Replied</option>
+            </select>
           </div>
 
           <ContactTable
