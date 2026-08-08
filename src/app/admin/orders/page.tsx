@@ -1,57 +1,141 @@
 "use client";
 
-import { OrdersHeader } from "@/components/admin/orders/OrdersHeader";
-import { OrdersStats } from "@/components/admin/orders/OrdersStats";
-import { OrdersSearch } from "@/components/admin/orders/OrdersSearch";
-import { OrdersTable } from "@/components/admin/orders/OrdersTable";
-import { ProfessionalPagination } from "@/components/common/ProfessionalPagination";
-import { AdminOrderDialog } from "@/components/admin/orders/AdminOrderDialog";
-import { useAdminOrders } from "@/modules/admin/hooks/use-admin-orders";
+import { RefreshCw } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
+import { PageHeader } from "@/components/admin/ui/PageHeader";
+import {
+  OrdersTable,
+  OrdersFilters,
+  OrdersBulkActions,
+  OrderDetailsDrawer,
+  OrdersPagination,
+  OrdersEmptyState,
+  OrdersErrorState,
+  OrdersStats,
+  useOrdersManager,
+} from "@/components/admin/orders";
 
 export default function OrdersPage() {
   const {
-    filteredOrders, loading, searchQuery, setSearchQuery, statusFilter, setStatusFilter,
-    paymentFilter, setPaymentFilter, selectedOrder, setSelectedOrder, isDialogOpen,
-    setIsDialogOpen, pagination, fetchOrders, handlePageChange, handleUpdateStatus, stats, status,
-  } = useAdminOrders();
+    orders,
+    loading,
+    error,
+    pagination,
+    filters,
+    sort,
+    selectedIds,
+    selectedOrder,
+    isDrawerOpen,
+    stats,
+    handlePageChange,
+    handleFilterChange,
+    handleSortChange,
+    toggleSelectAll,
+    toggleSelectOne,
+    clearSelection,
+    handleUpdateStatus,
+    handleBulkStatusChange,
+    handleExport,
+    viewOrder,
+    closeDrawer,
+    refresh,
+  } = useOrdersManager();
 
-  if (status === "loading") {
-    return (
-      <div className="flex items-center justify-center min-h-[400px]">
-        <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-primary"></div>
-      </div>
-    );
-  }
+  const hasActiveFilters =
+    !!filters.search ||
+    filters.orderStatus !== "all" ||
+    filters.paymentStatus !== "all" ||
+    !!filters.dateFrom ||
+    !!filters.dateTo;
 
   return (
     <div className="space-y-6">
-      <OrdersHeader loading={loading} onRefresh={() => fetchOrders(pagination.page)} />
+      <PageHeader
+        title="Orders"
+        description="Manage orders, track shipments, and handle fulfillment."
+        action={
+          <Button
+            variant="outline"
+            size="icon"
+            onClick={() => {
+              refresh();
+              toast.success("Orders refreshed");
+            }}
+            className="h-9 w-9 rounded-lg border-border/60"
+            disabled={loading}
+          >
+            <RefreshCw className={`w-3.5 h-3.5 ${loading ? "animate-spin" : ""}`} />
+          </Button>
+        }
+      />
 
       <OrdersStats stats={stats} />
 
       <div className="bg-card border border-border/60 rounded-xl overflow-hidden">
-        <OrdersSearch
-          searchQuery={searchQuery} setSearchQuery={setSearchQuery}
-          statusFilter={statusFilter} setStatusFilter={setStatusFilter}
-          paymentFilter={paymentFilter} setPaymentFilter={setPaymentFilter}
-        />
-
-        <OrdersTable
-          orders={filteredOrders} loading={loading}
-          onView={(order) => { setSelectedOrder(order); setIsDialogOpen(true); }}
-          onUpdateStatus={handleUpdateStatus}
-        />
-
-        <div className="p-4 border-t border-border/60">
-          <ProfessionalPagination
-            currentPage={pagination.page} totalPages={pagination.pages} onPageChange={handlePageChange}
+        <div className="p-4 border-b border-border/60">
+          <OrdersFilters
+            filters={filters}
+            totalOrders={pagination.total}
+            onFilterChange={handleFilterChange}
+            onReset={() => {
+              handleFilterChange("search", "");
+              handleFilterChange("orderStatus", "all");
+              handleFilterChange("paymentStatus", "all");
+              handleFilterChange("dateFrom", "");
+              handleFilterChange("dateTo", "");
+            }}
+            onExport={handleExport}
           />
         </div>
+
+        <OrdersBulkActions
+          selectedCount={selectedIds.size}
+          onBulkStatusChange={handleBulkStatusChange}
+          onClearSelection={clearSelection}
+        />
+
+        {error ? (
+          <OrdersErrorState message={error} onRetry={refresh} />
+        ) : !loading && orders.length === 0 ? (
+          <OrdersEmptyState
+            hasFilters={hasActiveFilters}
+            onClearFilters={() => {
+              handleFilterChange("search", "");
+              handleFilterChange("orderStatus", "all");
+              handleFilterChange("paymentStatus", "all");
+              handleFilterChange("dateFrom", "");
+              handleFilterChange("dateTo", "");
+            }}
+          />
+        ) : (
+          <OrdersTable
+            orders={orders}
+            loading={loading}
+            sort={sort}
+            selectedIds={selectedIds}
+            onSort={handleSortChange}
+            onSelectAll={toggleSelectAll}
+            onSelectOne={toggleSelectOne}
+            onView={viewOrder}
+            onUpdateStatus={handleUpdateStatus}
+          />
+        )}
+
+        <OrdersPagination
+          currentPage={pagination.page}
+          totalPages={pagination.pages}
+          totalItems={pagination.total}
+          itemsPerPage={pagination.limit}
+          onPageChange={handlePageChange}
+        />
       </div>
 
-      <AdminOrderDialog
-        open={isDialogOpen} onOpenChange={setIsDialogOpen}
-        order={selectedOrder} onSuccess={() => fetchOrders(pagination.page)}
+      <OrderDetailsDrawer
+        order={selectedOrder}
+        open={isDrawerOpen}
+        onClose={closeDrawer}
+        onUpdateStatus={handleUpdateStatus}
       />
     </div>
   );
