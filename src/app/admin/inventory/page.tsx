@@ -1,59 +1,129 @@
 "use client";
 
-import { AdminProductDialog } from "@/components/admin/AdminProductDialog";
-import { ProfessionalPagination } from "@/components/common/ProfessionalPagination";
+import { useState } from "react";
+import { PageHeader } from "@/components/admin/ui/PageHeader";
 import {
-  InventoryHeader,
-  InventoryStats,
-  InventorySearch,
+  InventoryOverview,
+  InventoryFiltersBar,
   InventoryTable,
+  InventoryBulkActions,
+  InventoryPagination,
+  InventoryEmptyState,
+  InventoryErrorState,
+  StockAdjustmentDialog,
+  InventoryHistoryDrawer,
+  useInventoryManager,
 } from "@/components/admin/inventory";
-import { useAdminInventory } from "@/modules/admin/hooks/use-admin-inventory";
 
 export default function InventoryPage() {
   const {
-    products, loading, keyword, setKeyword, selectedProduct, setSelectedProduct,
-    isDialogOpen, setIsDialogOpen, pagination, fetchInventory,
-    handlePageChange, handleDelete, handleAddProduct,
-    lowStockProducts, outOfStockProducts, mapToDialogProduct,
-  } = useAdminInventory();
+    products,
+    loading,
+    error,
+    pagination,
+    filters,
+    sort,
+    selectedIds,
+    stats,
+    history,
+    adjustingProduct,
+    isAdjustDialogOpen,
+    isHistoryOpen,
+    setIsAdjustDialogOpen,
+    setIsHistoryOpen,
+    handlePageChange,
+    handleFilterChange,
+    handleSortChange,
+    toggleSelectAll,
+    toggleSelectOne,
+    clearSelection,
+    adjustStock,
+    handleBulkAdjust,
+    openAdjustDialog,
+    openHistory,
+    refresh,
+  } = useInventoryManager();
+
+  const [resetKey, setResetKey] = useState(0);
+
+  const handleReset = () => {
+    handleFilterChange("search", "");
+    handleFilterChange("stock", "all");
+    handleFilterChange("category", "");
+    setResetKey((k) => k + 1);
+  };
+
+  const hasActiveFilters = !!filters.search || filters.stock !== "all" || !!filters.category;
 
   return (
     <div className="space-y-6">
-        <InventoryHeader
-          loading={loading}
-          onRefresh={() => fetchInventory(pagination.page)}
-          onAddProduct={handleAddProduct}
-        />
+      <PageHeader
+        title="Inventory"
+        description="Monitor stock levels, adjust quantities, and track inventory status"
+      />
 
-        <AdminProductDialog
-          open={isDialogOpen}
-          onOpenChange={setIsDialogOpen}
-          product={mapToDialogProduct(selectedProduct)}
-          onSuccess={() => fetchInventory(pagination.page)}
-        />
+      <InventoryOverview stats={stats} />
 
-        <InventoryStats
-          totalProducts={products.length}
-          lowStockCount={lowStockProducts.length}
-          outOfStockCount={outOfStockProducts.length}
-        />
-
-        <div className="bg-card border border-border/60 rounded-xl overflow-hidden">
-          <InventorySearch value={keyword} onChange={setKeyword} />
-
-          <InventoryTable
-            products={products} loading={loading}
-            onEdit={(product) => { setSelectedProduct(product); setIsDialogOpen(true); }}
-            onDelete={handleDelete}
+      <div className="border border-border/60 rounded-xl bg-card overflow-hidden">
+        <div className="p-4">
+          <InventoryFiltersBar
+            key={resetKey}
+            filters={filters}
+            totalProducts={products.length}
+            onFilterChange={handleFilterChange}
+            onReset={handleReset}
+            onOpenHistory={openHistory}
+            historyCount={history.length}
           />
-
-          <div className="p-4 border-t border-border/60">
-            <ProfessionalPagination
-              currentPage={pagination.page} totalPages={pagination.pages} onPageChange={handlePageChange}
-            />
-          </div>
         </div>
+
+        <InventoryBulkActions
+          selectedCount={selectedIds.size}
+          onClearSelection={clearSelection}
+          onBulkAdjust={handleBulkAdjust}
+        />
+
+        {error ? (
+          <InventoryErrorState error={error} onRetry={refresh} />
+        ) : !loading && products.length === 0 ? (
+          <InventoryEmptyState hasFilters={hasActiveFilters} onReset={handleReset} />
+        ) : (
+          <InventoryTable
+            products={products}
+            loading={loading}
+            sort={sort}
+            selectedIds={selectedIds}
+            onSort={handleSortChange}
+            onSelectAll={toggleSelectAll}
+            onSelectOne={toggleSelectOne}
+            onAdjustStock={openAdjustDialog}
+            onViewHistory={openHistory}
+          />
+        )}
+
+        {!error && !loading && products.length > 0 && (
+          <InventoryPagination
+            currentPage={pagination.page}
+            totalPages={pagination.pages}
+            totalItems={pagination.total}
+            itemsPerPage={pagination.limit}
+            onPageChange={handlePageChange}
+          />
+        )}
+      </div>
+
+      <StockAdjustmentDialog
+        product={adjustingProduct}
+        open={isAdjustDialogOpen}
+        onOpenChange={setIsAdjustDialogOpen}
+        onAdjust={adjustStock}
+      />
+
+      <InventoryHistoryDrawer
+        open={isHistoryOpen}
+        onOpenChange={setIsHistoryOpen}
+        history={history}
+      />
     </div>
   );
 }

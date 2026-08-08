@@ -1,4 +1,10 @@
-export { InventoryHeader } from "./InventoryHeader";
-export { InventoryStats } from "./InventoryStats";
-export { InventorySearch } from "./InventorySearch";
+export { InventoryOverview } from "./InventoryOverview";
+export { InventoryFiltersBar } from "./InventoryFilters";
 export { InventoryTable } from "./InventoryTable";
+export { InventoryBulkActions } from "./InventoryBulkActions";
+export { InventoryPagination } from "./InventoryPagination";
+export { InventoryEmptyState } from "./InventoryEmptyState";
+export { InventoryErrorState } from "./InventoryErrorState";
+export { StockAdjustmentDialog } from "./StockAdjustmentDialog";
+export { InventoryHistoryDrawer } from "./InventoryHistoryDrawer";
+export { useInventoryManager } from "./useInventoryManager";
