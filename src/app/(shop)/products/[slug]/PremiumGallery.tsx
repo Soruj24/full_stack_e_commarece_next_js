@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useCallback } from "react";
+import { useState, useRef, useCallback, useEffect } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -28,6 +28,9 @@ export function PremiumGallery({ images, productName, categorySlug }: Props) {
   const [isLightbox, setIsLightbox] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const thumbnailScrollRef = useRef<HTMLDivElement>(null);
+  const touchStartX = useRef<number>(0);
+  const touchStartY = useRef<number>(0);
+  const isSwiping = useRef<boolean>(false);
 
   const validImages =
     images?.length > 0 ? images : ["/placeholder-product.svg"];
@@ -61,6 +64,37 @@ export function PremiumGallery({ images, productName, categorySlug }: Props) {
     if (!isZoomed) setRotation(0);
   };
 
+  // Touch swipe handlers for mobile
+  const handleTouchStart = useCallback((e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+    touchStartY.current = e.touches[0].clientY;
+    isSwiping.current = false;
+  }, []);
+
+  const handleTouchMove = useCallback((e: React.TouchEvent) => {
+    if (!touchStartX.current) return;
+    const dx = Math.abs(e.touches[0].clientX - touchStartX.current);
+    const dy = Math.abs(e.touches[0].clientY - touchStartY.current);
+    // Only swipe if horizontal movement > vertical (avoid conflict with scroll)
+    if (dx > 10 && dx > dy * 1.5) {
+      isSwiping.current = true;
+    }
+  }, []);
+
+  const handleTouchEnd = useCallback((e: React.TouchEvent) => {
+    if (!isSwiping.current) return;
+    const dx = e.changedTouches[0].clientX - touchStartX.current;
+    const threshold = 50;
+    if (dx < -threshold) {
+      goNext();
+    } else if (dx > threshold) {
+      goPrev();
+    }
+    touchStartX.current = 0;
+    touchStartY.current = 0;
+    isSwiping.current = false;
+  }, [activeIndex, validImages.length]);
+
   return (
     <>
       <div className="space-y-4">
@@ -74,6 +108,9 @@ export function PremiumGallery({ images, productName, categorySlug }: Props) {
           onClick={toggleZoom}
           onMouseMove={handleMouseMove}
           onMouseLeave={() => setIsZoomed(false)}
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
         >
           <AnimatePresence mode="wait">
             <motion.div
@@ -111,9 +148,9 @@ export function PremiumGallery({ images, productName, categorySlug }: Props) {
             {activeIndex + 1} / {validImages.length}
           </div>
 
-          {/* Zoom indicator */}
+          {/* Zoom indicator — always visible on mobile */}
           <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between z-10">
-            <div className="px-4 py-2 bg-black/60 backdrop-blur-md rounded-full flex items-center gap-2 text-white text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            <div className="px-4 py-2 bg-black/60 backdrop-blur-md rounded-full flex items-center gap-2 text-white text-xs font-medium opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity duration-300">
               <ZoomIn className="w-3.5 h-3.5" />
               <span>{isZoomed ? "Click to zoom out" : "Hover to zoom"}</span>
             </div>
@@ -124,7 +161,7 @@ export function PremiumGallery({ images, productName, categorySlug }: Props) {
             )}
           </div>
 
-          {/* Nav arrows */}
+          {/* Nav arrows — always visible on mobile, hover on desktop */}
           {validImages.length > 1 && (
             <>
               <button
@@ -132,7 +169,7 @@ export function PremiumGallery({ images, productName, categorySlug }: Props) {
                   e.stopPropagation();
                   goPrev();
                 }}
-                className="absolute left-3 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-white/90 dark:bg-zinc-800/90 backdrop-blur-sm shadow-xl flex items-center justify-center transition-all hover:scale-110 hover:bg-white opacity-0 group-hover:opacity-100 z-10"
+                className="absolute left-3 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-white/90 dark:bg-zinc-800/90 backdrop-blur-sm shadow-xl flex items-center justify-center transition-all hover:scale-110 hover:bg-white opacity-100 sm:opacity-0 sm:group-hover:opacity-100 z-10"
                 aria-label="Previous image"
               >
                 <ChevronLeft className="w-5 h-5" />
@@ -142,7 +179,7 @@ export function PremiumGallery({ images, productName, categorySlug }: Props) {
                   e.stopPropagation();
                   goNext();
                 }}
-                className="absolute right-3 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-white/90 dark:bg-zinc-800/90 backdrop-blur-sm shadow-xl flex items-center justify-center transition-all hover:scale-110 hover:bg-white opacity-0 group-hover:opacity-100 z-10"
+                className="absolute right-3 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-white/90 dark:bg-zinc-800/90 backdrop-blur-sm shadow-xl flex items-center justify-center transition-all hover:scale-110 hover:bg-white opacity-100 sm:opacity-0 sm:group-hover:opacity-100 z-10"
                 aria-label="Next image"
               >
                 <ChevronRight className="w-5 h-5" />
@@ -150,8 +187,8 @@ export function PremiumGallery({ images, productName, categorySlug }: Props) {
             </>
           )}
 
-          {/* Action buttons */}
-          <div className="absolute top-4 left-4 flex flex-col gap-2 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+          {/* Action buttons — always visible on mobile, hover on desktop */}
+          <div className="absolute top-4 left-4 flex flex-col gap-2 z-10 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity duration-300">
             <button
               onClick={(e) => {
                 e.stopPropagation();
@@ -254,6 +291,9 @@ export function PremiumGallery({ images, productName, categorySlug }: Props) {
               transition={{ duration: 0.2 }}
               className="relative w-[90vw] h-[90vh] max-w-5xl"
               onClick={(e) => e.stopPropagation()}
+              onTouchStart={handleTouchStart}
+              onTouchMove={handleTouchMove}
+              onTouchEnd={handleTouchEnd}
             >
               <Image
                 src={getSafeImageSrc(validImages[activeIndex], categorySlug)}

@@ -23,6 +23,7 @@ import { SaveForLaterWidget } from "@/components/products/SaveForLater";
 import { PWAProvider } from "@/components/pwa";
 import { InstallPromptBanner } from "@/components/pwa";
 import { OfflineIndicator } from "@/components/pwa";
+import { BottomNav } from "@/components/layout/BottomNav";
 
 // Use a system font stack instead of downloading from Google Fonts to avoid connection issues
 const fontSans = {
@@ -193,9 +194,10 @@ export default async function RootLayout({
                 <NotificationLayout>
                   <div className="min-h-screen flex flex-col bg-background text-foreground selection:bg-primary/15 selection:text-foreground relative overflow-x-hidden">
                     <Header />
-                    <main className="flex-grow">
+                    <main className="flex-grow pb-16 md:pb-0">
                       <PageTransitionClient>{children}</PageTransitionClient>
                     </main>
+                    <BottomNav />
                     <LiveChat />
                     <CookieConsent />
                     <ScrollToTop />

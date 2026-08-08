@@ -10,7 +10,7 @@ import { SHOP_LINKS, SUPPORT_LINKS } from "@/lib/data/footer";
 
 export function Footer() {
   return (
-    <footer className="bg-background border-t border-border/40">
+    <footer className="bg-background border-t border-border/40 safe-area-bottom">
       <FooterTrustFeatures />
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-8">

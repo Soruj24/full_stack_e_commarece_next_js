@@ -152,7 +152,7 @@ export function PolicyLayout({
         </div>
       </div>
 
-      <div className="fixed bottom-8 right-8 flex flex-col gap-3 z-40">
+      <div className="fixed bottom-24 md:bottom-8 right-8 flex flex-col gap-3 z-40">
         {showScrollTop && (
           <Button
             size="icon"

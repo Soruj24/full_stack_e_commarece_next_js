@@ -25,7 +25,7 @@ export function CartNotification({ isOpen, onClose, product }: CartNotificationP
           initial={{ opacity: 0, y: 50, scale: 0.9 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           exit={{ opacity: 0, y: 20, scale: 0.9 }}
-          className="fixed bottom-6 right-6 z-50 w-80 bg-white dark:bg-zinc-900 rounded-2xl shadow-2xl shadow-black/20 border border-zinc-200 dark:border-white/10 overflow-hidden"
+          className="fixed bottom-24 md:bottom-6 right-6 z-50 w-80 bg-white dark:bg-zinc-900 rounded-2xl shadow-2xl shadow-black/20 border border-zinc-200 dark:border-white/10 overflow-hidden"
         >
           <div className="p-4">
             <div className="flex items-start gap-4">

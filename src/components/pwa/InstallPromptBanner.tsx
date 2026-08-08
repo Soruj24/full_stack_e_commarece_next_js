@@ -30,7 +30,7 @@ export function InstallPromptBanner() {
   if (!isInstallable) return null;
 
   return (
-    <Card className="fixed bottom-4 left-4 right-4 md:left-auto md:right-4 md:w-[380px] z-50 shadow-2xl border-primary/20 animate-in slide-in-from-bottom-4">
+    <Card className="fixed bottom-20 md:bottom-4 left-4 right-4 md:left-auto md:right-4 md:w-[380px] z-50 shadow-2xl border-primary/20 animate-in slide-in-from-bottom-4">
       <CardContent className="p-4">
         <div className="flex items-start gap-3">
           <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">

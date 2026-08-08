@@ -13,7 +13,7 @@ export function RecentlyViewedWidget() {
   if (products.length === 0) return null;
 
   return (
-    <div className="fixed bottom-20 right-4 z-40">
+    <div className="fixed bottom-24 md:bottom-20 right-4 z-40">
       <div className="bg-card rounded-2xl shadow-2xl border p-4 max-w-xs animate-in slide-in-from-bottom-4 duration-300">
         <div className="flex items-center gap-2 mb-3">
           <Clock className="w-4 h-4 text-primary" />

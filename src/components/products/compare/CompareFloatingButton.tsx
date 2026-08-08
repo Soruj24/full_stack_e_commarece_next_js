@@ -19,7 +19,7 @@ export function CompareFloatingButton() {
   if (products.length === 0) return null;
 
   return (
-    <div className="fixed bottom-20 left-4 z-40">
+    <div className="fixed bottom-24 md:bottom-20 left-4 z-40">
       <Sheet>
         <SheetTrigger asChild>
           <motion.div

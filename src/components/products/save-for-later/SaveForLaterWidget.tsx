@@ -13,7 +13,7 @@ export function SaveForLaterWidget() {
 
   return (
     <Link href="/saved">
-      <div className="fixed bottom-20 right-4 z-40">
+      <div className="fixed bottom-24 md:bottom-20 right-4 z-40">
         <motion.div initial={{ scale: 0, opacity: 0 }} animate={{ scale: 1, opacity: 1 }}
           className="bg-card rounded-2xl shadow-2xl border p-4 cursor-pointer hover:shadow-3xl transition-shadow">
           <div className="flex items-center gap-3">
