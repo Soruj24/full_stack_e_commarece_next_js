@@ -58,7 +58,7 @@ export function RoleFormDialog({
     }));
   };
 
-  const groupedPermissions = permissions.reduce((acc, permission) => {
+  const groupedPermissions = (Array.isArray(permissions) ? permissions : []).reduce((acc, permission) => {
     const module = permission.module || "Other";
     if (!acc[module]) acc[module] = [];
     acc[module].push(permission);
@@ -100,12 +100,12 @@ export function RoleFormDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[600px] rounded-[32px] bg-card border-border shadow-2xl max-h-[90vh] overflow-y-auto">
+      <DialogContent className="sm:max-w-[600px] rounded-xl bg-card border-border/60 max-h-[90vh] overflow-y-auto">
         <DialogHeader>
-          <div className="mx-auto w-12 h-12 bg-primary/10 rounded-2xl flex items-center justify-center mb-4">
+          <div className="mx-auto w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-4">
             <Shield className="h-6 w-6 text-primary" />
           </div>
-          <DialogTitle className="text-2xl font-black text-center">
+          <DialogTitle className="text-lg font-semibold text-center">
             {role ? "Edit" : "Create"} Role
           </DialogTitle>
           <DialogDescription className="text-center text-muted-foreground font-medium">
@@ -116,7 +116,7 @@ export function RoleFormDialog({
         <form onSubmit={handleSubmit} className="space-y-6 pt-4">
           <div className="space-y-4">
             <div className="space-y-2">
-              <Label className="text-sm font-black text-muted-foreground uppercase tracking-wider ml-1">
+              <Label className="text-xs font-medium text-muted-foreground uppercase tracking-wider ml-1">
                 Role Name
               </Label>
               <Input
@@ -124,40 +124,40 @@ export function RoleFormDialog({
                 required
                 value={formData.name}
                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                className="h-12 rounded-xl bg-muted/50 border-border focus:ring-primary font-bold"
+                className="h-10 rounded-lg bg-muted/50 border-border/60"
               />
             </div>
 
             <div className="space-y-2">
-              <Label className="text-sm font-black text-muted-foreground uppercase tracking-wider ml-1">
+              <Label className="text-xs font-medium text-muted-foreground uppercase tracking-wider ml-1">
                 Description
               </Label>
               <Textarea
                 placeholder="Describe the role's purpose..."
                 value={formData.description}
                 onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                className="min-h-[80px] rounded-xl bg-muted/50 border-border focus:ring-primary font-bold p-4"
+                className="min-h-[80px] rounded-lg bg-muted/50 border-border/60 p-3"
               />
             </div>
 
             <div className="space-y-2">
-              <Label className="text-sm font-black text-muted-foreground uppercase tracking-wider ml-1">
+              <Label className="text-xs font-medium text-muted-foreground uppercase tracking-wider ml-1">
                 Permissions
               </Label>
               <div className="space-y-4 max-h-[300px] overflow-y-auto p-1">
                 {Object.entries(groupedPermissions).map(([module, perms]) => (
                   <div key={module} className="space-y-2">
-                    <h4 className="text-xs font-black uppercase tracking-widest text-muted-foreground">
+                    <h4 className="text-[11px] font-medium uppercase tracking-wider text-muted-foreground">
                       {module}
                     </h4>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                       {perms.map((permission) => (
                         <label
                           key={permission._id}
-                          className={`flex items-center gap-3 p-3 rounded-xl border cursor-pointer transition-all ${
+                          className={`flex items-center gap-3 p-3 rounded-lg border cursor-pointer transition-all ${
                             formData.permissionIds.includes(permission._id)
                               ? "border-primary/50 bg-primary/5"
-                              : "border-border/50 hover:border-muted-foreground/20"
+                              : "border-border/60 hover:border-border"
                           }`}
                         >
                           <input
@@ -191,18 +191,18 @@ export function RoleFormDialog({
               type="button"
               variant="outline"
               onClick={() => onOpenChange(false)}
-              className="rounded-2xl font-bold px-6"
+              className="rounded-lg px-4"
             >
               Cancel
             </Button>
             <Button
               type="submit"
               disabled={loading}
-              className="rounded-2xl font-black px-8"
+              className="rounded-lg px-6"
             >
               {loading ? (
                 <>
-                  <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                   Saving...
                 </>
               ) : role ? (

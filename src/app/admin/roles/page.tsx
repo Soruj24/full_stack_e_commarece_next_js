@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import {
   RolesHeader,
@@ -73,14 +72,6 @@ export default function AdminRolesPage() {
     setSelectedRole(role);
     setDialogOpen(true);
   }, []);
-
-  if (loading && roles.length === 0) {
-    return (
-      <div className="flex items-center justify-center min-h-[600px]">
-        <Loader2 className="w-10 h-10 animate-spin text-primary" />
-      </div>
-    );
-  }
 
   return (
     <div className="space-y-6">
