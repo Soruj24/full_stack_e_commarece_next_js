@@ -7,79 +7,83 @@ interface SalesSummaryCardsProps {
   data: SalesSummary | null;
 }
 
-export function SalesSummaryCards({ data }: SalesSummaryCardsProps) {
-  const cards = [
-    {
-      label: "Total Sales",
-      value: `$${(data?.totalSales || 0).toLocaleString()}`,
-      icon: DollarSign,
-      growth: data?.salesGrowth || 0,
-      color: "text-blue-600",
-      bg: "bg-blue-50 dark:bg-blue-500/10",
-    },
-    {
-      label: "Total Orders",
-      value: (data?.totalOrders || 0).toLocaleString(),
-      icon: ShoppingCart,
-      growth: data?.ordersGrowth || 0,
-      color: "text-emerald-600",
-      bg: "bg-emerald-50 dark:bg-emerald-500/10",
-    },
-    {
-      label: "Avg Order Value",
-      value: `$${(data?.avgOrderValue || 0).toLocaleString()}`,
-      icon: Target,
-      growth: data?.aovGrowth || 0,
-      color: "text-amber-600",
-      bg: "bg-amber-50 dark:bg-amber-500/10",
-    },
-    {
-      label: "Conversion Rate",
-      value: `${(data?.conversionRate || 0).toFixed(1)}%`,
-      icon: TrendingUp,
-      growth: data?.conversionGrowth || 0,
-      color: "text-purple-600",
-      bg: "bg-purple-50 dark:bg-purple-500/10",
-    },
-  ];
-
+function KpiCard({
+  label,
+  value,
+  icon: Icon,
+  iconBg,
+  iconColor,
+  growth,
+}: {
+  label: string;
+  value: string;
+  icon: React.ElementType;
+  iconBg: string;
+  iconColor: string;
+  growth?: number;
+}) {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-      {cards.map((card, i) => (
-        <div
-          key={i}
-          className="bg-card p-6 rounded-[32px] border border-border/50 shadow-xl shadow-primary/5 group hover:border-primary/30 transition-all"
-        >
-          <div className="flex justify-between items-start mb-4">
-            <div
-              className={`p-3 rounded-2xl ${card.bg} ${card.color} group-hover:scale-110 transition-transform`}
-            >
-              <card.icon className="w-6 h-6" />
-            </div>
-            <span
-              className={`flex items-center text-xs font-bold px-2 py-1 rounded-lg ${
-                card.growth >= 0
-                  ? "text-emerald-600 bg-emerald-50 dark:bg-emerald-500/10"
-                  : "text-red-600 bg-red-50 dark:bg-red-500/10"
-              }`}
-            >
-              {card.growth >= 0 ? (
-                <TrendingUp className="w-3 h-3 mr-1" />
-              ) : (
-                <TrendingDown className="w-3 h-3 mr-1" />
-              )}
-              {card.growth >= 0 ? "+" : ""}
-              {card.growth.toFixed(1)}%
-            </span>
-          </div>
-          <p className="text-sm font-bold text-muted-foreground uppercase tracking-widest mb-1">
-            {card.label}
-          </p>
-          <h3 className="text-3xl font-black tracking-tighter">
-            {card.value}
-          </h3>
+    <div className="border border-border/60 rounded-xl p-4 bg-card">
+      <div className="flex items-center justify-between mb-3">
+        <p className="text-[11px] text-muted-foreground uppercase tracking-wider font-medium">{label}</p>
+        <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${iconBg}`}>
+          <Icon className={`h-4 w-4 ${iconColor}`} />
         </div>
-      ))}
+      </div>
+      <div className="flex items-center gap-2">
+        <p className="text-2xl font-semibold tracking-tight">{value}</p>
+        {growth !== undefined && growth !== 0 && (
+          <span
+            className={`inline-flex items-center gap-0.5 text-[11px] font-medium px-1.5 py-0.5 rounded-md ${
+              growth >= 0
+                ? "text-emerald-600 bg-emerald-500/10"
+                : "text-red-600 bg-red-500/10"
+            }`}
+          >
+            {growth >= 0 ? <TrendingUp className="h-3 w-3" /> : <TrendingDown className="h-3 w-3" />}
+            {growth >= 0 ? "+" : ""}{growth.toFixed(1)}%
+          </span>
+        )}
+      </div>
+    </div>
+  );
+}
+
+export function SalesSummaryCards({ data }: SalesSummaryCardsProps) {
+  return (
+    <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+      <KpiCard
+        label="Total Sales"
+        value={`$${(data?.totalSales || 0).toLocaleString()}`}
+        icon={DollarSign}
+        iconBg="bg-blue-500/10"
+        iconColor="text-blue-500"
+        growth={data?.salesGrowth}
+      />
+      <KpiCard
+        label="Total Orders"
+        value={(data?.totalOrders || 0).toLocaleString()}
+        icon={ShoppingCart}
+        iconBg="bg-emerald-500/10"
+        iconColor="text-emerald-500"
+        growth={data?.ordersGrowth}
+      />
+      <KpiCard
+        label="Avg Order Value"
+        value={`$${(data?.avgOrderValue || 0).toLocaleString()}`}
+        icon={Target}
+        iconBg="bg-amber-500/10"
+        iconColor="text-amber-500"
+        growth={data?.aovGrowth}
+      />
+      <KpiCard
+        label="Conversion Rate"
+        value={`${(data?.conversionRate || 0).toFixed(1)}%`}
+        icon={TrendingUp}
+        iconBg="bg-purple-500/10"
+        iconColor="text-purple-500"
+        growth={data?.conversionGrowth}
+      />
     </div>
   );
 }

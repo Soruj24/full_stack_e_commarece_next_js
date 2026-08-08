@@ -10,17 +10,17 @@ import {
 } from "@/components/admin/sales";
 
 const SalesTrendChart = dynamic(() => import("@/components/admin/sales/SalesTrendChart").then(mod => ({ default: mod.SalesTrendChart })), {
-  loading: () => <div className="h-[400px] bg-muted/20 animate-pulse rounded-xl" />,
+  loading: () => <div className="h-[400px] border border-border/60 bg-muted/20 animate-pulse rounded-xl" />,
   ssr: false,
 });
 
 const SalesByProduct = dynamic(() => import("@/components/admin/sales/SalesByProduct").then(mod => ({ default: mod.SalesByProduct })), {
-  loading: () => <div className="h-[400px] bg-muted/20 animate-pulse rounded-xl" />,
+  loading: () => <div className="h-[400px] border border-border/60 bg-muted/20 animate-pulse rounded-xl" />,
   ssr: false,
 });
 
 const SalesByCategory = dynamic(() => import("@/components/admin/sales/SalesByCategory").then(mod => ({ default: mod.SalesByCategory })), {
-  loading: () => <div className="h-[400px] bg-muted/20 animate-pulse rounded-xl" />,
+  loading: () => <div className="h-[400px] border border-border/60 bg-muted/20 animate-pulse rounded-xl" />,
   ssr: false,
 });
 import type { SalesSummary, SalesByDay, SalesByProduct as SalesByProductType, SalesByCategory as SalesByCategoryType } from "@/modules/admin/types";
@@ -32,6 +32,14 @@ interface SalesData {
   categoryDistribution: SalesByCategoryType[];
 }
 
+const DATE_RANGE_DAYS: Record<string, number> = {
+  "7d": 7,
+  "30d": 30,
+  "90d": 90,
+  "1y": 365,
+  "all": 90,
+};
+
 export default function AdminSalesPage() {
   const [loading, setLoading] = useState(true);
   const [dateRange, setDateRange] = useState("30d");
@@ -40,10 +48,18 @@ export default function AdminSalesPage() {
   const fetchSales = useCallback(async () => {
     setLoading(true);
     try {
-      const res = await fetch(`/api/admin/sales?dateRange=${dateRange}`);
+      const days = DATE_RANGE_DAYS[dateRange] || 30;
+      const res = await fetch(`/api/admin/sales?days=${days}`);
       const json = await res.json();
       if (!res.ok) throw new Error(json.error || "Failed to fetch sales data");
-      setData(json);
+      if (!json.success) throw new Error(json.error || "Failed to fetch sales data");
+      const d = json.data;
+      setData({
+        summary: d.summary,
+        trend: d.byDay || [],
+        topProducts: d.byProduct || [],
+        categoryDistribution: d.byCategory || [],
+      });
     } catch (error: unknown) {
       if (error instanceof Error) {
         toast.error(error.message);
@@ -62,7 +78,7 @@ export default function AdminSalesPage() {
   if (loading && !data) {
     return (
       <div className="flex items-center justify-center min-h-[600px]">
-        <Loader2 className="w-10 h-10 animate-spin text-primary" />
+        <Loader2 className="h-10 w-10 animate-spin text-primary" />
       </div>
     );
   }
@@ -80,7 +96,7 @@ export default function AdminSalesPage() {
 
       <SalesTrendChart data={data?.trend || []} />
 
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-3">
         <div className="lg:col-span-5">
           <SalesByCategory data={data?.categoryDistribution || []} />
         </div>

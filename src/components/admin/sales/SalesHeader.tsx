@@ -31,10 +31,10 @@ export function SalesHeader({
       action={
         <div className="flex items-center gap-3">
           <Select value={dateRange} onValueChange={onDateRangeChange}>
-            <SelectTrigger className="w-[180px] h-10 rounded-xl bg-card border-border/50">
+            <SelectTrigger className="w-[180px] h-9 rounded-lg bg-card border-border/60">
               <SelectValue placeholder="Select range" />
             </SelectTrigger>
-            <SelectContent className="rounded-xl border-border/50 bg-card">
+            <SelectContent className="rounded-lg border-border/60 bg-card">
               <SelectItem value="7d">Last 7 Days</SelectItem>
               <SelectItem value="30d">Last 30 Days</SelectItem>
               <SelectItem value="90d">Last 90 Days</SelectItem>
