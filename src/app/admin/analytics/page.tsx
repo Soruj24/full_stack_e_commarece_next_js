@@ -1,6 +1,5 @@
 "use client";
 
-import { Loader2 } from "lucide-react";
 import { PageHeader } from "@/components/admin/ui/PageHeader";
 import {
   useAnalyticsManager,
@@ -45,19 +44,27 @@ export default function AnalyticsPage() {
       </div>
 
       {loading ? (
-        <div className="flex items-center justify-center min-h-[400px]">
-          <Loader2 className="w-8 h-8 animate-spin text-muted-foreground" />
+        <div className="space-y-6">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-7 gap-3">
+            {[1, 2, 3, 4, 5, 6, 7].map((i) => (
+              <div key={i} className="h-24 bg-muted/30 rounded-xl animate-pulse" />
+            ))}
+          </div>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div className="h-[300px] bg-muted/30 rounded-xl animate-pulse" />
+            <div className="h-[300px] bg-muted/30 rounded-xl animate-pulse" />
+          </div>
         </div>
       ) : (
         <>
           <AnalyticsOverview stats={stats} />
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <AnalyticsRevenueChart data={revenueChart} />
             <AnalyticsOrdersChart data={ordersChart} />
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <AnalyticsOrderStatus data={statusChart} />
             <AnalyticsConversionFunnel
               totalUsers={stats?.totalUsers || 0}
@@ -78,7 +85,7 @@ export default function AnalyticsPage() {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <AnalyticsTopProducts products={topProducts} />
             <AnalyticsTopCategories categories={topCategories} />
           </div>

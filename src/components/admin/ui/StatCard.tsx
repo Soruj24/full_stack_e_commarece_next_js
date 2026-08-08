@@ -46,7 +46,7 @@ export function StatCard({
             className={cn(
               "text-xs font-medium mb-0.5",
               changeType === "positive" && "text-emerald-600",
-              changeType === "negative" && "text-red-500",
+              changeType === "negative" && "text-red-600",
               changeType === "neutral" && "text-muted-foreground"
             )}
           >

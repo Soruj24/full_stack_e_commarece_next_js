@@ -1,8 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { UserPlus } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { PageHeader } from "@/components/admin/ui/PageHeader";
 import {
   CustomersStats,

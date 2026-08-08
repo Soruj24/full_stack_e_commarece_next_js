@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect } from "react";
-import { Loader2 } from "lucide-react";
 import { PageHeader } from "@/components/admin/ui/PageHeader";
 import {
   useSettingsManager,
@@ -38,8 +37,24 @@ export default function SettingsPage() {
 
   if (globalLoading) {
     return (
-      <div className="flex items-center justify-center min-h-[400px]">
-        <Loader2 className="w-8 h-8 animate-spin text-muted-foreground" />
+      <div className="space-y-6">
+        <div className="h-10 w-48 bg-muted/30 rounded-lg animate-pulse" />
+        <div className="flex gap-6">
+          <div className="w-56 space-y-1">
+            {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map((i) => (
+              <div key={i} className="h-9 bg-muted/30 rounded-lg animate-pulse" />
+            ))}
+          </div>
+          <div className="flex-1 space-y-4">
+            <div className="h-8 w-32 bg-muted/30 rounded animate-pulse" />
+            <div className="h-4 w-64 bg-muted/20 rounded animate-pulse" />
+            <div className="space-y-3">
+              {[1, 2, 3, 4].map((i) => (
+                <div key={i} className="h-12 bg-muted/30 rounded-xl animate-pulse" />
+              ))}
+            </div>
+          </div>
+        </div>
       </div>
     );
   }

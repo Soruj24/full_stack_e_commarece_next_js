@@ -42,9 +42,9 @@ export function SettingsLayout({
   children,
 }: SettingsLayoutProps) {
   return (
-    <div className="flex gap-6 min-h-[calc(100vh-8rem)]">
-      <nav className="w-56 shrink-0">
-        <div className="sticky top-6 space-y-0.5">
+    <div className="flex flex-col lg:flex-row gap-6 min-h-[calc(100vh-8rem)]">
+      <nav className="w-full lg:w-56 shrink-0">
+        <div className="flex lg:flex-col gap-1 overflow-x-auto lg:overflow-x-visible pb-2 lg:pb-0 sticky top-0 lg:top-6 scrollbar-none">
           {NAV_ITEMS.map((item) => {
             const isActive = activeSection === item.key;
             return (
@@ -52,7 +52,7 @@ export function SettingsLayout({
                 key={item.key}
                 onClick={() => onSectionChange(item.key)}
                 className={cn(
-                  "w-full flex items-center gap-2.5 px-3 py-2 text-sm rounded-lg transition-colors text-left",
+                  "flex items-center gap-2.5 px-3 py-2 text-sm rounded-lg transition-colors text-left whitespace-nowrap shrink-0",
                   isActive
                     ? "bg-primary/10 text-primary font-medium"
                     : "text-muted-foreground hover:text-foreground hover:bg-muted/50"

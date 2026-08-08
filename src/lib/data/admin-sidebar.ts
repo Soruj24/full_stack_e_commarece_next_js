@@ -2,8 +2,7 @@ import {
   LayoutDashboard, Package, Layers, ShoppingBag, Users, Star,
   Ticket, CreditCard, PieChart, FileText, Settings,
   TrendingUp, DollarSign, Bell, Key, Lock, Activity, Gift,
-  MessageCircle, AlertTriangle, ShoppingCart, Store, Inbox, Tag,
-  ChevronRight,
+  MessageCircle, AlertTriangle, ShoppingCart, Store, Inbox,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 

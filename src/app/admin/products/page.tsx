@@ -1,6 +1,6 @@
 "use client";
 
-import { RefreshCw, Plus } from "lucide-react";
+import { RefreshCw, Plus, Package, AlertTriangle, XCircle, TrendingUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { PageHeader } from "@/components/admin/ui/PageHeader";
@@ -15,7 +15,6 @@ import {
   ProductErrorState,
   useProductsManager,
 } from "@/components/admin/products";
-import { Package, AlertTriangle, XCircle, TrendingUp } from "lucide-react";
 
 export default function ProductsPage() {
   const {
