@@ -1,149 +1,117 @@
 "use client";
 
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
-import { Separator } from "@/components/ui/separator";
+import { SettingsSection, SettingGroup, SettingRow } from "./SettingsSection";
 
-interface PaymentSettingsProps {
+interface Props {
   settings: Record<string, unknown>;
   onChange: (key: string, value: unknown) => void;
+  saving: boolean;
+  saved: boolean;
+  error: string | null;
+  hasChanges: boolean;
+  onSave: () => void;
 }
 
-export function PaymentSettings({ settings, onChange }: PaymentSettingsProps) {
+export function PaymentSettings({ settings, onChange, saving, saved, error, hasChanges, onSave }: Props) {
   return (
-    <div className="space-y-6">
-      <div>
-        <h3 className="text-lg font-semibold mb-4">Stripe</h3>
-        <div className="space-y-4">
-          <div className="flex items-center justify-between">
-            <div>
-              <Label>Enable Stripe</Label>
-              <p className="text-sm text-muted-foreground">Accept credit card payments via Stripe</p>
-            </div>
-            <Switch
-              checked={(settings.stripeEnabled as boolean) ?? false}
-              onCheckedChange={(checked) => onChange("stripeEnabled", checked)}
-            />
-          </div>
-          {(settings.stripeEnabled as boolean) && (
-            <div className="grid gap-4 pl-6">
-              <div className="grid gap-2">
-                <Label htmlFor="stripePublicKey">Public Key</Label>
-                <Input
-                  id="stripePublicKey"
-                  value={(settings.stripePublicKey as string) || ""}
-                  onChange={(e) => onChange("stripePublicKey", e.target.value)}
-                  placeholder="pk_live_..."
-                />
-              </div>
-              <div className="grid gap-2">
-                <Label htmlFor="stripeSecretKey">Secret Key</Label>
-                <Input
-                  id="stripeSecretKey"
-                  type="password"
-                  value={(settings.stripeSecretKey as string) || ""}
-                  onChange={(e) => onChange("stripeSecretKey", e.target.value)}
-                  placeholder="sk_live_..."
-                />
-              </div>
-            </div>
-          )}
-        </div>
-      </div>
+    <SettingsSection
+      title="Payments"
+      description="Payment gateways and transaction settings"
+      saving={saving}
+      saved={saved}
+      error={error}
+      hasChanges={hasChanges}
+      onSave={onSave}
+    >
+      <SettingGroup title="Stripe">
+        <SettingRow label="Enable Stripe" description="Accept credit/debit cards via Stripe">
+          <Switch
+            checked={(settings.stripeEnabled as boolean) ?? false}
+            onCheckedChange={(c) => onChange("stripeEnabled", c)}
+          />
+        </SettingRow>
+        {(settings.stripeEnabled as boolean) && (
+          <>
+            <SettingRow label="Publishable Key">
+              <Input
+                value={(settings.stripePublicKey as string) || ""}
+                onChange={(e) => onChange("stripePublicKey", e.target.value)}
+                placeholder="pk_live_..."
+                className="w-64 h-8 text-sm font-mono"
+              />
+            </SettingRow>
+            <SettingRow label="Secret Key">
+              <Input
+                type="password"
+                value={(settings.stripeSecretKey as string) || ""}
+                onChange={(e) => onChange("stripeSecretKey", e.target.value)}
+                placeholder="sk_live_..."
+                className="w-64 h-8 text-sm font-mono"
+              />
+            </SettingRow>
+          </>
+        )}
+      </SettingGroup>
 
-      <Separator />
+      <SettingGroup title="PayPal">
+        <SettingRow label="Enable PayPal" description="Accept PayPal payments">
+          <Switch
+            checked={(settings.paypalEnabled as boolean) ?? false}
+            onCheckedChange={(c) => onChange("paypalEnabled", c)}
+          />
+        </SettingRow>
+        {(settings.paypalEnabled as boolean) && (
+          <>
+            <SettingRow label="Client ID">
+              <Input
+                value={(settings.paypalClientId as string) || ""}
+                onChange={(e) => onChange("paypalClientId", e.target.value)}
+                className="w-64 h-8 text-sm font-mono"
+              />
+            </SettingRow>
+            <SettingRow label="Secret">
+              <Input
+                type="password"
+                value={(settings.paypalSecret as string) || ""}
+                onChange={(e) => onChange("paypalSecret", e.target.value)}
+                className="w-64 h-8 text-sm font-mono"
+              />
+            </SettingRow>
+          </>
+        )}
+      </SettingGroup>
 
-      <div>
-        <h3 className="text-lg font-semibold mb-4">PayPal</h3>
-        <div className="space-y-4">
-          <div className="flex items-center justify-between">
-            <div>
-              <Label>Enable PayPal</Label>
-              <p className="text-sm text-muted-foreground">Accept PayPal payments</p>
-            </div>
-            <Switch
-              checked={(settings.paypalEnabled as boolean) ?? false}
-              onCheckedChange={(checked) => onChange("paypalEnabled", checked)}
-            />
-          </div>
-          {(settings.paypalEnabled as boolean) && (
-            <div className="grid gap-4 pl-6">
-              <div className="grid gap-2">
-                <Label htmlFor="paypalClientId">Client ID</Label>
-                <Input
-                  id="paypalClientId"
-                  value={(settings.paypalClientId as string) || ""}
-                  onChange={(e) => onChange("paypalClientId", e.target.value)}
-                />
-              </div>
-              <div className="grid gap-2">
-                <Label htmlFor="paypalSecret">Secret</Label>
-                <Input
-                  id="paypalSecret"
-                  type="password"
-                  value={(settings.paypalSecret as string) || ""}
-                  onChange={(e) => onChange("paypalSecret", e.target.value)}
-                />
-              </div>
-            </div>
-          )}
-        </div>
-      </div>
+      <SettingGroup title="Mobile Payment">
+        <SettingRow label="bKash" description="Enable bKash payments">
+          <Switch
+            checked={(settings.bKashEnabled as boolean) ?? false}
+            onCheckedChange={(c) => onChange("bKashEnabled", c)}
+          />
+        </SettingRow>
+        <SettingRow label="Nagad" description="Enable Nagad payments">
+          <Switch
+            checked={(settings.nagadEnabled as boolean) ?? false}
+            onCheckedChange={(c) => onChange("nagadEnabled", c)}
+          />
+        </SettingRow>
+        <SettingRow label="Rocket" description="Enable Rocket payments">
+          <Switch
+            checked={(settings.rocketEnabled as boolean) ?? false}
+            onCheckedChange={(c) => onChange("rocketEnabled", c)}
+          />
+        </SettingRow>
+      </SettingGroup>
 
-      <Separator />
-
-      <div>
-        <h3 className="text-lg font-semibold mb-4">Mobile Payment (Bangladesh)</h3>
-        <div className="space-y-4">
-          <div className="flex items-center justify-between">
-            <div>
-              <Label>bKash</Label>
-              <p className="text-sm text-muted-foreground">Enable bKash payments</p>
-            </div>
-            <Switch
-              checked={(settings.bKashEnabled as boolean) ?? false}
-              onCheckedChange={(checked) => onChange("bKashEnabled", checked)}
-            />
-          </div>
-          <div className="flex items-center justify-between">
-            <div>
-              <Label>Nagad</Label>
-              <p className="text-sm text-muted-foreground">Enable Nagad payments</p>
-            </div>
-            <Switch
-              checked={(settings.nagadEnabled as boolean) ?? false}
-              onCheckedChange={(checked) => onChange("nagadEnabled", checked)}
-            />
-          </div>
-          <div className="flex items-center justify-between">
-            <div>
-              <Label>Rocket</Label>
-              <p className="text-sm text-muted-foreground">Enable Rocket payments</p>
-            </div>
-            <Switch
-              checked={(settings.rocketEnabled as boolean) ?? false}
-              onCheckedChange={(checked) => onChange("rocketEnabled", checked)}
-            />
-          </div>
-        </div>
-      </div>
-
-      <Separator />
-
-      <div>
-        <h3 className="text-lg font-semibold mb-4">Cash on Delivery</h3>
-        <div className="flex items-center justify-between">
-          <div>
-            <Label>Enable COD</Label>
-            <p className="text-sm text-muted-foreground">Allow cash on delivery payments</p>
-          </div>
+      <SettingGroup title="Other">
+        <SettingRow label="Cash on Delivery" description="Allow COD payments">
           <Switch
             checked={(settings.codEnabled as boolean) ?? true}
-            onCheckedChange={(checked) => onChange("codEnabled", checked)}
+            onCheckedChange={(c) => onChange("codEnabled", c)}
           />
-        </div>
-      </div>
-    </div>
+        </SettingRow>
+      </SettingGroup>
+    </SettingsSection>
   );
 }

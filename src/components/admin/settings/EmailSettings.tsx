@@ -1,86 +1,99 @@
 "use client";
 
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Separator } from "@/components/ui/separator";
+import { SettingsSection, SettingGroup, SettingRow } from "./SettingsSection";
 
-interface EmailSettingsProps {
+interface Props {
   settings: Record<string, unknown>;
   onChange: (key: string, value: unknown) => void;
+  saving: boolean;
+  saved: boolean;
+  error: string | null;
+  hasChanges: boolean;
+  onSave: () => void;
 }
 
-export function EmailSettings({ settings, onChange }: EmailSettingsProps) {
+export function EmailSettings({ settings, onChange, saving, saved, error, hasChanges, onSave }: Props) {
   return (
-    <div className="space-y-6">
-      <div>
-        <h3 className="text-lg font-semibold mb-4">SMTP Configuration</h3>
-        <div className="grid gap-4">
-          <div className="grid gap-2">
-            <Label htmlFor="smtpHost">SMTP Host</Label>
+    <SettingsSection
+      title="Email"
+      description="SMTP and transactional email configuration"
+      saving={saving}
+      saved={saved}
+      error={error}
+      hasChanges={hasChanges}
+      onSave={onSave}
+    >
+      <SettingGroup title="SMTP">
+        <SettingRow label="Host" description="SMTP server hostname">
+          <Input
+            value={(settings.smtpHost as string) || ""}
+            onChange={(e) => onChange("smtpHost", e.target.value)}
+            placeholder="smtp.gmail.com"
+            className="w-64 h-8 text-sm"
+          />
+        </SettingRow>
+        <SettingRow label="Port" description="SMTP server port">
+          <Input
+            type="number"
+            value={(settings.smtpPort as number) || 587}
+            onChange={(e) => onChange("smtpPort", Number(e.target.value))}
+            className="w-32 h-8 text-sm"
+          />
+        </SettingRow>
+        <SettingRow label="Username">
+          <Input
+            value={(settings.smtpUser as string) || ""}
+            onChange={(e) => onChange("smtpUser", e.target.value)}
+            placeholder="your-email@gmail.com"
+            className="w-64 h-8 text-sm"
+          />
+        </SettingRow>
+        <SettingRow label="Password">
+          <Input
+            type="password"
+            value={(settings.smtpPass as string) || ""}
+            onChange={(e) => onChange("smtpPass", e.target.value)}
+            placeholder="App password"
+            className="w-64 h-8 text-sm"
+          />
+        </SettingRow>
+        <SettingRow label="From Address" description="Sender email address">
+          <Input
+            type="email"
+            value={(settings.smtpFrom as string) || ""}
+            onChange={(e) => onChange("smtpFrom", e.target.value)}
+            placeholder="noreply@example.com"
+            className="w-64 h-8 text-sm"
+          />
+        </SettingRow>
+      </SettingGroup>
+
+      <SettingGroup title="Provider">
+        <SettingRow label="Email Provider" description="Select your email service">
+          <select
+            value={(settings.emailProvider as string) || "smtp"}
+            onChange={(e) => onChange("emailProvider", e.target.value)}
+            className="h-8 px-3 rounded-lg border border-border/60 bg-card text-sm"
+          >
+            <option value="smtp">Custom SMTP</option>
+            <option value="resend">Resend</option>
+            <option value="sendgrid">SendGrid</option>
+            <option value="ses">Amazon SES</option>
+          </select>
+        </SettingRow>
+        {(settings.emailProvider as string) === "resend" && (
+          <SettingRow label="Resend API Key">
             <Input
-              id="smtpHost"
-              value={(settings.smtpHost as string) || ""}
-              onChange={(e) => onChange("smtpHost", e.target.value)}
-              placeholder="smtp.gmail.com"
-            />
-          </div>
-          <div className="grid gap-2">
-            <Label htmlFor="smtpPort">SMTP Port</Label>
-            <Input
-              id="smtpPort"
-              type="number"
-              value={(settings.smtpPort as number) || 587}
-              onChange={(e) => onChange("smtpPort", Number(e.target.value))}
-              placeholder="587"
-            />
-          </div>
-          <div className="grid gap-2">
-            <Label htmlFor="smtpUser">SMTP Username</Label>
-            <Input
-              id="smtpUser"
-              value={(settings.smtpUser as string) || ""}
-              onChange={(e) => onChange("smtpUser", e.target.value)}
-              placeholder="your-email@gmail.com"
-            />
-          </div>
-          <div className="grid gap-2">
-            <Label htmlFor="smtpPass">SMTP Password</Label>
-            <Input
-              id="smtpPass"
               type="password"
-              value={(settings.smtpPass as string) || ""}
-              onChange={(e) => onChange("smtpPass", e.target.value)}
-              placeholder="App password"
+              value={(settings.resendApiKey as string) || ""}
+              onChange={(e) => onChange("resendApiKey", e.target.value)}
+              placeholder="re_..."
+              className="w-64 h-8 text-sm font-mono"
             />
-          </div>
-          <div className="grid gap-2">
-            <Label htmlFor="smtpFrom">From Email Address</Label>
-            <Input
-              id="smtpFrom"
-              type="email"
-              value={(settings.smtpFrom as string) || ""}
-              onChange={(e) => onChange("smtpFrom", e.target.value)}
-              placeholder="noreply@example.com"
-            />
-          </div>
-        </div>
-      </div>
-
-      <Separator />
-
-      <div className="p-4 bg-muted rounded-lg">
-        <h4 className="font-medium mb-2">Email Notifications</h4>
-        <p className="text-sm text-muted-foreground">
-          The following emails are sent automatically:
-        </p>
-        <ul className="text-sm text-muted-foreground space-y-1 mt-2">
-          <li>• Welcome email on registration</li>
-          <li>• Order confirmation</li>
-          <li>• Shipping notification</li>
-          <li>• Password reset</li>
-          <li>• Email verification</li>
-        </ul>
-      </div>
-    </div>
+          </SettingRow>
+        )}
+      </SettingGroup>
+    </SettingsSection>
   );
 }

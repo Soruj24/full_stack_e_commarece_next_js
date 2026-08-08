@@ -1,130 +1,79 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { toast } from "sonner";
-import { useSession } from "next-auth/react";
-import { redirect } from "next/navigation";
-import { SettingsHeader } from "@/components/admin/settings/SettingsHeader";
-import { SettingsTabs } from "@/components/admin/settings/SettingsTabs";
-import { GeneralSettings } from "@/components/admin/settings/GeneralSettings";
-import { PaymentSettings } from "@/components/admin/settings/PaymentSettings";
-import { SecuritySettings } from "@/components/admin/settings/SecuritySettings";
-import { EmailSettings } from "@/components/admin/settings/EmailSettings";
-
-const defaultSettings: Record<string, unknown> = {
-  siteName: "E-Commerce Store",
-  siteDescription: "",
-  contactEmail: "",
-  supportEmail: "",
-  maintenanceMode: false,
-  allowRegistration: true,
-  requireEmailVerification: false,
-  currency: "USD",
-  taxRate: 0,
-  shippingFee: 0,
-  stripeEnabled: false,
-  stripePublicKey: "",
-  stripeSecretKey: "",
-  paypalEnabled: false,
-  paypalClientId: "",
-  paypalSecret: "",
-  bKashEnabled: false,
-  nagadEnabled: false,
-  rocketEnabled: false,
-  codEnabled: true,
-  smtpHost: "",
-  smtpPort: 587,
-  smtpUser: "",
-  smtpPass: "",
-  smtpFrom: "",
-  googleAnalyticsId: "",
-  facebookPixelId: "",
-  facebook: "",
-  twitter: "",
-  instagram: "",
-  linkedin: "",
-};
+import { useEffect } from "react";
+import { Loader2 } from "lucide-react";
+import { PageHeader } from "@/components/admin/ui/PageHeader";
+import {
+  useSettingsManager,
+  SettingsLayout,
+  GeneralSettings,
+  StoreSettings,
+  ProfileSettings,
+  SecuritySettings,
+  NotificationSettings,
+  PaymentSettings,
+  ShippingSettings,
+  TaxSettings,
+  EmailSettings,
+  IntegrationSettings,
+  AppearanceSettings,
+} from "@/components/admin/settings";
 
 export default function SettingsPage() {
-  const { data: session, status } = useSession();
-  const [loading, setLoading] = useState(true);
-  const [saving, setSaving] = useState(false);
-  const [activeTab, setActiveTab] = useState("general");
-  const [settings, setSettings] = useState<Record<string, unknown>>(defaultSettings);
+  const {
+    activeSection,
+    setActiveSection,
+    settings,
+    globalLoading,
+    fetchSettings,
+    updateField,
+    hasChanges,
+    saveSection,
+    getStatus,
+  } = useSettingsManager();
 
   useEffect(() => {
-    if (status === "loading") return;
-    if (!session || session.user.role !== "admin") {
-      redirect("/login");
-    }
     fetchSettings();
-  }, [session, status]);
+  }, [fetchSettings]);
 
-  const fetchSettings = async () => {
-    setLoading(true);
-    try {
-      const res = await fetch("/api/admin/settings");
-      const data = await res.json();
-      if (data.success && data.settings) {
-        setSettings({ ...defaultSettings, ...data.settings });
-      }
-    } catch {
-      toast.error("Failed to fetch settings");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleChange = (key: string, value: unknown) => {
-    setSettings((prev) => ({ ...prev, [key]: value }));
-  };
-
-  const handleSave = async () => {
-    setSaving(true);
-    try {
-      const res = await fetch("/api/admin/settings", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(settings),
-      });
-      if (res.ok) {
-        toast.success("Settings saved successfully");
-      }
-    } catch {
-      toast.error("Failed to save settings");
-    } finally {
-      setSaving(false);
-    }
-  };
-
-  if (status === "loading" || loading) {
+  if (globalLoading) {
     return (
       <div className="flex items-center justify-center min-h-[400px]">
-        <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-primary"></div>
+        <Loader2 className="w-8 h-8 animate-spin text-muted-foreground" />
       </div>
     );
   }
 
+  const sectionProps = {
+    settings,
+    onChange: updateField,
+    saving: getStatus(activeSection).saving,
+    saved: getStatus(activeSection).saved,
+    error: getStatus(activeSection).error,
+    hasChanges: hasChanges(),
+    onSave: () => saveSection(activeSection),
+  };
+
   return (
     <div className="space-y-6">
-        <SettingsHeader saving={saving} onSave={handleSave} />
+      <PageHeader
+        title="Settings"
+        description="Configure your store, payments, shipping, and integrations"
+      />
 
-        <SettingsTabs activeTab={activeTab} onTabChange={setActiveTab} />
-
-        <div className="bg-card border border-border/60 rounded-xl overflow-hidden p-8">
-          {activeTab === "general" && (
-            <GeneralSettings settings={settings} onChange={handleChange} />
-          )}
-          {activeTab === "payment" && (
-            <PaymentSettings settings={settings} onChange={handleChange} />
-          )}
-          {activeTab === "security" && (
-            <SecuritySettings settings={settings} onChange={handleChange} />
-          )}
-          {activeTab === "email" && (
-            <EmailSettings settings={settings} onChange={handleChange} />
-          )}
-        </div>
+      <SettingsLayout activeSection={activeSection} onSectionChange={setActiveSection}>
+        {activeSection === "general" && <GeneralSettings {...sectionProps} />}
+        {activeSection === "store" && <StoreSettings {...sectionProps} />}
+        {activeSection === "profile" && <ProfileSettings {...sectionProps} />}
+        {activeSection === "security" && <SecuritySettings {...sectionProps} />}
+        {activeSection === "notifications" && <NotificationSettings {...sectionProps} />}
+        {activeSection === "payments" && <PaymentSettings {...sectionProps} />}
+        {activeSection === "shipping" && <ShippingSettings {...sectionProps} />}
+        {activeSection === "tax" && <TaxSettings {...sectionProps} />}
+        {activeSection === "email" && <EmailSettings {...sectionProps} />}
+        {activeSection === "integrations" && <IntegrationSettings {...sectionProps} />}
+        {activeSection === "appearance" && <AppearanceSettings {...sectionProps} />}
+      </SettingsLayout>
     </div>
   );
 }

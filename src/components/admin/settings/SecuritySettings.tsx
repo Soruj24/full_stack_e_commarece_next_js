@@ -1,50 +1,92 @@
 "use client";
 
 import { Switch } from "@/components/ui/switch";
-import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { SettingsSection, SettingGroup, SettingRow } from "./SettingsSection";
 
-interface SecuritySettingsProps {
+interface Props {
   settings: Record<string, unknown>;
   onChange: (key: string, value: unknown) => void;
+  saving: boolean;
+  saved: boolean;
+  error: string | null;
+  hasChanges: boolean;
+  onSave: () => void;
 }
 
-export function SecuritySettings({ settings, onChange }: SecuritySettingsProps) {
+export function SecuritySettings({ settings, onChange, saving, saved, error, hasChanges, onSave }: Props) {
   return (
-    <div className="space-y-6">
-      <div>
-        <h3 className="text-lg font-semibold mb-4">Authentication</h3>
-        <div className="space-y-4">
-          <div className="flex items-center justify-between">
-            <div>
-              <Label>Require Email Verification</Label>
-              <p className="text-sm text-muted-foreground">
-                Users must verify their email before logging in
-              </p>
-            </div>
-            <Switch
-              checked={(settings.requireEmailVerification as boolean) ?? false}
-              onCheckedChange={(checked) => onChange("requireEmailVerification", checked)}
-            />
-          </div>
-        </div>
-      </div>
+    <SettingsSection
+      title="Security"
+      description="Authentication, sessions, and access control"
+      saving={saving}
+      saved={saved}
+      error={error}
+      hasChanges={hasChanges}
+      onSave={onSave}
+    >
+      <SettingGroup title="Authentication">
+        <SettingRow label="Require Email Verification" description="Users must verify email before login">
+          <Switch
+            checked={(settings.requireEmailVerification as boolean) ?? false}
+            onCheckedChange={(c) => onChange("requireEmailVerification", c)}
+          />
+        </SettingRow>
+        <SettingRow label="Two-Factor Authentication" description="Enforce 2FA for all admin users">
+          <Switch
+            checked={(settings.enforce2FA as boolean) ?? false}
+            onCheckedChange={(c) => onChange("enforce2FA", c)}
+          />
+        </SettingRow>
+      </SettingGroup>
 
-      <div className="p-4 bg-muted rounded-lg">
-        <h4 className="font-medium mb-2">Two-Factor Authentication</h4>
-        <p className="text-sm text-muted-foreground mb-4">
-          Two-factor authentication is configured per-user. Admin users can enable 2FA from their profile settings.
-        </p>
-      </div>
+      <SettingGroup title="Sessions">
+        <SettingRow label="Session Timeout" description="Auto-logout after inactivity (minutes)">
+          <Input
+            type="number"
+            value={(settings.sessionTimeout as number) || 60}
+            onChange={(e) => onChange("sessionTimeout", Number(e.target.value))}
+            className="w-32 h-8 text-sm"
+          />
+        </SettingRow>
+        <SettingRow label="Max Login Attempts" description="Lock account after failed attempts">
+          <Input
+            type="number"
+            value={(settings.maxLoginAttempts as number) || 5}
+            onChange={(e) => onChange("maxLoginAttempts", Number(e.target.value))}
+            className="w-32 h-8 text-sm"
+          />
+        </SettingRow>
+      </SettingGroup>
 
-      <div className="p-4 bg-muted rounded-lg">
-        <h4 className="font-medium mb-2">Password Requirements</h4>
-        <ul className="text-sm text-muted-foreground space-y-1">
-          <li>• Minimum 8 characters</li>
-          <li>• At least one uppercase letter</li>
-          <li>• At least one lowercase letter</li>
-          <li>• At least one number</li>
-        </ul>
-      </div>
-    </div>
+      <SettingGroup title="Password Policy">
+        <SettingRow label="Minimum Length" description="Minimum password length">
+          <Input
+            type="number"
+            value={(settings.minPasswordLength as number) || 8}
+            onChange={(e) => onChange("minPasswordLength", Number(e.target.value))}
+            className="w-32 h-8 text-sm"
+          />
+        </SettingRow>
+        <SettingRow label="Require Uppercase">
+          <Switch
+            checked={(settings.requireUppercase as boolean) ?? true}
+            onCheckedChange={(c) => onChange("requireUppercase", c)}
+          />
+        </SettingRow>
+        <SettingRow label="Require Number">
+          <Switch
+            checked={(settings.requireNumber as boolean) ?? true}
+            onCheckedChange={(c) => onChange("requireNumber", c)}
+          />
+        </SettingRow>
+        <SettingRow label="Require Special Character">
+          <Switch
+            checked={(settings.requireSpecial as boolean) ?? false}
+            onCheckedChange={(c) => onChange("requireSpecial", c)}
+          />
+        </SettingRow>
+      </SettingGroup>
+    </SettingsSection>
   );
 }
