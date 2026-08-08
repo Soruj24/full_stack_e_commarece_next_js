@@ -1,59 +1,101 @@
 "use client";
 
-import { UsersHeader } from "@/components/admin/users/UsersHeader";
-import { UsersStats } from "@/components/admin/users/UsersStats";
-import { UsersSearch } from "@/components/admin/users/UsersSearch";
-import { UsersTable } from "@/components/admin/users/UsersTable";
-import { ProfessionalPagination } from "@/components/common/ProfessionalPagination";
-import { AdminUserDialog } from "@/components/admin/users/AdminUserDialog";
-import { useAdminUsers } from "@/modules/admin/hooks/use-admin-users";
+import { useState } from "react";
+import { UserPlus } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { PageHeader } from "@/components/admin/ui/PageHeader";
+import {
+  CustomersStats,
+  CustomersFilters,
+  CustomersTable,
+  CustomersPagination,
+  CustomersEmptyState,
+  CustomersErrorState,
+  useCustomersManager,
+} from "@/components/admin/customers";
 
-export default function UsersPage() {
+export default function CustomersPage() {
   const {
-    filteredUsers, loading, searchQuery, setSearchQuery, roleFilter, setRoleFilter,
-    statusFilter, setStatusFilter, selectedUser, setSelectedUser, isDialogOpen,
-    setIsDialogOpen, pagination, fetchUsers, handlePageChange, handleDelete,
-    handleChangeRole, handleUpdateStatus, stats, status,
-  } = useAdminUsers();
+    users,
+    loading,
+    error,
+    pagination,
+    filters,
+    sort,
+    stats,
+    handlePageChange,
+    handleFilterChange,
+    handleSortChange,
+    handleDelete,
+    handleChangeRole,
+    handleUpdateStatus,
+    refresh,
+  } = useCustomersManager();
 
-  if (status === "loading") {
-    return (
-      <div className="flex items-center justify-center min-h-[400px]">
-        <div className="w-8 h-8 border-2 border-primary/30 border-t-primary rounded-full animate-spin" />
-      </div>
-    );
-  }
+  const [resetKey, setResetKey] = useState(0);
+
+  const handleReset = () => {
+    handleFilterChange("search", "");
+    handleFilterChange("role", "all");
+    handleFilterChange("status", "all");
+    handleFilterChange("dateFrom", "");
+    handleFilterChange("dateTo", "");
+    setResetKey((k) => k + 1);
+  };
+
+  const hasActiveFilters =
+    !!filters.search ||
+    filters.role !== "all" ||
+    filters.status !== "all" ||
+    !!filters.dateFrom ||
+    !!filters.dateTo;
 
   return (
     <div className="space-y-6">
-      <UsersHeader loading={loading} onRefresh={() => fetchUsers(pagination.page)} />
+      <PageHeader
+        title="Customers"
+        description="Manage registered users, roles, and account status"
+      />
 
-      <UsersStats stats={stats} />
+      <CustomersStats stats={stats} />
 
-      <div className="bg-card border border-border/60 rounded-xl overflow-hidden">
-        <UsersSearch
-          searchQuery={searchQuery} setSearchQuery={setSearchQuery}
-          roleFilter={roleFilter} setRoleFilter={setRoleFilter}
-          statusFilter={statusFilter} setStatusFilter={setStatusFilter}
-        />
-
-        <UsersTable
-          users={filteredUsers} loading={loading}
-          onEdit={(user) => { setSelectedUser(user); setIsDialogOpen(true); }}
-          onDelete={handleDelete} onChangeRole={handleChangeRole} onUpdateStatus={handleUpdateStatus}
-        />
-
-        <div className="p-4 border-t border-border/60">
-          <ProfessionalPagination
-            currentPage={pagination.page} totalPages={pagination.pages} onPageChange={handlePageChange}
+      <div className="border border-border/60 rounded-xl bg-card overflow-hidden">
+        <div className="p-4">
+          <CustomersFilters
+            key={resetKey}
+            filters={filters}
+            totalUsers={users.length}
+            onFilterChange={handleFilterChange}
+            onReset={handleReset}
           />
         </div>
-      </div>
 
-      <AdminUserDialog
-        open={isDialogOpen} onOpenChange={setIsDialogOpen}
-        user={selectedUser} onSuccess={() => fetchUsers(pagination.page)}
-      />
+        {error ? (
+          <CustomersErrorState error={error} onRetry={refresh} />
+        ) : !loading && users.length === 0 ? (
+          <CustomersEmptyState hasFilters={hasActiveFilters} onReset={handleReset} />
+        ) : (
+          <CustomersTable
+            users={users}
+            loading={loading}
+            sort={sort}
+            onSort={handleSortChange}
+            onDelete={handleDelete}
+            onChangeRole={handleChangeRole}
+            onUpdateStatus={handleUpdateStatus}
+          />
+        )}
+
+        {!error && !loading && users.length > 0 && (
+          <CustomersPagination
+            currentPage={pagination.page}
+            totalPages={pagination.pages}
+            totalItems={pagination.total}
+            itemsPerPage={pagination.limit}
+            onPageChange={handlePageChange}
+          />
+        )}
+      </div>
     </div>
   );
 }
