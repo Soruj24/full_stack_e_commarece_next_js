@@ -2,7 +2,12 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { toast } from "sonner";
-import { ProductFormData, Category, Brand } from "@/components/admin/product-form/types";
+import {
+  ProductFormData,
+  Category,
+  Brand,
+  defaultProductFormData,
+} from "@/components/admin/product-form/types";
 
 interface ProductDialogData {
   _id: string;
@@ -18,22 +23,51 @@ interface ProductDialogData {
   sizes?: string[];
   isFeatured?: boolean;
   isArchived?: boolean;
+  isActive?: boolean;
   onSale?: boolean;
   discountPrice?: number;
   images: string[];
+  variants?: Array<{
+    name: string;
+    sku: string;
+    price: number;
+    stock: number;
+    color?: string;
+    size?: string;
+  }>;
+  weight?: number;
+  weightUnit?: "kg" | "lb" | "g" | "oz";
+  dimensions?: {
+    length: number;
+    width: number;
+    height: number;
+    unit: "cm" | "in";
+  };
+  metaTitle?: string;
+  metaDescription?: string;
+  canonicalUrl?: string;
+  ogImage?: string;
+  lowStockThreshold?: number;
+  inventoryTracking?: boolean;
+  isTaxable?: boolean;
+  taxClass?: string;
+  shippingOptions?: Array<{
+    method: string;
+    price: number;
+    estimatedDays: string;
+  }>;
 }
 
-const defaultFormData: ProductFormData = {
-  name: "", description: "", price: "", category: "", stock: "", brand: "", sku: "",
-  tags: "", colors: "", sizes: "", isFeatured: false, isArchived: false, onSale: false,
-  discountPrice: "", images: [], newImageUrl: "",
-};
-
-export function useProductDialog(product: ProductDialogData | null, open: boolean, onSuccess: () => void, onOpenChange: (open: boolean) => void) {
+export function useProductDialog(
+  product: ProductDialogData | null,
+  open: boolean,
+  onSuccess: () => void,
+  onOpenChange: (open: boolean) => void
+) {
   const [loading, setLoading] = useState(false);
   const [categories, setCategories] = useState<Category[]>([]);
   const [brands, setBrands] = useState<Brand[]>([]);
-  const [formData, setFormData] = useState<ProductFormData>(defaultFormData);
+  const [formData, setFormData] = useState<ProductFormData>(defaultProductFormData);
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -46,51 +80,126 @@ export function useProductDialog(product: ProductDialogData | null, open: boolea
       const data = await res.json();
       if (data.success) setBrands(data.brands);
     };
-    if (open) { fetchCategories(); fetchBrands(); }
+    if (open) {
+      fetchCategories();
+      fetchBrands();
+    }
   }, [open]);
 
   useEffect(() => {
     if (product) {
       setFormData({
-        name: product.name, description: product.description,
+        name: product.name,
+        description: product.description,
         price: product.price.toString(),
-        category: (typeof product.category === "object" ? (product.category as { _id: string })._id : product.category) || "",
-        stock: product.stock.toString(), brand: product.brand || "", sku: product.sku || "",
-        tags: product.tags?.join(", ") || "", colors: product.colors?.join(", ") || "",
-        sizes: product.sizes?.join(", ") || "", isFeatured: product.isFeatured || false,
-        isArchived: product.isArchived || false, onSale: product.onSale || false,
-        discountPrice: product.discountPrice?.toString() || "", images: product.images || [], newImageUrl: "",
+        category:
+          typeof product.category === "object"
+            ? (product.category as { _id: string })._id
+            : product.category || "",
+        stock: product.stock.toString(),
+        brand: product.brand || "",
+        sku: product.sku || "",
+        tags: product.tags?.join(", ") || "",
+        colors: product.colors?.join(", ") || "",
+        sizes: product.sizes?.join(", ") || "",
+        isFeatured: product.isFeatured || false,
+        isArchived: product.isArchived || false,
+        isActive: product.isActive !== false,
+        onSale: product.onSale || false,
+        discountPrice: product.discountPrice?.toString() || "",
+        images: product.images || [],
+        newImageUrl: "",
+        lowStockThreshold: product.lowStockThreshold?.toString() || "10",
+        inventoryTracking: product.inventoryTracking !== false,
+        weight: product.weight?.toString() || "",
+        weightUnit: product.weightUnit || "kg",
+        dimensionsLength: product.dimensions?.length?.toString() || "",
+        dimensionsWidth: product.dimensions?.width?.toString() || "",
+        dimensionsHeight: product.dimensions?.height?.toString() || "",
+        dimensionsUnit: product.dimensions?.unit || "cm",
+        metaTitle: product.metaTitle || "",
+        metaDescription: product.metaDescription || "",
+        canonicalUrl: product.canonicalUrl || "",
+        ogImage: product.ogImage || "",
+        shippingPrice: product.shippingOptions?.[0]?.price?.toString() || "",
+        shippingDays: product.shippingOptions?.[0]?.estimatedDays || "",
+        isTaxable: product.isTaxable !== false,
+        taxClass: product.taxClass || "standard",
       });
     } else {
-      setFormData(defaultFormData);
+      setFormData(defaultProductFormData);
     }
   }, [product, open]);
 
-  const handleSubmit = useCallback(async (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
-    try {
-      const url = product ? `/api/products/${product._id}` : "/api/products";
-      const method = product ? "PATCH" : "POST";
-      const tagsArray = formData.tags.split(",").map((t) => t.trim()).filter(Boolean);
-      const colorsArray = formData.colors.split(",").map((c) => c.trim()).filter(Boolean);
-      const sizesArray = formData.sizes.split(",").map((s) => s.trim()).filter(Boolean);
-      const res = await fetch(url, {
-        method, headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          ...formData, price: Number(formData.price), stock: Number(formData.stock),
-          discountPrice: formData.discountPrice ? Number(formData.discountPrice) : undefined,
-          tags: tagsArray, colors: colorsArray, sizes: sizesArray,
-        }),
-      });
-      const data = await res.json();
-      if (data.success) {
-        toast.success(product ? "Product updated" : "Product created");
-        onSuccess();
-        onOpenChange(false);
-      } else toast.error(data.error);
-    } catch { toast.error("Something went wrong"); } finally { setLoading(false); }
-  }, [product, formData, onSuccess, onOpenChange]);
+  const handleSubmit = useCallback(
+    async (e: React.FormEvent) => {
+      e.preventDefault();
+      setLoading(true);
+      try {
+        const url = product ? `/api/products/${product._id}` : "/api/products";
+        const method = product ? "PATCH" : "POST";
+        const tagsArray = formData.tags
+          .split(",")
+          .map((t) => t.trim())
+          .filter(Boolean);
+        const colorsArray = formData.colors
+          .split(",")
+          .map((c) => c.trim())
+          .filter(Boolean);
+        const sizesArray = formData.sizes
+          .split(",")
+          .map((s) => s.trim())
+          .filter(Boolean);
+        const res = await fetch(url, {
+          method,
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            ...formData,
+            price: Number(formData.price),
+            stock: Number(formData.stock),
+            discountPrice: formData.discountPrice
+              ? Number(formData.discountPrice)
+              : undefined,
+            lowStockThreshold: Number(formData.lowStockThreshold),
+            weight: formData.weight ? Number(formData.weight) : undefined,
+            dimensions:
+              formData.dimensionsLength || formData.dimensionsWidth || formData.dimensionsHeight
+                ? {
+                    length: Number(formData.dimensionsLength) || 0,
+                    width: Number(formData.dimensionsWidth) || 0,
+                    height: Number(formData.dimensionsHeight) || 0,
+                    unit: formData.dimensionsUnit,
+                  }
+                : undefined,
+            shippingOptions:
+              formData.shippingPrice || formData.shippingDays
+                ? [
+                    {
+                      method: "standard",
+                      price: Number(formData.shippingPrice) || 0,
+                      estimatedDays: formData.shippingDays || "3-5",
+                    },
+                  ]
+                : undefined,
+            tags: tagsArray,
+            colors: colorsArray,
+            sizes: sizesArray,
+          }),
+        });
+        const data = await res.json();
+        if (data.success) {
+          toast.success(product ? "Product updated" : "Product created");
+          onSuccess();
+          onOpenChange(false);
+        } else toast.error(data.error);
+      } catch {
+        toast.error("Something went wrong");
+      } finally {
+        setLoading(false);
+      }
+    },
+    [product, formData, onSuccess, onOpenChange]
+  );
 
   return { loading, categories, brands, formData, setFormData, handleSubmit };
 }
