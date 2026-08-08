@@ -4,7 +4,7 @@ export async function fetchReports(): Promise<Report[]> {
   try {
     const res = await fetch("/api/admin/reports");
     const data = await res.json();
-    if (data.success && Array.isArray(data.reports)) return data.reports;
+    if (data.success && Array.isArray(data.data?.reports)) return data.data.reports;
     return [];
   } catch {
     return [];

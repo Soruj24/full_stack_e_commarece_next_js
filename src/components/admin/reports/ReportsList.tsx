@@ -17,35 +17,35 @@ export function ReportsList({ reports, onDelete, loading }: ReportsListProps) {
   const getStatusBadge = (status: string) => {
     switch (status) {
       case "ready":
-        return "bg-green-500/10 text-green-500 border-green-500/20";
+        return "bg-emerald-500/10 text-emerald-600 border-emerald-500/20";
       case "generating":
-        return "bg-yellow-500/10 text-yellow-500 border-yellow-500/20";
+        return "bg-amber-500/10 text-amber-600 border-amber-500/20";
       case "failed":
-        return "bg-red-500/10 text-red-500 border-red-500/20";
+        return "bg-red-500/10 text-red-600 border-red-500/20";
       default:
-        return "bg-gray-500/10 text-gray-500 border-gray-500/20";
+        return "bg-muted text-muted-foreground border-border/60";
     }
   };
 
   if (loading) {
     return (
-      <div className="bg-card border border-border/50 rounded-[48px] p-12 text-center">
-        <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-primary mx-auto"></div>
-        <p className="text-muted-foreground mt-4">Loading reports...</p>
+      <div className="border border-border/60 rounded-xl bg-card p-12 text-center">
+        <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-primary mx-auto" />
+        <p className="text-sm text-muted-foreground mt-4">Loading reports...</p>
       </div>
     );
   }
 
   if (reports.length === 0) {
     return (
-      <div className="bg-card border border-border/50 rounded-[48px] p-12 text-center">
-        <p className="text-muted-foreground">No reports found</p>
+      <div className="border border-border/60 rounded-xl bg-card p-12 text-center">
+        <p className="text-sm text-muted-foreground">No reports found</p>
       </div>
     );
   }
 
   return (
-    <div className="bg-card border border-border/50 rounded-[48px] shadow-2xl shadow-primary/5 overflow-hidden">
+    <div className="border border-border/60 rounded-xl bg-card overflow-hidden">
       <div className="overflow-x-auto">
         <Table>
           <TableHeader>
@@ -56,40 +56,40 @@ export function ReportsList({ reports, onDelete, loading }: ReportsListProps) {
               <TableHead>Format</TableHead>
               <TableHead>Status</TableHead>
               <TableHead>Generated At</TableHead>
-              <TableHead className="w-[100px]">Actions</TableHead>
+              <TableHead className="w-[80px] text-right">Actions</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {reports.map((report) => (
               <TableRow key={report._id}>
-                <TableCell className="font-bold">{report.name}</TableCell>
-                <TableCell className="capitalize">{report.type}</TableCell>
-                <TableCell className="text-muted-foreground">{report.config.dateRange}</TableCell>
-                <TableCell className="uppercase font-bold text-xs">{report.config.format}</TableCell>
+                <TableCell className="text-sm font-medium">{report.name}</TableCell>
+                <TableCell className="text-sm capitalize">{report.type}</TableCell>
+                <TableCell className="text-sm text-muted-foreground">{report.config?.dateRange || "—"}</TableCell>
+                <TableCell className="text-xs font-medium uppercase">{report.config?.format || "—"}</TableCell>
                 <TableCell>
-                  <Badge variant="outline" className={getStatusBadge(report.status)}>
+                  <Badge variant="outline" className={`text-[11px] font-medium ${getStatusBadge(report.status)}`}>
                     {report.status}
                   </Badge>
                 </TableCell>
-                <TableCell className="text-muted-foreground text-sm">
+                <TableCell className="text-sm text-muted-foreground">
                   {formatDate(report.createdAt)}
                 </TableCell>
                 <TableCell>
-                  <div className="flex items-center gap-1">
+                  <div className="flex items-center justify-end gap-1">
                     {report.status === "ready" && report.fileUrl && (
                       <a href={report.fileUrl} download>
-                        <Button variant="ghost" size="icon" className="rounded-xl">
-                          <Download className="h-4 w-4" />
+                        <Button variant="ghost" size="icon" className="h-7 w-7">
+                          <Download className="h-3.5 w-3.5" />
                         </Button>
                       </a>
                     )}
                     <Button
                       variant="ghost"
                       size="icon"
-                      className="rounded-xl text-destructive hover:text-destructive"
+                      className="h-7 w-7 text-destructive hover:text-destructive"
                       onClick={() => onDelete(report._id)}
                     >
-                      <Trash2 className="h-4 w-4" />
+                      <Trash2 className="h-3.5 w-3.5" />
                     </Button>
                   </div>
                 </TableCell>

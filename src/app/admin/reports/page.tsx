@@ -21,7 +21,25 @@ export default function AdminReportsPage() {
       const res = await fetch("/api/admin/reports");
       const json = await res.json();
       if (!res.ok) throw new Error(json.error || "Failed to fetch reports");
-      setReports(json.reports || json.data || []);
+      const raw = json.data?.reports || json.reports || [];
+      setReports(
+        raw.map((r: Record<string, unknown>) => ({
+          _id: (r.id as string) || "",
+          name: (r.name as string) || "",
+          type: (r.type as string) || "",
+          config: {
+            type: (r.type as string) || "",
+            dateRange: typeof r.dateRange === "object" ? `${(r.dateRange as Record<string, string>).from} to ${(r.dateRange as Record<string, string>).to}` : (r.dateRange as string) || "",
+            format: (r.format as string) || "pdf",
+          },
+          generatedBy: "System",
+          fileUrl: undefined,
+          status: r.status === "completed" ? "ready" : r.status === "scheduled" ? "generating" : (r.status as string) || "generating",
+          createdAt: (r.generatedAt as string) || new Date().toISOString(),
+          size: r.size,
+          pages: r.pages,
+        }))
+      );
     } catch (error: unknown) {
       if (error instanceof Error) {
         toast.error(error.message);
