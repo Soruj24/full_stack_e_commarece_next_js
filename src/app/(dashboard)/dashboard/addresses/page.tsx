@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { Loader2, Plus, MapPin, Pencil, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
@@ -25,6 +26,14 @@ import {
 } from "@/components/ui/dialog";
 import { Checkbox } from "@/components/ui/checkbox";
 import type { IAddress } from "@/shared/types";
+import {
+  staggerContainer,
+  staggerItem,
+  fadeUp,
+  viewportOnce,
+  ease,
+  duration,
+} from "@/lib/animations";
 
 const emptyAddress: IAddress & { name?: string; phone?: string } = {
   type: "shipping",
@@ -40,6 +49,7 @@ const emptyAddress: IAddress & { name?: string; phone?: string } = {
 
 export default function AddressesPage() {
   const { data: session } = useSession();
+  const prefersReduced = useReducedMotion();
   const [addresses, setAddresses] = useState<(IAddress & { name?: string; phone?: string })[]>([]);
   const [loading, setLoading] = useState(true);
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -136,83 +146,122 @@ export default function AddressesPage() {
     );
   }
 
+  const animate = prefersReduced ? false : "visible";
+
   return (
     <div className="space-y-8">
-      <div className="flex items-center justify-between">
+      {/* Header */}
+      <motion.div
+        initial={prefersReduced ? undefined : { opacity: 0, y: 12 }}
+        animate={prefersReduced ? undefined : { opacity: 1, y: 0 }}
+        transition={{ duration: duration.base, ease: ease.out }}
+        className="flex items-center justify-between"
+      >
         <div>
           <h1 className="text-3xl font-black tracking-tight">Addresses</h1>
           <p className="text-muted-foreground font-medium mt-1">Manage your shipping and billing addresses.</p>
         </div>
-        <Button onClick={openAdd} className="rounded-xl font-black gap-2 h-12 px-6">
-          <Plus className="w-4 h-4" />
-          Add Address
-        </Button>
-      </div>
+        <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+          <Button onClick={openAdd} className="rounded-xl font-black gap-2 h-12 px-6">
+            <Plus className="w-4 h-4" />
+            Add Address
+          </Button>
+        </motion.div>
+      </motion.div>
 
+      {/* Empty state */}
       {addresses.length === 0 ? (
-        <div className="flex flex-col items-center justify-center py-20 px-4 bg-card rounded-[32px] border border-border/50 shadow-2xl shadow-primary/5">
-          <div className="h-16 w-16 bg-primary/10 rounded-2xl flex items-center justify-center text-primary mb-6">
+        <motion.div
+          initial={prefersReduced ? undefined : { opacity: 0, scale: 0.96 }}
+          animate={prefersReduced ? undefined : { opacity: 1, scale: 1 }}
+          transition={{ duration: duration.slow, ease: ease.out }}
+          className="flex flex-col items-center justify-center py-20 px-4 bg-card rounded-[32px] border border-border/50 shadow-2xl shadow-primary/5"
+        >
+          <motion.div
+            initial={prefersReduced ? undefined : { scale: 0 }}
+            animate={prefersReduced ? undefined : { scale: 1 }}
+            transition={{ type: "spring", stiffness: 200, damping: 15, delay: 0.1 }}
+            className="h-16 w-16 bg-primary/10 rounded-2xl flex items-center justify-center text-primary mb-6"
+          >
             <MapPin className="h-8 w-8" />
-          </div>
+          </motion.div>
           <h3 className="text-xl font-black tracking-tight mb-2">No addresses yet</h3>
           <p className="text-muted-foreground font-medium text-center max-w-sm mb-6">
             Add a shipping or billing address to make checkout faster.
           </p>
-          <Button onClick={openAdd} className="rounded-xl font-black gap-2 h-12 px-6">
-            <Plus className="w-4 h-4" />
-            Add Your First Address
-          </Button>
-        </div>
+          <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+            <Button onClick={openAdd} className="rounded-xl font-black gap-2 h-12 px-6">
+              <Plus className="w-4 h-4" />
+              Add Your First Address
+            </Button>
+          </motion.div>
+        </motion.div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {addresses.map((addr, index) => (
-            <div
-              key={index}
-              className="bg-card rounded-[32px] border border-border/50 shadow-2xl shadow-primary/5 p-6 space-y-4 relative overflow-hidden"
-            >
-              <div className="flex items-start justify-between">
-                <div className="flex items-center gap-2">
-                  <Badge variant={addr.type === "shipping" ? "info" : "warning"} size="sm">
-                    {addr.type === "shipping" ? "Shipping" : "Billing"}
-                  </Badge>
-                  {addr.isDefault && (
-                    <Badge variant="success" size="sm">Default</Badge>
-                  )}
+        /* Card grid with stagger */
+        <motion.div
+          variants={staggerContainer(0.06)}
+          initial="hidden"
+          animate={animate}
+          className="grid grid-cols-1 md:grid-cols-2 gap-6"
+        >
+          <AnimatePresence mode="popLayout">
+            {addresses.map((addr, index) => (
+              <motion.div
+                key={`${addr.street}-${index}`}
+                variants={staggerItem}
+                layout
+                exit={{ opacity: 0, scale: 0.95, transition: { duration: 0.2 } }}
+                className="bg-card rounded-[32px] border border-border/50 shadow-2xl shadow-primary/5 p-6 space-y-4 relative overflow-hidden group hover:border-primary/20 hover:shadow-primary/10 transition-colors duration-300"
+              >
+                <div className="flex items-start justify-between">
+                  <div className="flex items-center gap-2">
+                    <Badge variant={addr.type === "shipping" ? "info" : "warning"} size="sm">
+                      {addr.type === "shipping" ? "Shipping" : "Billing"}
+                    </Badge>
+                    {addr.isDefault && (
+                      <Badge variant="success" size="sm">Default</Badge>
+                    )}
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="h-9 w-9 rounded-xl"
+                        onClick={() => openEdit(index)}
+                      >
+                        <Pencil className="w-4 h-4" />
+                      </Button>
+                    </motion.div>
+                    <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="h-9 w-9 rounded-xl text-destructive hover:text-destructive"
+                        onClick={() => handleDelete(index)}
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </Button>
+                    </motion.div>
+                  </div>
                 </div>
-                <div className="flex items-center gap-1">
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    className="h-8 w-8 rounded-xl"
-                    onClick={() => openEdit(index)}
-                  >
-                    <Pencil className="w-4 h-4" />
-                  </Button>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    className="h-8 w-8 rounded-xl text-destructive hover:text-destructive"
-                    onClick={() => handleDelete(index)}
-                  >
-                    <Trash2 className="w-4 h-4" />
-                  </Button>
-                </div>
-              </div>
 
-              <div className="space-y-1 text-sm font-medium">
-                {addr.name && <p className="font-bold text-foreground">{addr.name}</p>}
-                <p className="text-muted-foreground">{addr.street}</p>
-                <p className="text-muted-foreground">
-                  {addr.city}, {addr.state} {addr.zipCode}
-                </p>
-                <p className="text-muted-foreground">{addr.country}</p>
-                {addr.phone && <p className="text-muted-foreground">{addr.phone}</p>}
-              </div>
-            </div>
-          ))}
-        </div>
+                <div className="space-y-1 text-sm font-medium">
+                  {addr.name && <p className="font-bold text-foreground">{addr.name}</p>}
+                  <p className="text-muted-foreground">{addr.street}</p>
+                  <p className="text-muted-foreground">
+                    {addr.city}, {addr.state} {addr.zipCode}
+                  </p>
+                  <p className="text-muted-foreground">{addr.country}</p>
+                  {addr.phone && <p className="text-muted-foreground">{addr.phone}</p>}
+                </div>
+              </motion.div>
+            ))}
+          </AnimatePresence>
+        </motion.div>
       )}
 
+      {/* Dialog */}
       <Dialog open={dialogOpen} onOpenChange={(open) => { if (!saving) { setDialogOpen(open); if (!open) { setEditingIndex(null); setForm(emptyAddress); } } }}>
         <DialogContent size="lg">
           <DialogHeader>

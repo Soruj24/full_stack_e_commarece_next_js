@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { Loader2, Plus, CreditCard, Trash2, Star } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
@@ -25,6 +26,12 @@ import {
 } from "@/components/ui/dialog";
 import { Checkbox } from "@/components/ui/checkbox";
 import type { IPaymentMethod } from "@/shared/types";
+import {
+  staggerContainer,
+  staggerItem,
+  ease,
+  duration,
+} from "@/lib/animations";
 
 const cardBrands: Record<string, { color: string; gradient: string }> = {
   visa: { color: "from-blue-600 to-blue-800", gradient: "from-blue-500/20 to-blue-600/10" },
@@ -51,6 +58,7 @@ const emptyPayment: PaymentMethodDisplay = {
 
 export default function PaymentsPage() {
   const { data: session } = useSession();
+  const prefersReduced = useReducedMotion();
   const [paymentMethods, setPaymentMethods] = useState<PaymentMethodDisplay[]>([]);
   const [loading, setLoading] = useState(true);
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -137,99 +145,140 @@ export default function PaymentsPage() {
     );
   }
 
+  const animate = prefersReduced ? false : "visible";
+
   return (
     <div className="space-y-8">
-      <div className="flex items-center justify-between">
+      {/* Header */}
+      <motion.div
+        initial={prefersReduced ? undefined : { opacity: 0, y: 12 }}
+        animate={prefersReduced ? undefined : { opacity: 1, y: 0 }}
+        transition={{ duration: duration.base, ease: ease.out }}
+        className="flex items-center justify-between"
+      >
         <div>
           <h1 className="text-3xl font-black tracking-tight">Payment Methods</h1>
           <p className="text-muted-foreground font-medium mt-1">Manage your saved payment methods.</p>
         </div>
-        <Button onClick={() => { setForm(emptyPayment); setDialogOpen(true); }} className="rounded-xl font-black gap-2 h-12 px-6">
-          <Plus className="w-4 h-4" />
-          Add Payment Method
-        </Button>
-      </div>
-
-      {paymentMethods.length === 0 ? (
-        <div className="flex flex-col items-center justify-center py-20 px-4 bg-card rounded-[32px] border border-border/50 shadow-2xl shadow-primary/5">
-          <div className="h-16 w-16 bg-primary/10 rounded-2xl flex items-center justify-center text-primary mb-6">
-            <CreditCard className="h-8 w-8" />
-          </div>
-          <h3 className="text-xl font-black tracking-tight mb-2">No payment methods</h3>
-          <p className="text-muted-foreground font-medium text-center max-w-sm mb-6">
-            Add a payment method for faster checkout.
-          </p>
+        <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
           <Button onClick={() => { setForm(emptyPayment); setDialogOpen(true); }} className="rounded-xl font-black gap-2 h-12 px-6">
             <Plus className="w-4 h-4" />
             Add Payment Method
           </Button>
-        </div>
-      ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {paymentMethods.map((method, index) => {
-            const brandStyle = getBrandStyle(method.brand);
-            return (
-              <div
-                key={index}
-                className="bg-card rounded-[32px] border border-border/50 shadow-2xl shadow-primary/5 overflow-hidden"
-              >
-                <div className={`h-3 bg-gradient-to-r ${brandStyle.color}`} />
-                <div className="p-6 space-y-4">
-                  <div className="flex items-start justify-between">
-                    <div className="flex items-center gap-3">
-                      <div className={`h-12 w-12 bg-gradient-to-br ${brandStyle.gradient} rounded-2xl flex items-center justify-center`}>
-                        <CreditCard className="w-6 h-6 text-foreground" />
-                      </div>
-                      <div>
-                        <p className="font-bold capitalize text-foreground">{method.brand || "Card"}</p>
-                        <p className="text-sm text-muted-foreground font-mono">
-                          **** {method.last4}
-                        </p>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-1">
-                      {method.isDefault && (
-                        <Badge variant="success" size="sm" className="gap-1">
-                          <Star className="w-3 h-3 fill-current" />
-                          Default
-                        </Badge>
-                      )}
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        className="h-8 w-8 rounded-xl text-destructive hover:text-destructive"
-                        onClick={() => handleDelete(index)}
-                      >
-                        <Trash2 className="w-4 h-4" />
-                      </Button>
-                    </div>
-                  </div>
+        </motion.div>
+      </motion.div>
 
-                  <div className="grid grid-cols-2 gap-4 text-sm">
-                    {method.cardholderName && (
-                      <div>
-                        <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Cardholder</p>
-                        <p className="font-bold text-foreground">{method.cardholderName}</p>
+      {/* Empty state */}
+      {paymentMethods.length === 0 ? (
+        <motion.div
+          initial={prefersReduced ? undefined : { opacity: 0, scale: 0.96 }}
+          animate={prefersReduced ? undefined : { opacity: 1, scale: 1 }}
+          transition={{ duration: duration.slow, ease: ease.out }}
+          className="flex flex-col items-center justify-center py-20 px-4 bg-card rounded-[32px] border border-border/50 shadow-2xl shadow-primary/5"
+        >
+          <motion.div
+            initial={prefersReduced ? undefined : { scale: 0 }}
+            animate={prefersReduced ? undefined : { scale: 1 }}
+            transition={{ type: "spring", stiffness: 200, damping: 15, delay: 0.1 }}
+            className="h-16 w-16 bg-primary/10 rounded-2xl flex items-center justify-center text-primary mb-6"
+          >
+            <CreditCard className="h-8 w-8" />
+          </motion.div>
+          <h3 className="text-xl font-black tracking-tight mb-2">No payment methods</h3>
+          <p className="text-muted-foreground font-medium text-center max-w-sm mb-6">
+            Add a payment method for faster checkout.
+          </p>
+          <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+            <Button onClick={() => { setForm(emptyPayment); setDialogOpen(true); }} className="rounded-xl font-black gap-2 h-12 px-6">
+              <Plus className="w-4 h-4" />
+              Add Payment Method
+            </Button>
+          </motion.div>
+        </motion.div>
+      ) : (
+        /* Card grid with stagger */
+        <motion.div
+          variants={staggerContainer(0.06)}
+          initial="hidden"
+          animate={animate}
+          className="grid grid-cols-1 md:grid-cols-2 gap-6"
+        >
+          <AnimatePresence mode="popLayout">
+            {paymentMethods.map((method, index) => {
+              const brandStyle = getBrandStyle(method.brand);
+              return (
+                <motion.div
+                  key={`${method.last4}-${index}`}
+                  variants={staggerItem}
+                  layout
+                  exit={{ opacity: 0, scale: 0.95, transition: { duration: 0.2 } }}
+                  className="bg-card rounded-[32px] border border-border/50 shadow-2xl shadow-primary/5 overflow-hidden group hover:border-primary/20 hover:shadow-primary/10 transition-colors duration-300"
+                >
+                  <div className={`h-3 bg-gradient-to-r ${brandStyle.color}`} />
+                  <div className="p-6 space-y-4">
+                    <div className="flex items-start justify-between">
+                      <div className="flex items-center gap-3">
+                        <motion.div
+                          className={`h-12 w-12 bg-gradient-to-br ${brandStyle.gradient} rounded-2xl flex items-center justify-center`}
+                          whileHover={prefersReduced ? undefined : { scale: 1.1, rotate: -5 }}
+                          transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                        >
+                          <CreditCard className="w-6 h-6 text-foreground" />
+                        </motion.div>
+                        <div>
+                          <p className="font-bold capitalize text-foreground">{method.brand || "Card"}</p>
+                          <p className="text-sm text-muted-foreground font-mono">
+                            **** {method.last4}
+                          </p>
+                        </div>
                       </div>
-                    )}
-                    {(method.expiryMonth && method.expiryYear) && (
-                      <div>
-                        <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Expires</p>
-                        <p className="font-bold text-foreground">{method.expiryMonth}/{method.expiryYear}</p>
+                      <div className="flex items-center gap-1">
+                        {method.isDefault && (
+                          <Badge variant="success" size="sm" className="gap-1">
+                            <Star className="w-3 h-3 fill-current" />
+                            Default
+                          </Badge>
+                        )}
+                        <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            className="h-9 w-9 rounded-xl text-destructive hover:text-destructive"
+                            onClick={() => handleDelete(index)}
+                          >
+                            <Trash2 className="w-4 h-4" />
+                          </Button>
+                        </motion.div>
                       </div>
-                    )}
-                    <div>
-                      <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Provider</p>
-                      <p className="font-bold text-foreground capitalize">{method.provider}</p>
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-4 text-sm">
+                      {method.cardholderName && (
+                        <div>
+                          <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Cardholder</p>
+                          <p className="font-bold text-foreground">{method.cardholderName}</p>
+                        </div>
+                      )}
+                      {(method.expiryMonth && method.expiryYear) && (
+                        <div>
+                          <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Expires</p>
+                          <p className="font-bold text-foreground">{method.expiryMonth}/{method.expiryYear}</p>
+                        </div>
+                      )}
+                      <div>
+                        <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Provider</p>
+                        <p className="font-bold text-foreground capitalize">{method.provider}</p>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </div>
-            );
-          })}
-        </div>
+                </motion.div>
+              );
+            })}
+          </AnimatePresence>
+        </motion.div>
       )}
 
+      {/* Dialog */}
       <Dialog open={dialogOpen} onOpenChange={(open) => { if (!saving) { setDialogOpen(open); if (!open) setForm(emptyPayment); } }}>
         <DialogContent size="lg">
           <DialogHeader>
