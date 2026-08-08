@@ -4,13 +4,14 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { ProductCard } from "@/components/products/ProductCard";
 import { Button } from "@/components/ui/button";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { Loader2, ArrowRight } from "lucide-react";
 import { IProduct } from "@/shared/types";
 
 export function AllProducts() {
   const [products, setProducts] = useState<IProduct[]>([]);
   const [loading, setLoading] = useState(true);
+  const shouldReduceMotion = useReducedMotion();
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -41,7 +42,7 @@ export function AllProducts() {
   if (products.length === 0) return null;
 
   return (
-    <div>
+    <section aria-label="All products">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-4 mb-10">
         <div>
           <p className="text-[11px] font-semibold text-primary/60 uppercase tracking-[0.15em] mb-3">
@@ -81,6 +82,6 @@ export function AllProducts() {
           <Link href="/products">View Full Collection</Link>
         </Button>
       </div>
-    </div>
+    </section>
   );
 }

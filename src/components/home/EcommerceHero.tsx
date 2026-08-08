@@ -2,12 +2,14 @@
 
 import { HeroContent } from "./hero/HeroContent";
 import { HeroVisual } from "./hero/HeroVisual";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { ChevronDown } from "lucide-react";
 
 export function EcommerceHero() {
+  const shouldReduceMotion = useReducedMotion();
+
   return (
-    <section className="relative min-h-[90vh] flex items-center overflow-hidden bg-background">
+    <section className="relative min-h-[90vh] flex items-center overflow-hidden bg-background" aria-label="Welcome banner">
       {/* Subtle radial gradient background */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_-20%,var(--color-primary)/0.06,transparent)]" />
 

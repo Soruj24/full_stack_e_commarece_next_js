@@ -1,6 +1,5 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { Skeleton } from "@/components/ui/skeleton";
 
 export default function Loading() {
@@ -14,11 +13,8 @@ export default function Loading() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           {[1, 2, 3, 4].map((i) => (
-            <motion.div
+            <div
               key={i}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: i * 0.1 }}
             >
               <div className="bg-card rounded-3xl border border-border/50 overflow-hidden">
                 <Skeleton className="aspect-square rounded-t-3xl" />
@@ -28,7 +24,7 @@ export default function Loading() {
                   <Skeleton className="h-6 w-20" />
                 </div>
               </div>
-            </motion.div>
+            </div>
           ))}
         </div>
 

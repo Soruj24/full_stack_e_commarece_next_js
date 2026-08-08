@@ -4,13 +4,14 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { ProductCard } from "@/components/products/ProductCard";
 import { Button } from "@/components/ui/button";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { Loader2, ArrowRight } from "lucide-react";
 import { IProduct } from "@/shared/types";
 
 export function TrendingProducts() {
   const [products, setProducts] = useState<IProduct[]>([]);
   const [loading, setLoading] = useState(true);
+  const shouldReduceMotion = useReducedMotion();
 
   useEffect(() => {
     const fetchTrendingProducts = async () => {
@@ -41,7 +42,7 @@ export function TrendingProducts() {
   if (products.length === 0) return null;
 
   return (
-    <div>
+    <section aria-label="Trending products">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-4 mb-10">
         <div>
           <p className="text-[11px] font-semibold text-primary/60 uppercase tracking-[0.15em] mb-3">
@@ -75,6 +76,6 @@ export function TrendingProducts() {
           </motion.div>
         ))}
       </div>
-    </div>
+    </section>
   );
 }

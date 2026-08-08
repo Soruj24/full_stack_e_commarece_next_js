@@ -4,11 +4,12 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { Mail, CheckCircle, ArrowRight } from "lucide-react";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 
 export function Newsletter() {
   const [email, setEmail] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const shouldReduceMotion = useReducedMotion();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -22,7 +23,7 @@ export function Newsletter() {
   };
 
   return (
-    <section className="py-20 sm:py-28">
+    <section className="py-20 sm:py-28" aria-label="Newsletter signup">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -45,7 +46,7 @@ export function Newsletter() {
             Get exclusive deals, early access to new arrivals, and insider discounts delivered to your inbox.
           </p>
 
-          <form onSubmit={handleSubmit} className="mb-6">
+          <form onSubmit={handleSubmit} className="mb-6" aria-label="Newsletter subscription">
             <div className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
               <input
                 type="email"
@@ -53,6 +54,7 @@ export function Newsletter() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
+                aria-label="Email address for newsletter"
                 className="flex-1 h-11 px-4 rounded-xl border border-border/60 bg-background text-foreground placeholder:text-muted-foreground/50 text-sm outline-none focus:border-primary/40 focus:ring-2 focus:ring-primary/10 transition-all"
               />
               <Button type="submit" disabled={isLoading} className="h-11 px-5 rounded-xl font-medium shrink-0">

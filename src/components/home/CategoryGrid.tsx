@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { CategoryCard } from "./CategoryCard";
 import { categories } from "@/lib/data/category-grid-data";
@@ -15,8 +15,9 @@ const containerVariants = {
 };
 
 export function CategoryGrid() {
+  const shouldReduceMotion = useReducedMotion();
   return (
-    <div className="py-20 sm:py-28">
+    <div className="py-20 sm:py-28" aria-label="Shop by category">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}

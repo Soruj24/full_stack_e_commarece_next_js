@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { Shield, Truck, BadgeCheck, RotateCcw, CreditCard, Headphones } from "lucide-react";
 
 const features = [
@@ -49,8 +49,10 @@ const features = [
 ];
 
 export function FeaturesSection() {
+  const shouldReduceMotion = useReducedMotion();
+
   return (
-    <section className="py-20 sm:py-28 bg-surface/40 border-y border-border/30">
+    <section className="py-20 sm:py-28 bg-surface/40 border-y border-border/30" aria-label="Why choose us">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

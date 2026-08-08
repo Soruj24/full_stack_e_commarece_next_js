@@ -28,9 +28,14 @@ export function TestimonialCard({ t, delay }: TestimonialCardProps) {
         <span className="text-muted-foreground text-[11px] ml-auto">{t.date}</span>
       </div>
 
-      <div className="flex gap-0.5 mb-3">
+      <div className="flex gap-0.5 mb-3" aria-label={`${t.rating} out of 5 stars`}>
         {[...Array(5)].map((_, i) => (
-          <Star key={i} className="w-3.5 h-3.5 text-amber-400 fill-amber-400" />
+          <Star
+            key={i}
+            className={`w-3.5 h-3.5 ${
+              i < t.rating ? "text-amber-400 fill-amber-400" : "text-muted-foreground/20"
+            }`}
+          />
         ))}
       </div>
 

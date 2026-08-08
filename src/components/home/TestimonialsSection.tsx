@@ -1,11 +1,12 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { Star } from "lucide-react";
 import { TestimonialCard } from "./TestimonialCard";
 import { testimonials } from "@/lib/data/testimonials-data";
 
 export function TestimonialsSection() {
+  const shouldReduceMotion = useReducedMotion();
   const summary = [
     { label: "Average Rating", value: "4.9/5" },
     { label: "Total Reviews", value: "12,000+" },
@@ -13,7 +14,7 @@ export function TestimonialsSection() {
   ];
 
   return (
-    <section className="py-20 sm:py-28 bg-surface/40">
+    <section className="py-20 sm:py-28 bg-surface/40" aria-label="Customer reviews">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
