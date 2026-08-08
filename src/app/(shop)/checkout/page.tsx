@@ -35,31 +35,38 @@ export default function CheckoutPage() {
   const currentStepId = STEPS[currentStep].id;
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-background to-muted/20">
+    <div className="min-h-screen bg-background">
+      {/* Ambient background */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none -z-10">
+        <div className="absolute top-[-15%] left-[-10%] w-[40%] h-[40%] bg-primary/5 blur-[150px] rounded-full" />
+        <div className="absolute bottom-[-15%] right-[-10%] w-[40%] h-[40%] bg-primary/8 blur-[150px] rounded-full" />
+      </div>
+
       <CheckoutHeader />
       <CheckoutStepsBar steps={STEPS} currentStep={currentStep} onStepClick={(i) => i < currentStep && setCurrentStep(i)} />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="flex flex-col lg:flex-row gap-8">
-          <div className="flex-1">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-12">
+        <div className="flex flex-col lg:flex-row gap-8 lg:gap-12">
+          {/* Main Content */}
+          <div className="flex-1 min-w-0">
             <AnimatePresence mode="wait">
               <motion.div
                 key={currentStep}
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                transition={{ duration: 0.3 }}
-                className="space-y-8"
+                exit={{ opacity: 0, y: -16 }}
+                transition={{ duration: 0.35, ease: [0.4, 0, 0.2, 1] }}
+                className="space-y-6"
               >
                 {currentStepId === "account" && (
-                  <div className="bg-card rounded-3xl border border-border/50 shadow-sm p-6 sm:p-8">
-                    <div className="flex items-center gap-3 mb-6">
-                      <div className="p-3 bg-primary/10 rounded-2xl">
+                  <div className="rounded-3xl bg-card border border-border/30 shadow-lg shadow-black/5 p-8 space-y-6">
+                    <div className="flex items-center gap-4">
+                      <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center">
                         <User className="w-6 h-6 text-primary" />
                       </div>
                       <div>
-                        <h2 className="text-2xl font-bold">Checkout Option</h2>
-                        <p className="text-sm text-muted-foreground">Sign in or continue as guest</p>
+                        <h2 className="text-2xl font-black tracking-tight">Checkout Options</h2>
+                        <p className="text-sm text-muted-foreground font-medium">Sign in or continue as guest</p>
                       </div>
                     </div>
                     <GuestCheckoutForm
@@ -116,6 +123,7 @@ export default function CheckoutPage() {
             <TrustBadges />
           </div>
 
+          {/* Sidebar */}
           <OrderSummary
             cart={cart} subtotal={subtotal} couponDiscount={couponDiscount} shippingCost={shippingCost}
             tax={tax} total={total} showOrderSummary={showOrderSummary} onToggle={() => setShowOrderSummary(!showOrderSummary)}

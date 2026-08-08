@@ -1,10 +1,13 @@
 "use client";
 
-import { CheckCircle2 } from "lucide-react";
+import { motion } from "framer-motion";
+import { Check } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface Step {
-  id: string; label: string; icon: React.ComponentType<{ className?: string }>;
+  id: string;
+  label: string;
+  icon: React.ComponentType<{ className?: string }>;
 }
 
 interface CheckoutStepsBarProps {
@@ -15,38 +18,85 @@ interface CheckoutStepsBarProps {
 
 export function CheckoutStepsBar({ steps, currentStep, onStepClick }: CheckoutStepsBarProps) {
   return (
-    <div className="bg-background border-b">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-        <div className="flex items-center justify-center">
+    <div className="sticky top-16 z-40 bg-background/80 backdrop-blur-xl border-b border-border/30">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between py-4">
           {steps.map((step, index) => {
             const Icon = step.icon;
             const isActive = index === currentStep;
             const isCompleted = index < currentStep;
+            const isFuture = index > currentStep;
 
             return (
-              <div key={step.id} className="flex items-center">
+              <div key={step.id} className="flex items-center flex-1 last:flex-none">
+                {/* Step Button */}
                 <button
                   onClick={() => isCompleted && onStepClick(index)}
-                  disabled={!isCompleted && !isActive}
+                  disabled={isFuture}
                   className={cn(
-                    "flex items-center gap-3 px-4 py-2 rounded-full transition-all",
-                    isActive && "bg-primary text-primary-foreground",
-                    isCompleted && "bg-green-100 text-green-700 hover:bg-green-200 cursor-pointer",
-                    !isActive && !isCompleted && "text-muted-foreground cursor-not-allowed",
+                    "flex items-center gap-2.5 px-3 py-2 rounded-xl transition-all duration-300 group relative",
+                    isActive && "bg-primary/10",
+                    isCompleted && "cursor-pointer hover:bg-primary/5",
+                    isFuture && "cursor-not-allowed opacity-40"
                   )}
                 >
-                  <div className={cn(
-                    "w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold",
-                    isActive && "bg-white/20",
-                    isCompleted && "bg-green-500 text-white",
-                    !isActive && !isCompleted && "bg-muted",
-                  )}>
-                    {isCompleted ? <CheckCircle2 className="w-4 h-4" /> : <Icon className="w-4 h-4" />}
+                  {/* Step Circle */}
+                  <div className="relative">
+                    <motion.div
+                      className={cn(
+                        "w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold transition-all duration-300",
+                        isActive && "bg-primary text-primary-foreground shadow-lg shadow-primary/30",
+                        isCompleted && "bg-primary text-primary-foreground",
+                        isFuture && "bg-muted text-muted-foreground"
+                      )}
+                      animate={isActive ? { scale: [1, 1.08, 1] } : {}}
+                      transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                    >
+                      {isCompleted ? (
+                        <motion.div
+                          initial={{ scale: 0, rotate: -90 }}
+                          animate={{ scale: 1, rotate: 0 }}
+                          transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                        >
+                          <Check className="w-4 h-4" strokeWidth={3} />
+                        </motion.div>
+                      ) : (
+                        <Icon className="w-4 h-4" />
+                      )}
+                    </motion.div>
+                    {isActive && (
+                      <motion.div
+                        className="absolute inset-0 rounded-full bg-primary/20"
+                        animate={{ scale: [1, 1.6, 1], opacity: [0.5, 0, 0.5] }}
+                        transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                      />
+                    )}
                   </div>
-                  <span className="font-semibold text-sm hidden sm:inline">{step.label}</span>
+
+                  {/* Label */}
+                  <span className={cn(
+                    "text-xs font-bold uppercase tracking-wider hidden sm:block transition-colors",
+                    isActive && "text-primary",
+                    isCompleted && "text-foreground",
+                    isFuture && "text-muted-foreground"
+                  )}>
+                    {step.label}
+                  </span>
                 </button>
+
+                {/* Connector */}
                 {index < steps.length - 1 && (
-                  <div className={cn("w-12 sm:w-20 h-0.5 mx-2", isCompleted ? "bg-green-500" : "bg-muted")} />
+                  <div className="flex-1 mx-2 h-0.5 rounded-full bg-border/50 overflow-hidden">
+                    <motion.div
+                      className={cn(
+                        "h-full rounded-full",
+                        isCompleted ? "bg-primary" : "bg-transparent"
+                      )}
+                      initial={{ width: "0%" }}
+                      animate={{ width: isCompleted ? "100%" : "0%" }}
+                      transition={{ duration: 0.5, ease: "easeOut" }}
+                    />
+                  </div>
                 )}
               </div>
             );
