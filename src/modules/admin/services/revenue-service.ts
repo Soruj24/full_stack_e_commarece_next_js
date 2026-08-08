@@ -15,7 +15,7 @@ export async function fetchRevenueByPaymentMethod(): Promise<RevenueByPaymentMet
   try {
     const res = await fetch("/api/admin/revenue/payments");
     const data = await res.json();
-    if (data.success && Array.isArray(data.paymentMethods)) return data.paymentMethods;
+    if (data.success && Array.isArray(data.data)) return data.data;
     return [];
   } catch {
     return [];

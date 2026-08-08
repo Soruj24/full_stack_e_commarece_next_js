@@ -10,17 +10,17 @@ import {
 } from "@/components/admin/revenue";
 
 const RevenueChart = dynamic(() => import("@/components/admin/revenue/RevenueChart").then(mod => ({ default: mod.RevenueChart })), {
-  loading: () => <div className="h-[400px] bg-muted/20 animate-pulse rounded-xl" />,
+  loading: () => <div className="h-[400px] border border-border/60 bg-muted/20 animate-pulse rounded-xl" />,
   ssr: false,
 });
 
 const RevenuePaymentMethods = dynamic(() => import("@/components/admin/revenue/RevenuePaymentMethods").then(mod => ({ default: mod.RevenuePaymentMethods })), {
-  loading: () => <div className="h-[400px] bg-muted/20 animate-pulse rounded-xl" />,
+  loading: () => <div className="h-[400px] border border-border/60 bg-muted/20 animate-pulse rounded-xl" />,
   ssr: false,
 });
 
 const RevenueForecast = dynamic(() => import("@/components/admin/revenue/RevenueForecast").then(mod => ({ default: mod.RevenueForecast })), {
-  loading: () => <div className="h-[400px] bg-muted/20 animate-pulse rounded-xl" />,
+  loading: () => <div className="h-[400px] border border-border/60 bg-muted/20 animate-pulse rounded-xl" />,
   ssr: false,
 });
 import type { RevenueSummary, RevenueByPeriod, RevenueByPaymentMethod, RevenueForecast as RevenueForecastType } from "@/modules/admin/types";
@@ -42,7 +42,26 @@ export default function AdminRevenuePage() {
       const res = await fetch("/api/admin/revenue");
       const json = await res.json();
       if (!res.ok) throw new Error(json.error || "Failed to fetch revenue data");
-      setData(json);
+      if (!json.success) throw new Error(json.error || "Failed to fetch revenue data");
+      const d = json.data;
+      setData({
+        summary: d.summary,
+        byPeriod: (d.byPeriod || []).map((p: Record<string, unknown>) => ({
+          period: p.month as string,
+          revenue: p.revenue as number,
+          orders: p.orders as number,
+          refunds: p.expenses as number,
+          netRevenue: p.profit as number,
+        })),
+        paymentMethods: d.byPaymentMethod || [],
+        forecast: (d.forecast || []).map((f: Record<string, unknown>) => ({
+          period: f.month as string,
+          predicted: f.predicted as number,
+          lowerBound: f.lowerBound as number,
+          upperBound: f.upperBound as number,
+          confidence: f.confidence as number,
+        })),
+      });
     } catch (error: unknown) {
       if (error instanceof Error) {
         toast.error(error.message);
