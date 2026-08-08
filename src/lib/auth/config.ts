@@ -5,6 +5,19 @@ export const authConfig = {
     strategy: "jwt",
   },
   providers: [], // IMPORTANT: Empty – no Credentials here
+  cookies: {
+    sessionToken: {
+      name: process.env.NODE_ENV === "production"
+        ? "__Secure-next-auth.session-token"
+        : "next-auth.session-token",
+      options: {
+        httpOnly: true,
+        sameSite: "lax",
+        path: "/",
+        secure: process.env.NODE_ENV === "production",
+      },
+    },
+  },
   callbacks: {
     async jwt({ token, user, account }) {
       if (user) {

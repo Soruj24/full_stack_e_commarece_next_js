@@ -22,6 +22,18 @@ export const PUBLIC_ROUTES = [
     '/api/auth/reset-password',
     '/api/auth/validate-token',
     '/api/auth/accept-invite',
+    '/api/products',
+    '/api/products/recommendations',
+    '/api/bundles',
+    '/api/admin/marketing/banners',
+    '/api/admin/settings',
+    '/products',
+    '/categories',
+    '/bundles',
+    '/search',
+    '/compare',
+    '/gift-cards',
+    '/track-order',
 ]
 
 export const AUTH_API_ROUTES = [

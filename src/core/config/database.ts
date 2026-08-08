@@ -3,6 +3,32 @@ import dns from "node:dns/promises";
 
 dns.setServers(["1.1.1.1", "8.8.8.8"]);
 
+// Register all models to ensure populate() works across routes
+import "@/core/database/models/User";
+import "@/core/database/models/Product";
+import "@/core/database/models/Category";
+import "@/core/database/models/Brand";
+import "@/core/database/models/Order";
+import "@/core/database/models/Coupon";
+import "@/core/database/models/Bundle";
+import "@/core/database/models/Banner";
+import "@/core/database/models/GiftCard";
+import "@/core/database/models/Return";
+import "@/core/database/models/Vendor";
+import "@/core/database/models/AbandonedCart";
+import "@/core/database/models/Notification";
+import "@/core/database/models/SupportTicket";
+import "@/core/database/models/StockAlert";
+import "@/core/database/models/PriceHistory";
+import "@/core/database/models/Payout";
+import "@/core/database/models/Settings";
+import "@/core/database/models/Session";
+import "@/core/database/models/Token";
+import "@/core/database/models/LoginHistory";
+import "@/core/database/models/PopularSearch";
+import "@/core/database/models/Faq";
+import "@/core/database/models/ContactMessage";
+
 
 interface MongooseCache {
   conn: mongoose.Mongoose | null;

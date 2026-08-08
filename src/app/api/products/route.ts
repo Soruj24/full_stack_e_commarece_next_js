@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import { dbConnect } from "@/core/config/database";
 import { Product } from "@/core/database/models/Product";
+import { Category } from "@/core/database/models/Category";
+import { Brand } from "@/core/database/models/Brand";
 import { checkRole } from "@/lib/rbac";
 import { productSchema } from "@/lib/validations";
 

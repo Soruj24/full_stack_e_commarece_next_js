@@ -27,7 +27,6 @@ export const ProductCard = memo(function ProductCard({ product }: ProductCardPro
   const { addToCart } = useCart();
   const { toggleWishlist, isInWishlist } = useWishlist();
 
-  // Calculate discount if discountPrice exists
   const hasDiscount =
     (product.discountPrice ?? 0) > 0 &&
     (product.discountPrice ?? 0) < product.price;
@@ -86,11 +85,11 @@ export const ProductCard = memo(function ProductCard({ product }: ProductCardPro
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 16 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.5 }}
-      className="group bg-card rounded-[32px] border border-border/50 overflow-hidden hover:border-primary/30 transition-all duration-500 hover:shadow-2xl hover:shadow-primary/5"
+      viewport={{ once: true, margin: "-40px" }}
+      transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+      className="group relative bg-card rounded-2xl border border-border/60 overflow-hidden transition-all duration-300 hover:shadow-[0_8px_30px_-5px_rgba(0,0,0,0.08)] hover:shadow-black/5 dark:hover:shadow-black/20 hover:border-border"
     >
       <ProductCardImage
         product={product}

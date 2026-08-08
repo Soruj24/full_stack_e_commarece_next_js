@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { dbConnect } from "@/core/config/database";
 import { Product } from "@/core/database/models/Product";
+import { Category } from "@/core/database/models/Category";
 
 export async function GET(
   _request: Request,

@@ -8,9 +8,6 @@ import { logAction } from "@/lib/audit";
 
 export async function GET() {
   try {
-    const { authorized, response } = await checkRole(["admin"]);
-    if (!authorized) return response as NextResponse;
-
     await dbConnect();
     let settings = await Settings.findOne();
 
