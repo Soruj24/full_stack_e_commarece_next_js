@@ -1,18 +1,18 @@
 "use client";
 
 import {
-  AreaChart,
-  Area,
+  BarChart,
+  Bar,
   XAxis,
   YAxis,
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
-import type { RevenuePoint } from "./useAnalyticsManager";
+import type { OrdersPoint } from "./useAnalyticsManager";
 
-interface RevenueChartProps {
-  data: RevenuePoint[];
+interface OrdersChartProps {
+  data: OrdersPoint[];
 }
 
 function CustomTooltip({ active, payload, label }: any) {
@@ -20,17 +20,17 @@ function CustomTooltip({ active, payload, label }: any) {
   return (
     <div className="bg-card border border-border/60 rounded-lg px-3 py-2 shadow-lg">
       <p className="text-xs text-muted-foreground mb-1">{label}</p>
-      <p className="text-sm font-semibold">${payload[0].value.toLocaleString()}</p>
+      <p className="text-sm font-semibold">{payload[0].value} orders</p>
     </div>
   );
 }
 
-export function AnalyticsRevenueChart({ data }: RevenueChartProps) {
+export function AnalyticsOrdersChart({ data }: OrdersChartProps) {
   if (data.length === 0) {
     return (
       <div className="border border-border/60 rounded-xl p-6 bg-card">
-        <p className="text-sm font-medium mb-1">Revenue</p>
-        <p className="text-xs text-muted-foreground mb-6">No revenue data for this period</p>
+        <p className="text-sm font-medium mb-1">Orders</p>
+        <p className="text-xs text-muted-foreground mb-6">No order data for this period</p>
         <div className="h-[250px] flex items-center justify-center text-xs text-muted-foreground">
           No data available
         </div>
@@ -40,19 +40,13 @@ export function AnalyticsRevenueChart({ data }: RevenueChartProps) {
 
   return (
     <div className="border border-border/60 rounded-xl p-6 bg-card">
-      <p className="text-sm font-medium mb-1">Revenue</p>
+      <p className="text-sm font-medium mb-1">Orders</p>
       <p className="text-xs text-muted-foreground mb-6">
-        ${data.reduce((s, d) => s + d.revenue, 0).toLocaleString(undefined, { maximumFractionDigits: 0 })} total
+        {data.reduce((s, d) => s + d.orders, 0)} total orders
       </p>
       <div className="h-[250px]">
         <ResponsiveContainer width="100%" height="100%">
-          <AreaChart data={data} margin={{ top: 0, right: 0, left: -20, bottom: 0 }}>
-            <defs>
-              <linearGradient id="revenueGrad" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor="#10b981" stopOpacity={0.15} />
-                <stop offset="100%" stopColor="#10b981" stopOpacity={0} />
-              </linearGradient>
-            </defs>
+          <BarChart data={data} margin={{ top: 0, right: 0, left: -20, bottom: 0 }}>
             <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="hsl(var(--border))" opacity={0.5} />
             <XAxis
               dataKey="date"
@@ -65,17 +59,10 @@ export function AnalyticsRevenueChart({ data }: RevenueChartProps) {
               axisLine={false}
               tickLine={false}
               tick={{ fontSize: 11, fill: "hsl(var(--muted-foreground))" }}
-              tickFormatter={(v) => `$${v >= 1000 ? `${(v / 1000).toFixed(0)}k` : v}`}
             />
             <Tooltip content={<CustomTooltip />} />
-            <Area
-              type="monotone"
-              dataKey="revenue"
-              stroke="#10b981"
-              strokeWidth={2}
-              fill="url(#revenueGrad)"
-            />
-          </AreaChart>
+            <Bar dataKey="orders" fill="#3b82f6" radius={[4, 4, 0, 0]} maxBarSize={40} />
+          </BarChart>
         </ResponsiveContainer>
       </div>
     </div>

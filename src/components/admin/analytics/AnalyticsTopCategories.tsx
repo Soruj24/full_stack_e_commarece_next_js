@@ -1,27 +1,27 @@
 "use client";
 
-import type { TopProduct } from "./useAnalyticsManager";
+import type { TopCategory } from "./useAnalyticsManager";
 
-interface TopProductsTableProps {
-  products: TopProduct[];
+interface TopCategoriesTableProps {
+  categories: TopCategory[];
 }
 
-export function AnalyticsTopProducts({ products }: TopProductsTableProps) {
-  if (products.length === 0) {
+export function AnalyticsTopCategories({ categories }: TopCategoriesTableProps) {
+  if (categories.length === 0) {
     return (
       <div className="border border-border/60 rounded-xl p-6 bg-card">
-        <p className="text-sm font-medium mb-1">Top Products</p>
-        <p className="text-xs text-muted-foreground">No product data for this period</p>
+        <p className="text-sm font-medium mb-1">Top Categories</p>
+        <p className="text-xs text-muted-foreground">No category data for this period</p>
       </div>
     );
   }
 
-  const maxRevenue = Math.max(...products.map((p) => p.revenue));
+  const maxRevenue = Math.max(...categories.map((c) => c.revenue));
 
   return (
     <div className="border border-border/60 rounded-xl bg-card overflow-hidden">
       <div className="p-4 border-b border-border/60">
-        <p className="text-sm font-medium">Top Products</p>
+        <p className="text-sm font-medium">Top Categories</p>
         <p className="text-xs text-muted-foreground mt-0.5">By revenue in selected period</p>
       </div>
       <div className="overflow-x-auto">
@@ -32,10 +32,10 @@ export function AnalyticsTopProducts({ products }: TopProductsTableProps) {
                 #
               </th>
               <th className="px-4 py-2.5 text-left text-[11px] font-medium text-muted-foreground uppercase tracking-wider">
-                Product
+                Category
               </th>
               <th className="px-4 py-2.5 text-right text-[11px] font-medium text-muted-foreground uppercase tracking-wider">
-                Sold
+                Orders
               </th>
               <th className="px-4 py-2.5 text-right text-[11px] font-medium text-muted-foreground uppercase tracking-wider">
                 Revenue
@@ -44,39 +44,27 @@ export function AnalyticsTopProducts({ products }: TopProductsTableProps) {
             </tr>
           </thead>
           <tbody className="divide-y divide-border/60">
-            {products.map((product, i) => (
-              <tr key={product._id} className="hover:bg-muted/30 transition-colors">
+            {categories.map((cat, i) => (
+              <tr key={cat._id} className="hover:bg-muted/30 transition-colors">
                 <td className="px-4 py-2.5">
                   <span className="text-xs font-medium text-muted-foreground">{i + 1}</span>
                 </td>
                 <td className="px-4 py-2.5">
-                  <div className="flex items-center gap-2.5">
-                    <div className="w-8 h-8 rounded-lg bg-muted/50 border border-border/60 overflow-hidden shrink-0">
-                      {product.image ? (
-                        <img src={product.image} alt="" className="w-full h-full object-cover" />
-                      ) : (
-                        <div className="w-full h-full" />
-                      )}
-                    </div>
-                    <div className="min-w-0">
-                      <p className="text-sm font-medium truncate max-w-[200px]">{product.name}</p>
-                      <p className="text-[11px] text-muted-foreground">${product.price}</p>
-                    </div>
-                  </div>
+                  <span className="text-sm font-medium">{cat._id}</span>
                 </td>
                 <td className="px-4 py-2.5 text-right">
-                  <span className="text-xs tabular-nums">{product.totalSold}</span>
+                  <span className="text-xs tabular-nums">{cat.orders}</span>
                 </td>
                 <td className="px-4 py-2.5 text-right">
                   <span className="text-sm font-medium tabular-nums">
-                    ${product.revenue.toLocaleString(undefined, { maximumFractionDigits: 0 })}
+                    ${cat.revenue.toLocaleString(undefined, { maximumFractionDigits: 0 })}
                   </span>
                 </td>
                 <td className="px-4 py-2.5">
                   <div className="h-1.5 rounded-full bg-muted/60 overflow-hidden">
                     <div
                       className="h-full rounded-full bg-foreground/15"
-                      style={{ width: `${(product.revenue / maxRevenue) * 100}%` }}
+                      style={{ width: `${(cat.revenue / maxRevenue) * 100}%` }}
                     />
                   </div>
                 </td>
