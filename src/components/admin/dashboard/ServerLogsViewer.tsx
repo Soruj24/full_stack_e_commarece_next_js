@@ -65,13 +65,13 @@ export function ServerLogsViewer() {
   );
 
   return (
-    <Card className="border-border shadow-xl shadow-primary/5 rounded-[32px] overflow-hidden bg-card h-[500px] flex flex-col">
+    <div className="rounded-xl border border-border/60 bg-card overflow-hidden h-[500px] flex flex-col">
       <CardHeader className="bg-card border-b border-border py-6 px-8 flex flex-row items-center justify-between shrink-0">
         <div className="flex items-center gap-3">
           <div className="p-2 bg-primary/10 rounded-xl">
             <Terminal className="h-5 w-5 text-primary" />
           </div>
-          <CardTitle className="text-xl font-black text-foreground">Live Server Logs</CardTitle>
+          <CardTitle className="text-xl font-semibold text-foreground">Live Server Logs</CardTitle>
         </div>
         <div className="flex items-center gap-3">
           <div className="relative">
@@ -103,10 +103,10 @@ export function ServerLogsViewer() {
               <span className="text-zinc-500 shrink-0 font-medium">
                 [{new Date(log.timestamp).toLocaleTimeString()}]
               </span>
-              <Badge className={`uppercase text-[9px] px-1.5 py-0 rounded font-black shrink-0 border-none ${logLevels[log.level]}`}>
+              <Badge className={`uppercase text-[9px] px-1.5 py-0 rounded font-semibold shrink-0 border-none ${logLevels[log.level]}`}>
                 {log.level}
               </Badge>
-              <span className="text-primary font-black shrink-0 w-12">{log.module}</span>
+              <span className="text-primary font-semibold shrink-0 w-12">{log.module}</span>
               <span className="text-zinc-300 break-all">{log.message}</span>
             </div>
           ))}
@@ -118,6 +118,6 @@ export function ServerLogsViewer() {
           )}
         </div>
       </CardContent>
-    </Card>
+    </div>
   );
 }

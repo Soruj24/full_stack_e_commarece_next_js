@@ -73,15 +73,14 @@ export default function AuditLogsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-background/95 p-6 lg:p-10">
-      <div className="max-w-7xl mx-auto space-y-8">
+    <div className="space-y-6">
         <AuditLogsHeader
           loading={loading}
           onRefresh={() => fetchLogs(pagination.page)}
         />
 
-        <div className="bg-card border border-border/50 rounded-[48px] shadow-2xl shadow-primary/5 overflow-hidden">
-          <div className="p-6 border-b border-border/50">
+        <div className="bg-card border border-border/60 rounded-xl overflow-hidden">
+          <div className="p-6 border-b border-border/60">
             <div className="flex flex-col md:flex-row gap-4">
               <select
                 className="w-full md:w-[200px] h-10 px-3 rounded-md border border-input bg-background"
@@ -114,7 +113,7 @@ export default function AuditLogsPage() {
 
           <AuditLogsTable logs={logs} loading={loading} />
 
-          <div className="p-4 border-t border-border/50">
+          <div className="p-4 border-t border-border/60">
             <ProfessionalPagination
               currentPage={pagination.page}
               totalPages={pagination.pages}
@@ -122,7 +121,6 @@ export default function AuditLogsPage() {
             />
           </div>
         </div>
-      </div>
     </div>
   );
 }

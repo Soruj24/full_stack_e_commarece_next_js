@@ -18,16 +18,16 @@ interface ActivityChartProps {
 
 export function ActivityChart({ data }: ActivityChartProps) {
   return (
-    <Card className="border-border shadow-xl shadow-primary/5 rounded-[32px] overflow-hidden bg-card">
+    <div className="rounded-xl border border-border/60 bg-card overflow-hidden">
       <CardHeader className="bg-card border-b border-border py-6 px-8">
         <div className="flex items-center gap-3">
           <div className="p-2 bg-primary/10 rounded-xl">
             <Activity className="h-5 w-5 text-primary" />
           </div>
-          <CardTitle className="text-xl font-black text-foreground">User Activity</CardTitle>
+          <CardTitle className="text-xl font-semibold text-foreground">User Activity</CardTitle>
         </div>
       </CardHeader>
-      <CardContent className="p-8 h-[300px]">
+      <CardContent className="p-5 h-[300px]">
         <ResponsiveContainer width="100%" height="100%">
           <AreaChart data={data}>
             <defs>
@@ -73,6 +73,6 @@ export function ActivityChart({ data }: ActivityChartProps) {
           </AreaChart>
         </ResponsiveContainer>
       </CardContent>
-    </Card>
+    </div>
   );
 }

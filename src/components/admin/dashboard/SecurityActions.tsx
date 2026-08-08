@@ -11,16 +11,16 @@ interface SecurityActionsProps {
 
 export function SecurityActions({ onSetup2FA, auditLogs }: SecurityActionsProps) {
   return (
-    <Card className="border-border shadow-xl shadow-primary/5 rounded-[32px] overflow-hidden bg-card">
+    <div className="rounded-xl border border-border/60 bg-card overflow-hidden">
       <CardHeader className="bg-card border-b border-border py-6 px-8">
         <div className="flex items-center gap-3">
           <div className="p-2 bg-primary/10 rounded-xl">
             <Lock className="h-5 w-5 text-primary" />
           </div>
-          <CardTitle className="text-xl font-black text-foreground">Security Actions</CardTitle>
+          <CardTitle className="text-xl font-semibold text-foreground">Security Actions</CardTitle>
         </div>
       </CardHeader>
-      <CardContent className="p-8">
+      <CardContent className="p-5">
         <div className="space-y-6">
           <div className="flex items-center justify-between p-4 bg-muted/50 rounded-2xl border border-border">
             <div className="flex items-center gap-3">
@@ -60,6 +60,6 @@ export function SecurityActions({ onSetup2FA, auditLogs }: SecurityActionsProps)
           </div>
         </div>
       </CardContent>
-    </Card>
+    </div>
   );
 }

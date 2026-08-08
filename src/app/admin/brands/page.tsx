@@ -73,8 +73,7 @@ export default function BrandsPage() {
   };
 
   return (
-    <div className="min-h-screen bg-background/95 p-6 lg:p-10">
-      <div className="max-w-7xl mx-auto space-y-10">
+    <div className="space-y-6">
         <BrandsHeader
           loading={loading}
           onRefresh={fetchBrands}
@@ -104,13 +103,12 @@ export default function BrandsPage() {
           )}
         </div>
 
-        <AdminBrandDialog
+      <AdminBrandDialog
           open={isDialogOpen}
           onOpenChange={setIsDialogOpen}
           brand={selectedBrand}
           onSuccess={fetchBrands}
         />
-      </div>
     </div>
   );
 }

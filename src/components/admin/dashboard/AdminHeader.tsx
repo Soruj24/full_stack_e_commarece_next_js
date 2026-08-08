@@ -1,6 +1,7 @@
 import { Search, RefreshCw, UserPlus } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { PageHeader } from "@/components/admin/ui/PageHeader";
 
 interface AdminHeaderProps {
   searchQuery: string;
@@ -18,44 +19,37 @@ export function AdminHeader({
   setIsInviteDialogOpen,
 }: AdminHeaderProps) {
   return (
-    <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-card p-6 rounded-[32px] border border-border/50 shadow-sm">
-      <div>
-        <h1 className="text-3xl font-black tracking-tight text-foreground">
-          Admin <span className="text-primary">Dashboard</span>
-        </h1>
-        <p className="text-muted-foreground font-medium">
-          Manage users, monitor activity, and configure settings.
-        </p>
-      </div>
-
-      <div className="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
+    <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <PageHeader
+        title="Dashboard"
+        description="Manage users, monitor activity, and configure settings."
+      />
+      <div className="flex items-center gap-2 shrink-0">
         <div className="relative">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-muted-foreground" />
           <Input
             placeholder="Search users..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="pl-9 h-11 rounded-xl bg-muted/50 border-none w-full sm:w-[250px]"
+            className="pl-9 h-9 rounded-lg bg-muted/50 border-border/60 w-56 text-sm"
           />
         </div>
-        <div className="flex gap-2">
-          <Button
-            variant="outline"
-            size="icon"
-            onClick={fetchUsers}
-            disabled={loading}
-            className="h-11 w-11 rounded-xl border-border/50"
-          >
-            <RefreshCw className={`h-4 w-4 ${loading ? "animate-spin" : ""}`} />
-          </Button>
-          <Button
-            onClick={() => setIsInviteDialogOpen(true)}
-            className="h-11 rounded-xl font-bold px-6 shadow-lg shadow-primary/20"
-          >
-            <UserPlus className="mr-2 h-4 w-4" />
-            Invite User
-          </Button>
-        </div>
+        <Button
+          variant="outline"
+          size="icon"
+          onClick={fetchUsers}
+          disabled={loading}
+          className="h-9 w-9 rounded-lg border-border/60"
+        >
+          <RefreshCw className={`h-3.5 w-3.5 ${loading ? "animate-spin" : ""}`} />
+        </Button>
+        <Button
+          onClick={() => setIsInviteDialogOpen(true)}
+          className="h-9 rounded-lg text-sm font-medium px-4"
+        >
+          <UserPlus className="mr-1.5 h-3.5 w-3.5" />
+          Invite
+        </Button>
       </div>
     </div>
   );

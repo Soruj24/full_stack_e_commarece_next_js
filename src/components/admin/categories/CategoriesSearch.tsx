@@ -16,7 +16,7 @@ export function CategoriesSearch({ value, onChange }: CategoriesSearchProps) {
         placeholder="Search categories..." 
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="pl-12 h-14 rounded-2xl bg-muted/50 border-border/50 focus:bg-background transition-all"
+        className="pl-12 h-14 rounded-2xl bg-muted/50 border-border/60 focus:bg-background transition-all"
       />
     </div>
   );

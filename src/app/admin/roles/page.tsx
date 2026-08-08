@@ -83,7 +83,7 @@ export default function AdminRolesPage() {
   }
 
   return (
-    <div className="p-8 space-y-8 animate-in fade-in duration-500">
+    <div className="space-y-6">
       <RolesHeader
         onCreate={handleCreate}
         onRefresh={fetchData}

@@ -16,7 +16,7 @@ export function BrandsSearch({ value, onChange }: BrandsSearchProps) {
         placeholder="Search brands..."
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="h-12 pl-12 rounded-2xl bg-muted/30 border-border/50"
+        className="h-12 pl-12 rounded-2xl bg-muted/30 border-border/60"
       />
     </div>
   );

@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { RefreshCw } from "lucide-react";
+import { PageHeader } from "@/components/admin/ui/PageHeader";
 
 interface UsersHeaderProps {
   loading: boolean;
@@ -10,21 +11,20 @@ interface UsersHeaderProps {
 
 export function UsersHeader({ loading, onRefresh }: UsersHeaderProps) {
   return (
-    <div className="flex items-center justify-between">
-      <div>
-        <h1 className="text-3xl font-black tracking-tight">User Management</h1>
-        <p className="text-muted-foreground mt-1">
-          Manage and monitor all registered users
-        </p>
-      </div>
-      <Button
-        variant="outline"
-        size="icon"
-        onClick={onRefresh}
-        disabled={loading}
-      >
-        <RefreshCw className={`h-4 w-4 ${loading ? "animate-spin" : ""}`} />
-      </Button>
-    </div>
+    <PageHeader
+      title="Customers"
+      description="Manage and monitor all registered users"
+      action={
+        <Button
+          variant="outline"
+          size="icon"
+          onClick={onRefresh}
+          disabled={loading}
+          className="h-9 w-9 rounded-lg border-border/60"
+        >
+          <RefreshCw className={`h-3.5 w-3.5 ${loading ? "animate-spin" : ""}`} />
+        </Button>
+      }
+    />
   );
 }

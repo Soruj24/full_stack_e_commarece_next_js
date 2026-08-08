@@ -32,7 +32,7 @@ export default function AdminAbandonedCartsPage() {
   if (loading) return <div className="flex justify-center p-8">Loading...</div>;
 
   return (
-    <div className="container mx-auto p-6">
+    <div className="space-y-6">
       <div className="flex items-center justify-between mb-6">
         <h1 className="text-3xl font-bold">Abandoned Carts</h1>
         <Button onClick={fetchCarts} variant="outline" size="sm"><RefreshCw className="w-4 h-4 mr-2" />Refresh</Button>

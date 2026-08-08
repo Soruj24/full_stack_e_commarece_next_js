@@ -21,21 +21,21 @@ export function CategoriesTable({
   const allSelected = categories.length > 0 && selectedIds.length === categories.length;
 
   return (
-    <div className="bg-card rounded-[32px] border border-border/50 shadow-sm overflow-hidden">
+    <div className="bg-card rounded-xl border border-border/60 overflow-hidden">
       <div className="overflow-x-auto">
         <table className="w-full">
-          <thead className="bg-muted/30 border-b border-border/50">
+          <thead className="bg-muted/30 border-b border-border/60">
             <tr>
               <th className="py-4 px-6 w-12"><Checkbox checked={allSelected} onCheckedChange={(checked) => onSelectAll(!!checked)} /></th>
-              <th className="text-left py-4 px-6 font-black text-xs uppercase tracking-widest text-muted-foreground">Name</th>
-              <th className="text-left py-4 px-6 font-black text-xs uppercase tracking-widest text-muted-foreground w-24">Status</th>
-              <th className="text-left py-4 px-6 font-black text-xs uppercase tracking-widest text-muted-foreground">Parent</th>
-              <th className="text-left py-4 px-6 font-black text-xs uppercase tracking-widest text-muted-foreground w-24">Featured</th>
-              <th className="text-left py-4 px-6 font-black text-xs uppercase tracking-widest text-muted-foreground w-20">Order</th>
-              <th className="text-right py-4 px-6 font-black text-xs uppercase tracking-widest text-muted-foreground">Actions</th>
+              <th className="text-left py-4 px-6 text-xs font-medium text-muted-foreground uppercase tracking-wider">Name</th>
+              <th className="text-left py-4 px-6 text-xs font-medium text-muted-foreground uppercase tracking-wider w-24">Status</th>
+              <th className="text-left py-4 px-6 text-xs font-medium text-muted-foreground uppercase tracking-wider">Parent</th>
+              <th className="text-left py-4 px-6 text-xs font-medium text-muted-foreground uppercase tracking-wider w-24">Featured</th>
+              <th className="text-left py-4 px-6 text-xs font-medium text-muted-foreground uppercase tracking-wider w-20">Order</th>
+              <th className="text-right py-4 px-6 text-xs font-medium text-muted-foreground uppercase tracking-wider">Actions</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-border/50">
+          <tbody className="divide-y divide-border/60">
             {categories.length === 0 ? (
               <tr><td colSpan={7} className="py-12 text-center text-muted-foreground font-medium">No categories found</td></tr>
             ) : (

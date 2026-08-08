@@ -18,7 +18,10 @@ export default function AdminLayout({
   if (status === "loading") {
     return (
       <div className="flex items-center justify-center min-h-screen bg-background">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
+        <div className="flex flex-col items-center gap-3">
+          <div className="w-8 h-8 border-2 border-primary/30 border-t-primary rounded-full animate-spin" />
+          <span className="text-xs text-muted-foreground">Loading...</span>
+        </div>
       </div>
     );
   }
@@ -30,13 +33,13 @@ export default function AdminLayout({
   return (
     <div className="flex h-screen bg-background overflow-hidden">
       {/* Desktop Sidebar */}
-      <div className="hidden lg:block">
+      <div className="hidden lg:block shrink-0">
         <AdminSidebar />
       </div>
 
-      {/* Mobile Sidebar (Sheet) */}
+      {/* Mobile Sidebar */}
       <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
-        <SheetContent side="left" className="p-0 w-64 border-none">
+        <SheetContent side="left" className="p-0 w-64 border-border/60">
           <SheetHeader className="sr-only">
             <SheetTitle>Admin Navigation</SheetTitle>
             <SheetDescription>Main navigation links for the admin area</SheetDescription>
@@ -45,10 +48,11 @@ export default function AdminLayout({
         </SheetContent>
       </Sheet>
 
+      {/* Main Area */}
       <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
         <AdminHeader onMenuClick={() => setIsMobileMenuOpen(true)} />
-        <main className="flex-1 overflow-y-auto bg-muted/30 scroll-smooth no-scrollbar">
-          <div className="p-4 md:p-8">
+        <main className="flex-1 overflow-y-auto scroll-smooth no-scrollbar">
+          <div className="p-4 md:p-6 lg:p-8">
             {children}
           </div>
         </main>

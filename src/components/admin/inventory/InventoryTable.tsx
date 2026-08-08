@@ -20,32 +20,32 @@ export function InventoryTable({ products, loading, onEdit, onDelete }: Inventor
       <table className="w-full text-left">
         <thead>
           <tr className="bg-muted/30">
-            <th className="px-8 py-5 text-xs font-black uppercase tracking-widest text-muted-foreground">
+            <th className="px-8 py-5 text-xs font-medium text-muted-foreground uppercase tracking-wider">
               Product Details
             </th>
-            <th className="px-8 py-5 text-xs font-black uppercase tracking-widest text-muted-foreground">
+            <th className="px-8 py-5 text-xs font-medium text-muted-foreground uppercase tracking-wider">
               Category
             </th>
-            <th className="px-8 py-5 text-xs font-black uppercase tracking-widest text-muted-foreground">
+            <th className="px-8 py-5 text-xs font-medium text-muted-foreground uppercase tracking-wider">
               Price
             </th>
-            <th className="px-8 py-5 text-xs font-black uppercase tracking-widest text-muted-foreground">
+            <th className="px-8 py-5 text-xs font-medium text-muted-foreground uppercase tracking-wider">
               Stock Level
             </th>
-            <th className="px-8 py-5 text-xs font-black uppercase tracking-widest text-muted-foreground">
+            <th className="px-8 py-5 text-xs font-medium text-muted-foreground uppercase tracking-wider">
               Status
             </th>
-            <th className="px-8 py-5 text-xs font-black uppercase tracking-widest text-muted-foreground text-right">
+            <th className="px-8 py-5 text-xs font-medium text-muted-foreground uppercase tracking-wider text-right">
               Actions
             </th>
           </tr>
         </thead>
-        <tbody className="divide-y divide-border/50">
+        <tbody className="divide-y divide-border/60">
           {loading
             ? Array.from({ length: 5 }).map((_, i) => (
                 <tr
                   key={i}
-                  className="animate-pulse border-b border-border/50"
+                  className="animate-pulse border-b border-border/60"
                 >
                   <td colSpan={6} className="p-8">
                     <div className="h-12 bg-muted rounded-2xl" />
@@ -59,7 +59,7 @@ export function InventoryTable({ products, loading, onEdit, onDelete }: Inventor
                 >
                   <td className="px-8 py-6">
                     <div className="flex items-center gap-4">
-                      <div className="w-12 h-12 rounded-2xl bg-muted overflow-hidden relative border border-border/50">
+                      <div className="w-12 h-12 rounded-2xl bg-muted overflow-hidden relative border border-border/60">
                         {product.images?.[0] && (
                           <Image
                             src={product.images[0]}
@@ -70,7 +70,7 @@ export function InventoryTable({ products, loading, onEdit, onDelete }: Inventor
                         )}
                       </div>
                       <div>
-                        <p className="font-black text-sm group-hover:text-primary transition-colors">
+                        <p className="font-medium text-sm group-hover:text-primary transition-colors">
                           {product.name}
                         </p>
                         <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">
@@ -88,7 +88,7 @@ export function InventoryTable({ products, loading, onEdit, onDelete }: Inventor
                     </span>
                   </td>
                   <td className="px-8 py-6">
-                    <p className="font-black text-sm">
+                    <p className="font-medium text-sm">
                       ${product.price.toFixed(2)}
                     </p>
                   </td>
@@ -109,7 +109,7 @@ export function InventoryTable({ products, loading, onEdit, onDelete }: Inventor
                           }}
                         />
                       </div>
-                      <span className="text-sm font-black">
+                      <span className="text-sm font-medium">
                         {product.stock}
                       </span>
                     </div>

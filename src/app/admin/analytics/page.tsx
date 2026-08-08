@@ -58,7 +58,7 @@ export default function AdminAnalyticsPage() {
   }
 
   return (
-    <div className="p-8 space-y-8 animate-in fade-in duration-500">
+    <div className="space-y-6">
       <AnalyticsHeader />
 
       <AnalyticsSummaryCards data={data?.summary || null} />

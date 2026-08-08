@@ -106,8 +106,7 @@ export default function CouponsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-background/95 p-6 lg:p-10">
-      <div className="max-w-7xl mx-auto space-y-8">
+    <div className="space-y-6">
         <CouponsHeader
           loading={loading}
           onRefresh={() => fetchCoupons(pagination.page)}
@@ -119,7 +118,7 @@ export default function CouponsPage() {
 
         <CouponsStats stats={stats} />
 
-        <div className="bg-card border border-border/50 rounded-[48px] shadow-2xl shadow-primary/5 overflow-hidden">
+        <div className="bg-card border border-border/60 rounded-xl overflow-hidden">
           <CouponsSearch
             searchQuery={searchQuery}
             setSearchQuery={setSearchQuery}
@@ -144,7 +143,7 @@ export default function CouponsPage() {
             }}
           />
 
-          <div className="p-4 border-t border-border/50">
+          <div className="p-4 border-t border-border/60">
             <ProfessionalPagination
               currentPage={pagination.page}
               totalPages={pagination.pages}
@@ -152,7 +151,6 @@ export default function CouponsPage() {
             />
           </div>
         </div>
-      </div>
 
       <AdminCouponDialog
         open={isDialogOpen}

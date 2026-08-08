@@ -57,8 +57,7 @@ export default function BannersPage() {
   };
 
   return (
-    <div className="min-h-screen bg-background/95 p-6 lg:p-10">
-      <div className="max-w-7xl mx-auto space-y-10">
+    <div className="space-y-6">
         <BannersHeader
           loading={loading}
           onRefresh={fetchBanners}
@@ -86,7 +85,6 @@ export default function BannersPage() {
           ))}
           <BannersEmptyState show={banners.length === 0 && !loading} />
         </div>
-      </div>
     </div>
   );
 }

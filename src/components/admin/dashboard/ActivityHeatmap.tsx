@@ -24,13 +24,13 @@ export function ActivityHeatmap() {
   };
 
   return (
-    <Card className="border-border shadow-xl shadow-primary/5 rounded-[32px] overflow-hidden bg-card">
+    <div className="rounded-xl border border-border/60 bg-card overflow-hidden">
       <CardHeader className="bg-card border-b border-border py-6 px-8 flex flex-row items-center justify-between">
         <div className="flex items-center gap-3">
           <div className="p-2 bg-primary/10 rounded-xl">
             <Calendar className="h-5 w-5 text-primary" />
           </div>
-          <CardTitle className="text-xl font-black text-foreground">Activity Heatmap</CardTitle>
+          <CardTitle className="text-xl font-semibold text-foreground">Activity Heatmap</CardTitle>
         </div>
         <TooltipProvider>
           <Tooltip>
@@ -43,7 +43,7 @@ export function ActivityHeatmap() {
           </Tooltip>
         </TooltipProvider>
       </CardHeader>
-      <CardContent className="p-8">
+      <CardContent className="p-5">
         <div className="flex flex-col gap-1 overflow-x-auto no-scrollbar">
           <div className="flex gap-1 mb-2 ml-8">
             {hours.filter(h => h % 3 === 0).map(h => (
@@ -54,7 +54,7 @@ export function ActivityHeatmap() {
           </div>
           {data.map((dayData, dayIndex) => (
             <div key={days[dayIndex]} className="flex items-center gap-2">
-              <span className="text-[10px] font-black text-muted-foreground w-6 uppercase tracking-tighter">
+              <span className="text-[10px] font-medium text-muted-foreground w-6 uppercase tracking-tighter">
                 {days[dayIndex]}
               </span>
               <div className="flex gap-1">
@@ -86,6 +86,6 @@ export function ActivityHeatmap() {
           </div>
         </div>
       </CardContent>
-    </Card>
+    </div>
   );
 }

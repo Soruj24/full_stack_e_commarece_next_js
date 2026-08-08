@@ -44,7 +44,7 @@ export default function AdminPermissionsPage() {
   }
 
   return (
-    <div className="p-8 space-y-8 animate-in fade-in duration-500">
+    <div className="space-y-6">
       <PermissionsHeader onRefresh={fetchPermissions} loading={loading} />
 
       <PermissionsGrid permissions={permissions} loading={loading} />

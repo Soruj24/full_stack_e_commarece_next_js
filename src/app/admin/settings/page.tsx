@@ -106,13 +106,12 @@ export default function SettingsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-background/95 p-6 lg:p-10">
-      <div className="max-w-5xl mx-auto space-y-8">
+    <div className="space-y-6">
         <SettingsHeader saving={saving} onSave={handleSave} />
 
         <SettingsTabs activeTab={activeTab} onTabChange={setActiveTab} />
 
-        <div className="bg-card border border-border/50 rounded-[48px] shadow-2xl shadow-primary/5 overflow-hidden p-8">
+        <div className="bg-card border border-border/60 rounded-xl overflow-hidden p-8">
           {activeTab === "general" && (
             <GeneralSettings settings={settings} onChange={handleChange} />
           )}
@@ -126,7 +125,6 @@ export default function SettingsPage() {
             <EmailSettings settings={settings} onChange={handleChange} />
           )}
         </div>
-      </div>
     </div>
   );
 }

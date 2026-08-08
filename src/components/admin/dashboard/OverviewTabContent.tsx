@@ -32,26 +32,23 @@ export function OverviewTabContent({
   stats,
 }: OverviewTabContentProps) {
   return (
-    <div className="space-y-8">
+    <div className="space-y-6">
       {stats && <EcommerceStats stats={stats} />}
       <SystemHealth />
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <ActivityChart data={activityData} />
         <LiveUserMonitor />
       </div>
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2">
           <ActivityHeatmap />
         </div>
-        <div className="space-y-8">
+        <div className="space-y-6">
           <SecurityActions onSetup2FA={setup2FA} auditLogs={auditLogs} />
           <AdminNotes />
         </div>
       </div>
-
-      <div className="grid grid-cols-1 gap-8">
-        <ServerLogsViewer />
-      </div>
+      <ServerLogsViewer />
     </div>
   );
 }

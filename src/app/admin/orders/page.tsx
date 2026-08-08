@@ -24,30 +24,28 @@ export default function OrdersPage() {
   }
 
   return (
-    <div className="min-h-screen bg-background/95 p-6 lg:p-10">
-      <div className="max-w-7xl mx-auto space-y-8">
-        <OrdersHeader loading={loading} onRefresh={() => fetchOrders(pagination.page)} />
+    <div className="space-y-6">
+      <OrdersHeader loading={loading} onRefresh={() => fetchOrders(pagination.page)} />
 
-        <OrdersStats stats={stats} />
+      <OrdersStats stats={stats} />
 
-        <div className="bg-card border border-border/50 rounded-[48px] shadow-2xl shadow-primary/5 overflow-hidden">
-          <OrdersSearch
-            searchQuery={searchQuery} setSearchQuery={setSearchQuery}
-            statusFilter={statusFilter} setStatusFilter={setStatusFilter}
-            paymentFilter={paymentFilter} setPaymentFilter={setPaymentFilter}
+      <div className="bg-card border border-border/60 rounded-xl overflow-hidden">
+        <OrdersSearch
+          searchQuery={searchQuery} setSearchQuery={setSearchQuery}
+          statusFilter={statusFilter} setStatusFilter={setStatusFilter}
+          paymentFilter={paymentFilter} setPaymentFilter={setPaymentFilter}
+        />
+
+        <OrdersTable
+          orders={filteredOrders} loading={loading}
+          onView={(order) => { setSelectedOrder(order); setIsDialogOpen(true); }}
+          onUpdateStatus={handleUpdateStatus}
+        />
+
+        <div className="p-4 border-t border-border/60">
+          <ProfessionalPagination
+            currentPage={pagination.page} totalPages={pagination.pages} onPageChange={handlePageChange}
           />
-
-          <OrdersTable
-            orders={filteredOrders} loading={loading}
-            onView={(order) => { setSelectedOrder(order); setIsDialogOpen(true); }}
-            onUpdateStatus={handleUpdateStatus}
-          />
-
-          <div className="p-4 border-t border-border/50">
-            <ProfessionalPagination
-              currentPage={pagination.page} totalPages={pagination.pages} onPageChange={handlePageChange}
-            />
-          </div>
         </div>
       </div>
 

@@ -21,8 +21,7 @@ export default function CategoriesPage() {
   } = useAdminCategories();
 
   return (
-    <div className="min-h-screen bg-background/95 p-6 lg:p-10">
-      <div className="max-w-7xl mx-auto space-y-10">
+    <div className="space-y-6">
         <CategoriesHeader
           loading={loading}
           onRefresh={() => fetchCategories(pagination.page)}
@@ -70,7 +69,6 @@ export default function CategoriesPage() {
             />
           </div>
         </div>
-      </div>
 
       <AdminCategoryDialog
         open={isDialogOpen}

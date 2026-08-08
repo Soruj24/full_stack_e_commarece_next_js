@@ -35,16 +35,16 @@ export function AdminNotes() {
   };
 
   return (
-    <Card className="border-border shadow-xl shadow-primary/5 rounded-[32px] overflow-hidden bg-card flex flex-col h-[400px]">
+    <div className="rounded-xl border border-border/60 bg-card overflow-hidden flex flex-col h-[400px]">
       <CardHeader className="bg-card border-b border-border py-6 px-8 flex flex-row items-center justify-between">
         <div className="flex items-center gap-3">
           <div className="p-2 bg-yellow-500/10 rounded-xl">
             <StickyNote className="h-5 w-5 text-yellow-500" />
           </div>
-          <CardTitle className="text-xl font-black text-foreground">Admin Scratchpad</CardTitle>
+          <CardTitle className="text-xl font-semibold text-foreground">Admin Scratchpad</CardTitle>
         </div>
       </CardHeader>
-      <CardContent className="p-6 flex flex-col h-full gap-4 overflow-hidden">
+      <CardContent className="p-5 flex flex-col h-full gap-4 overflow-hidden">
         <div className="relative shrink-0">
           <textarea
             value={currentNote}
@@ -54,7 +54,7 @@ export function AdminNotes() {
           />
           <button
             onClick={saveNote}
-            className="absolute bottom-3 right-3 p-2 bg-primary text-primary-foreground rounded-xl hover:bg-primary/90 transition-all shadow-lg shadow-primary/20"
+            className="absolute bottom-3 right-3 p-2 bg-primary text-primary-foreground rounded-xl hover:bg-primary/90 transition-all"
           >
             <Plus className="h-4 w-4" />
           </button>
@@ -63,7 +63,7 @@ export function AdminNotes() {
         <div className="flex-1 overflow-y-auto space-y-3 pr-2 no-scrollbar">
           {notes.map((note) => (
             <div key={note.id} className="p-4 rounded-2xl bg-yellow-500/5 border border-yellow-500/10 group relative">
-              <p className="text-xs text-muted-foreground font-black uppercase tracking-widest mb-2">{note.date}</p>
+              <p className="text-xs text-muted-foreground font-medium uppercase tracking-widest mb-2">{note.date}</p>
               <p className="text-sm font-medium text-foreground whitespace-pre-wrap">{note.text}</p>
               <button
                 onClick={() => deleteNote(note.id)}
@@ -76,11 +76,11 @@ export function AdminNotes() {
           {notes.length === 0 && (
             <div className="h-full flex flex-col items-center justify-center text-muted-foreground opacity-30 py-8">
               <StickyNote className="w-12 h-12 mb-2" />
-              <p className="text-xs font-black uppercase tracking-widest">No notes yet</p>
+              <p className="text-xs font-medium uppercase tracking-widest">No notes yet</p>
             </div>
           )}
         </div>
       </CardContent>
-    </Card>
+    </div>
   );
 }
