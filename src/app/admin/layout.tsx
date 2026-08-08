@@ -1,11 +1,17 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { AdminSidebar } from "@/components/admin/AdminSidebar";
 import { AdminHeader } from "@/components/admin/AdminHeader";
 import { useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription } from "@/components/ui/sheet";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetDescription,
+} from "@/components/ui/sheet";
 
 export default function AdminLayout({
   children,
@@ -14,6 +20,10 @@ export default function AdminLayout({
 }) {
   const { data: session, status } = useSession();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  const handleMobileNavigate = useCallback(() => {
+    setIsMobileMenuOpen(false);
+  }, []);
 
   if (status === "loading") {
     return (
@@ -42,9 +52,11 @@ export default function AdminLayout({
         <SheetContent side="left" className="p-0 w-64 border-border/60">
           <SheetHeader className="sr-only">
             <SheetTitle>Admin Navigation</SheetTitle>
-            <SheetDescription>Main navigation links for the admin area</SheetDescription>
+            <SheetDescription>
+              Main navigation links for the admin area
+            </SheetDescription>
           </SheetHeader>
-          <AdminSidebar isMobile />
+          <AdminSidebar isMobile onNavigate={handleMobileNavigate} />
         </SheetContent>
       </Sheet>
 
@@ -52,9 +64,7 @@ export default function AdminLayout({
       <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
         <AdminHeader onMenuClick={() => setIsMobileMenuOpen(true)} />
         <main className="flex-1 overflow-y-auto scroll-smooth no-scrollbar">
-          <div className="p-4 md:p-6 lg:p-8">
-            {children}
-          </div>
+          <div className="p-4 md:p-6 lg:p-8">{children}</div>
         </main>
       </div>
     </div>
