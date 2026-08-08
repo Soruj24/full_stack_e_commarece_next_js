@@ -23,6 +23,7 @@ export async function fetchNotifications(filters?: NotificationFilters): Promise
     const query = buildNotificationQuery(filters);
     const res = await fetch(`/api/admin/notifications${query}`);
     const data = await res.json();
+    if (data.success && Array.isArray(data.data?.notifications)) return data.data.notifications;
     if (data.success && Array.isArray(data.notifications)) return data.notifications;
     return [];
   } catch {
@@ -56,6 +57,7 @@ export async function fetchNotificationTemplates(): Promise<NotificationTemplate
   try {
     const res = await fetch("/api/admin/notifications/templates");
     const data = await res.json();
+    if (data.success && Array.isArray(data.data?.templates)) return data.data.templates;
     if (data.success && Array.isArray(data.templates)) return data.templates;
     return [];
   } catch {

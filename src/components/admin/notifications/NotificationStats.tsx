@@ -11,58 +11,39 @@ interface NotificationStatsProps {
   };
 }
 
-export function NotificationStats({ stats }: NotificationStatsProps) {
-  const items = [
-    {
-      title: "Total",
-      value: stats.total,
-      icon: Bell,
-      color: "text-blue-500",
-      bg: "bg-blue-500/10",
-    },
-    {
-      title: "Sent",
-      value: stats.sent,
-      icon: CheckCircle,
-      color: "text-green-500",
-      bg: "bg-green-500/10",
-    },
-    {
-      title: "Scheduled",
-      value: stats.scheduled,
-      icon: Clock,
-      color: "text-amber-500",
-      bg: "bg-amber-500/10",
-    },
-    {
-      title: "Failed",
-      value: stats.failed,
-      icon: AlertCircle,
-      color: "text-red-500",
-      bg: "bg-red-500/10",
-    },
-  ];
-
+function KpiCard({
+  label,
+  value,
+  icon: Icon,
+  iconBg,
+  iconColor,
+}: {
+  label: string;
+  value: number;
+  icon: React.ElementType;
+  iconBg: string;
+  iconColor: string;
+}) {
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-      {items.map((item) => (
-        <div
-          key={item.title}
-          className="bg-card p-6 rounded-[32px] border border-border/50 shadow-xl shadow-primary/5"
-        >
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm font-bold text-muted-foreground uppercase tracking-widest mb-1">
-                {item.title}
-              </p>
-              <p className="text-3xl font-black mt-1">{item.value}</p>
-            </div>
-            <div className={`p-3 rounded-2xl ${item.bg}`}>
-              <item.icon className={`h-6 w-6 ${item.color}`} />
-            </div>
-          </div>
+    <div className="border border-border/60 rounded-xl p-4 bg-card">
+      <div className="flex items-center justify-between mb-3">
+        <p className="text-[11px] text-muted-foreground uppercase tracking-wider font-medium">{label}</p>
+        <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${iconBg}`}>
+          <Icon className={`h-4 w-4 ${iconColor}`} />
         </div>
-      ))}
+      </div>
+      <p className="text-2xl font-semibold tracking-tight">{value}</p>
+    </div>
+  );
+}
+
+export function NotificationStats({ stats }: NotificationStatsProps) {
+  return (
+    <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+      <KpiCard label="Total" value={stats.total} icon={Bell} iconBg="bg-blue-500/10" iconColor="text-blue-500" />
+      <KpiCard label="Sent" value={stats.sent} icon={CheckCircle} iconBg="bg-emerald-500/10" iconColor="text-emerald-500" />
+      <KpiCard label="Scheduled" value={stats.scheduled} icon={Clock} iconBg="bg-amber-500/10" iconColor="text-amber-500" />
+      <KpiCard label="Failed" value={stats.failed} icon={AlertCircle} iconBg="bg-red-500/10" iconColor="text-red-500" />
     </div>
   );
 }

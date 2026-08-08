@@ -56,10 +56,11 @@ export function SendNotificationDialog({
       const res = await fetch("/api/admin/notifications/templates");
       if (res.ok) {
         const data = await res.json();
-        setTemplates(data.templates || []);
+        const raw = data.data?.templates || data.templates || [];
+        setTemplates(raw);
       }
     } catch {
-      // Silently fail - templates are optional
+      // Templates are optional
     }
   };
 
@@ -118,140 +119,138 @@ export function SendNotificationDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[500px] rounded-[32px] bg-card border-border shadow-2xl max-h-[90vh] overflow-y-auto">
+      <DialogContent className="sm:max-w-[500px] rounded-xl bg-card border-border/60 max-h-[90vh] overflow-y-auto">
         <DialogHeader>
-          <div className="mx-auto w-12 h-12 bg-primary/10 rounded-2xl flex items-center justify-center mb-4">
-            <Send className="h-6 w-6 text-primary" />
-          </div>
-          <DialogTitle className="text-2xl font-black text-center">
+          <DialogTitle className="text-lg font-semibold">
             Send Notification
           </DialogTitle>
-          <DialogDescription className="text-center text-muted-foreground font-medium">
+          <DialogDescription className="text-sm text-muted-foreground">
             Compose a new notification to send to users.
           </DialogDescription>
         </DialogHeader>
 
-        <form onSubmit={handleSubmit} className="space-y-6 pt-4">
-          <div className="space-y-4">
-            {templates.length > 0 && (
-              <div className="space-y-2">
-                <Label className="text-sm font-black text-muted-foreground uppercase tracking-wider ml-1">
-                  Template (Optional)
-                </Label>
-                <Select onValueChange={handleTemplateSelect}>
-                  <SelectTrigger className="h-12 rounded-xl bg-muted/50 border-border focus:ring-primary font-bold">
-                    <SelectValue placeholder="Select a template" />
-                  </SelectTrigger>
-                  <SelectContent className="rounded-xl border-border bg-card">
-                    {templates.map((template) => (
-                      <SelectItem key={template._id} value={template._id} className="font-bold">
-                        {template.name}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-            )}
-
-            <div className="space-y-2">
-              <Label className="text-sm font-black text-muted-foreground uppercase tracking-wider ml-1">
-                Title
+        <form onSubmit={handleSubmit} className="space-y-4 pt-2">
+          {templates.length > 0 && (
+            <div className="space-y-1.5">
+              <Label className="text-[11px] font-medium text-muted-foreground uppercase tracking-wider">
+                Template (Optional)
               </Label>
-              <Input
-                placeholder="Notification title"
-                required
-                value={formData.title}
-                onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                className="h-12 rounded-xl bg-muted/50 border-border focus:ring-primary font-bold"
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label className="text-sm font-black text-muted-foreground uppercase tracking-wider ml-1">
-                Message
-              </Label>
-              <Textarea
-                placeholder="Notification message..."
-                required
-                value={formData.message}
-                onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                className="min-h-[100px] rounded-xl bg-muted/50 border-border focus:ring-primary font-bold p-4"
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label className="text-sm font-black text-muted-foreground uppercase tracking-wider ml-1">
-                Type
-              </Label>
-              <Select
-                value={formData.type}
-                onValueChange={(v) => setFormData({ ...formData, type: v })}
-              >
-                <SelectTrigger className="h-12 rounded-xl bg-muted/50 border-border focus:ring-primary font-bold">
-                  <SelectValue />
+              <Select onValueChange={handleTemplateSelect}>
+                <SelectTrigger className="h-9 rounded-lg bg-muted/50 border-border/60 text-sm">
+                  <SelectValue placeholder="Select a template" />
                 </SelectTrigger>
-                <SelectContent className="rounded-xl border-border bg-card">
-                  <SelectItem value="info" className="font-bold">Info</SelectItem>
-                  <SelectItem value="warning" className="font-bold">Warning</SelectItem>
-                  <SelectItem value="success" className="font-bold">Success</SelectItem>
-                  <SelectItem value="error" className="font-bold">Error</SelectItem>
+                <SelectContent className="rounded-lg border-border/60 bg-card">
+                  {templates.map((template) => (
+                    <SelectItem key={template._id} value={template._id} className="text-sm">
+                      {template.name}
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
             </div>
+          )}
 
-            <div className="space-y-2">
-              <Label className="text-sm font-black text-muted-foreground uppercase tracking-wider ml-1">
-                Recipients
-              </Label>
-              <Select
-                value={formData.recipients}
-                onValueChange={(v) => setFormData({ ...formData, recipients: v })}
-              >
-                <SelectTrigger className="h-12 rounded-xl bg-muted/50 border-border focus:ring-primary font-bold">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent className="rounded-xl border-border bg-card">
-                  <SelectItem value="all" className="font-bold">All Users</SelectItem>
-                  <SelectItem value="admin" className="font-bold">All Admins</SelectItem>
-                  <SelectItem value="user" className="font-bold">Specific Users</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-
-            <div className="space-y-2">
-              <Label className="text-sm font-black text-muted-foreground uppercase tracking-wider ml-1">
-                Schedule (Optional)
-              </Label>
-              <Input
-                type="datetime-local"
-                value={formData.scheduledFor}
-                onChange={(e) => setFormData({ ...formData, scheduledFor: e.target.value })}
-                className="h-12 rounded-xl bg-muted/50 border-border focus:ring-primary font-bold"
-              />
-            </div>
+          <div className="space-y-1.5">
+            <Label className="text-[11px] font-medium text-muted-foreground uppercase tracking-wider">
+              Title
+            </Label>
+            <Input
+              placeholder="Notification title"
+              required
+              value={formData.title}
+              onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+              className="h-9 rounded-lg bg-muted/50 border-border/60 text-sm"
+            />
           </div>
 
-          <DialogFooter className="pt-4">
+          <div className="space-y-1.5">
+            <Label className="text-[11px] font-medium text-muted-foreground uppercase tracking-wider">
+              Message
+            </Label>
+            <Textarea
+              placeholder="Notification message..."
+              required
+              value={formData.message}
+              onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+              className="min-h-[80px] rounded-lg bg-muted/50 border-border/60 text-sm p-3"
+            />
+          </div>
+
+          <div className="space-y-1.5">
+            <Label className="text-[11px] font-medium text-muted-foreground uppercase tracking-wider">
+              Type
+            </Label>
+            <Select
+              value={formData.type}
+              onValueChange={(v) => setFormData({ ...formData, type: v })}
+            >
+              <SelectTrigger className="h-9 rounded-lg bg-muted/50 border-border/60 text-sm">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent className="rounded-lg border-border/60 bg-card">
+                <SelectItem value="info" className="text-sm">Info</SelectItem>
+                <SelectItem value="warning" className="text-sm">Warning</SelectItem>
+                <SelectItem value="success" className="text-sm">Success</SelectItem>
+                <SelectItem value="error" className="text-sm">Error</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div className="space-y-1.5">
+            <Label className="text-[11px] font-medium text-muted-foreground uppercase tracking-wider">
+              Recipients
+            </Label>
+            <Select
+              value={formData.recipients}
+              onValueChange={(v) => setFormData({ ...formData, recipients: v })}
+            >
+              <SelectTrigger className="h-9 rounded-lg bg-muted/50 border-border/60 text-sm">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent className="rounded-lg border-border/60 bg-card">
+                <SelectItem value="all" className="text-sm">All Users</SelectItem>
+                <SelectItem value="admin" className="text-sm">All Admins</SelectItem>
+                <SelectItem value="user" className="text-sm">Specific Users</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div className="space-y-1.5">
+            <Label className="text-[11px] font-medium text-muted-foreground uppercase tracking-wider">
+              Schedule (Optional)
+            </Label>
+            <Input
+              type="datetime-local"
+              value={formData.scheduledFor}
+              onChange={(e) => setFormData({ ...formData, scheduledFor: e.target.value })}
+              className="h-9 rounded-lg bg-muted/50 border-border/60 text-sm"
+            />
+          </div>
+
+          <DialogFooter className="pt-2">
             <Button
               type="button"
               variant="outline"
               onClick={() => onOpenChange(false)}
-              className="rounded-2xl font-bold px-6"
+              className="rounded-lg text-sm"
             >
               Cancel
             </Button>
             <Button
               type="submit"
               disabled={loading}
-              className="rounded-2xl font-black px-8"
+              className="rounded-lg text-sm"
             >
               {loading ? (
                 <>
-                  <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                  <Loader2 className="mr-1.5 h-3.5 w-3.5 animate-spin" />
                   Sending...
                 </>
               ) : (
-                "Send"
+                <>
+                  <Send className="mr-1.5 h-3.5 w-3.5" />
+                  Send
+                </>
               )}
             </Button>
           </DialogFooter>

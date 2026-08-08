@@ -13,69 +13,56 @@ interface NotificationListProps {
   loading: boolean;
 }
 
+function getTypeIcon(type: string) {
+  switch (type) {
+    case "info": return <Info className="h-3.5 w-3.5 text-blue-500" />;
+    case "warning": return <AlertTriangle className="h-3.5 w-3.5 text-amber-500" />;
+    case "success": return <CheckCircle className="h-3.5 w-3.5 text-emerald-500" />;
+    case "error": return <XCircle className="h-3.5 w-3.5 text-red-500" />;
+    case "critical": return <XCircle className="h-3.5 w-3.5 text-red-500" />;
+    default: return <Info className="h-3.5 w-3.5 text-muted-foreground" />;
+  }
+}
+
+function getStatusBadge(status: string) {
+  switch (status) {
+    case "sent": return "bg-emerald-500/10 text-emerald-600 border-emerald-500/20";
+    case "scheduled": return "bg-amber-500/10 text-amber-600 border-amber-500/20";
+    case "draft": return "bg-muted text-muted-foreground border-border/60";
+    case "failed": return "bg-red-500/10 text-red-600 border-red-500/20";
+    default: return "bg-muted text-muted-foreground border-border/60";
+  }
+}
+
+function getRecipientsIcon(recipients: string) {
+  switch (recipients) {
+    case "all": return <Users className="h-3.5 w-3.5" />;
+    case "admin": return <Shield className="h-3.5 w-3.5" />;
+    case "user": return <User className="h-3.5 w-3.5" />;
+    default: return <Users className="h-3.5 w-3.5" />;
+  }
+}
+
 export function NotificationList({ notifications, onDelete, loading }: NotificationListProps) {
-  const getTypeIcon = (type: string) => {
-    switch (type) {
-      case "info":
-        return <Info className="w-4 h-4 text-blue-500" />;
-      case "warning":
-        return <AlertTriangle className="w-4 h-4 text-amber-500" />;
-      case "success":
-        return <CheckCircle className="w-4 h-4 text-green-500" />;
-      case "error":
-        return <XCircle className="w-4 h-4 text-red-500" />;
-      default:
-        return <Info className="w-4 h-4" />;
-    }
-  };
-
-  const getStatusBadge = (status: string) => {
-    switch (status) {
-      case "sent":
-        return "bg-green-500/10 text-green-500 border-green-500/20";
-      case "scheduled":
-        return "bg-amber-500/10 text-amber-500 border-amber-500/20";
-      case "draft":
-        return "bg-gray-500/10 text-gray-500 border-gray-500/20";
-      case "failed":
-        return "bg-red-500/10 text-red-500 border-red-500/20";
-      default:
-        return "bg-gray-500/10 text-gray-500 border-gray-500/20";
-    }
-  };
-
-  const getRecipientsIcon = (recipients: string) => {
-    switch (recipients) {
-      case "all":
-        return <Users className="w-4 h-4" />;
-      case "admin":
-        return <Shield className="w-4 h-4" />;
-      case "user":
-        return <User className="w-4 h-4" />;
-      default:
-        return <Users className="w-4 h-4" />;
-    }
-  };
-
   if (loading) {
     return (
-      <div className="bg-card border border-border/50 rounded-[48px] p-12 text-center">
-        <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-primary mx-auto"></div>
-        <p className="text-muted-foreground mt-4">Loading notifications...</p>
+      <div className="border border-border/60 rounded-xl bg-card p-12 text-center">
+        <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-primary mx-auto" />
+        <p className="text-sm text-muted-foreground mt-4">Loading notifications...</p>
       </div>
     );
   }
 
   if (notifications.length === 0) {
     return (
-      <div className="bg-card border border-border/50 rounded-[48px] p-12 text-center">
-        <p className="text-muted-foreground">No notifications found</p>
+      <div className="border border-border/60 rounded-xl bg-card p-12 text-center">
+        <p className="text-sm text-muted-foreground">No notifications found</p>
       </div>
     );
   }
 
   return (
-    <div className="bg-card border border-border/50 rounded-[48px] shadow-2xl shadow-primary/5 overflow-hidden">
+    <div className="border border-border/60 rounded-xl bg-card overflow-hidden">
       <div className="overflow-x-auto">
         <Table>
           <TableHeader>
@@ -86,47 +73,49 @@ export function NotificationList({ notifications, onDelete, loading }: Notificat
               <TableHead>Recipients</TableHead>
               <TableHead>Status</TableHead>
               <TableHead>Sent At</TableHead>
-              <TableHead className="w-[70px]">Actions</TableHead>
+              <TableHead className="w-[60px] text-right">Actions</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {notifications.map((notification) => (
               <TableRow key={notification._id}>
-                <TableCell className="font-bold">{notification.title}</TableCell>
-                <TableCell className="text-muted-foreground max-w-[200px] truncate">
+                <TableCell className="text-sm font-medium">{notification.title}</TableCell>
+                <TableCell className="text-sm text-muted-foreground max-w-[200px] truncate">
                   {notification.message}
                 </TableCell>
                 <TableCell>
-                  <div className="flex items-center gap-2">
-                    <div className="p-1.5 rounded-lg bg-muted">
+                  <div className="flex items-center gap-1.5">
+                    <div className="p-1 rounded-md bg-muted/50">
                       {getTypeIcon(notification.type)}
                     </div>
-                    <span className="text-xs font-bold capitalize">{notification.type}</span>
+                    <span className="text-xs font-medium capitalize">{notification.type}</span>
                   </div>
                 </TableCell>
                 <TableCell>
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-1.5">
                     {getRecipientsIcon(notification.recipients)}
-                    <span className="text-xs font-bold capitalize">{notification.recipients}</span>
+                    <span className="text-xs font-medium capitalize">{notification.recipients}</span>
                   </div>
                 </TableCell>
                 <TableCell>
-                  <Badge variant="outline" className={getStatusBadge(notification.status)}>
+                  <Badge variant="outline" className={`text-[11px] font-medium ${getStatusBadge(notification.status)}`}>
                     {notification.status}
                   </Badge>
                 </TableCell>
-                <TableCell className="text-muted-foreground text-sm">
-                  {notification.sentAt ? formatDate(notification.sentAt) : "N/A"}
+                <TableCell className="text-sm text-muted-foreground">
+                  {notification.sentAt ? formatDate(notification.sentAt) : "—"}
                 </TableCell>
                 <TableCell>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    className="rounded-xl text-destructive hover:text-destructive"
-                    onClick={() => onDelete(notification._id)}
-                  >
-                    <Trash2 className="h-4 w-4" />
-                  </Button>
+                  <div className="flex items-center justify-end">
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="h-7 w-7 text-destructive hover:text-destructive"
+                      onClick={() => onDelete(notification._id)}
+                    >
+                      <Trash2 className="h-3.5 w-3.5" />
+                    </Button>
+                  </div>
                 </TableCell>
               </TableRow>
             ))}

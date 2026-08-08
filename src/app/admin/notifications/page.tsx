@@ -31,10 +31,31 @@ export default function AdminNotificationsPage() {
     setLoading(true);
     try {
       const res = await fetch("/api/admin/notifications");
-      const json: NotificationsResponse = await res.json();
+      const json = await res.json();
       if (!res.ok) throw new Error("Failed to fetch notifications");
-      setNotifications(json.notifications || []);
-      setStats(json.stats || { total: 0, sent: 0, scheduled: 0, failed: 0 });
+      if (!json.success) throw new Error(json.error || "Failed to fetch notifications");
+      const raw = json.data?.notifications || json.notifications || [];
+      const mapped: AdminNotification[] = raw.map((n: Record<string, unknown>) => ({
+        _id: (n.id as string) || "",
+        title: (n.title as string) || "",
+        message: (n.message as string) || "",
+        type: (n.severity as string) || (n.type as string) || "info",
+        recipients: "all" as const,
+        recipientIds: [],
+        status: (n.isRead as boolean) ? "sent" : "scheduled",
+        scheduledFor: undefined,
+        sentAt: (n.createdAt as string) || undefined,
+        readBy: [],
+        createdAt: (n.createdAt as string) || new Date().toISOString(),
+        updatedAt: (n.createdAt as string) || new Date().toISOString(),
+      }));
+      setNotifications(mapped);
+      setStats({
+        total: json.data?.totalCount || mapped.length,
+        sent: mapped.filter((n) => n.status === "sent").length,
+        scheduled: mapped.filter((n) => n.status === "scheduled").length,
+        failed: mapped.filter((n) => n.status === "failed").length,
+      });
     } catch {
       toast.error("Failed to fetch notifications");
     } finally {
@@ -48,12 +69,14 @@ export default function AdminNotificationsPage() {
 
   const handleDelete = useCallback(async (id: string) => {
     try {
-      const res = await fetch(`/api/admin/notifications/${id}`, {
+      const res = await fetch("/api/admin/notifications", {
         method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id }),
       });
       const json = await res.json();
-      if (!res.ok) throw new Error(json.error || "Failed to delete notification");
-      toast.success("Notification deleted successfully");
+      if (!json.success) throw new Error(json.error || "Failed to delete notification");
+      toast.success("Notification deleted");
       fetchNotifications();
     } catch (error: unknown) {
       if (error instanceof Error) {
@@ -67,7 +90,7 @@ export default function AdminNotificationsPage() {
   if (loading && notifications.length === 0) {
     return (
       <div className="flex items-center justify-center min-h-[600px]">
-        <Loader2 className="w-10 h-10 animate-spin text-primary" />
+        <Loader2 className="h-10 w-10 animate-spin text-primary" />
       </div>
     );
   }
