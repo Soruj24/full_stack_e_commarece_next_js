@@ -1,155 +1,91 @@
 "use client";
 
-import { useState, Suspense, useMemo } from "react";
-import dynamic from "next/dynamic";
+import { useState, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
-import { toast } from "sonner";
 
 import { Tabs, TabsContent } from "@/components/ui/tabs";
-import { AdminHeader } from "@/components/admin/dashboard/AdminHeader";
+import { PageHeader } from "@/components/admin/ui/PageHeader";
 import { AdminTabsList } from "@/components/admin/dashboard/AdminTabsList";
-import { DashboardStats } from "@/components/admin/dashboard/DashboardStats";
-import { AdminEditUserDialog } from "@/components/admin/dashboard/AdminEditUserDialog";
-import { AdminMessageDialog } from "@/components/admin/dashboard/AdminMessageDialog";
-import { Admin2FADialog } from "@/components/admin/dashboard/Admin2FADialog";
-import { OverviewTabContent } from "@/components/admin/dashboard/OverviewTabContent";
-import { UsersTabContent } from "@/components/admin/dashboard/UsersTabContent";
-import { InquiriesTabContent } from "@/components/admin/dashboard/InquiriesTabContent";
-import { AuditTabContent } from "@/components/admin/dashboard/AuditTabContent";
-import { AdminSettings } from "@/components/admin/dashboard/AdminSettings";
-const AnalyticsTabContent = dynamic(() => import("@/components/admin/dashboard/AnalyticsTabContent").then(mod => ({ default: mod.AnalyticsTabContent })), {
-  loading: () => <div className="h-96 bg-muted/20 animate-pulse rounded-[40px]" />,
-  ssr: false,
-});
-import { OrdersTabContent } from "@/components/admin/dashboard/OrdersTabContent";
-import { MarketingTabContent } from "@/components/admin/dashboard/MarketingTabContent";
-import { InviteUserDialog } from "@/components/admin/InviteUserDialog";
-import { useAdminDashboard } from "@/components/admin/dashboard/useAdminDashboard";
-import { User } from "@/shared/types";
+import { KpiCards } from "@/components/admin/dashboard/KpiCards";
+import { DateRangeSelector } from "@/components/admin/dashboard/DateRangeSelector";
+import { RevenueChart } from "@/components/admin/dashboard/RevenueChart";
+import { OrdersChart } from "@/components/admin/dashboard/OrdersChart";
+import { RecentOrdersTable } from "@/components/admin/dashboard/RecentOrdersTable";
+import { TopProductsCard } from "@/components/admin/dashboard/TopProductsCard";
+import { LowStockAlert } from "@/components/admin/dashboard/LowStockAlert";
+import { RecentCustomers } from "@/components/admin/dashboard/RecentCustomers";
+import { ActivityFeed } from "@/components/admin/dashboard/ActivityFeed";
+import { SystemHealth } from "@/components/admin/dashboard/SystemHealth";
+import { DashboardErrorBoundary } from "@/components/admin/dashboard/DashboardErrorBoundary";
+import { useDashboardData } from "@/components/admin/dashboard/useDashboardData";
+
+function DashboardSkeleton() {
+  return (
+    <div className="space-y-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-3">
+        {[1, 2, 3, 4, 5, 6].map((i) => (
+          <div key={i} className="h-24 bg-muted/30 rounded-xl animate-pulse" />
+        ))}
+      </div>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div className="h-[350px] bg-muted/30 rounded-xl animate-pulse" />
+        <div className="h-[350px] bg-muted/30 rounded-xl animate-pulse" />
+      </div>
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="lg:col-span-2 h-[400px] bg-muted/30 rounded-xl animate-pulse" />
+        <div className="h-[400px] bg-muted/30 rounded-xl animate-pulse" />
+      </div>
+    </div>
+  );
+}
 
 function AdminDashboardContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const activeTab = searchParams.get("tab") || "overview";
-
-  const [isInviteDialogOpen, setIsInviteDialogOpen] = useState(false);
-  const [selectedMessage, setSelectedMessage] = useState<any>(null);
-  const [isMessageDialogOpen, setIsMessageDialogOpen] = useState(false);
-  const [selectedUserForEdit, setSelectedUserForEdit] = useState<User | null>(
-    null,
-  );
-  const [isEditUserDialogOpen, setIsEditUserDialogOpen] = useState(false);
+  const [dateRange, setDateRange] = useState("30d");
 
   const {
     loading,
+    stats,
+    salesData,
+    topProducts,
+    recentOrders,
+    lowStockItems,
     users,
-    setUsers,
-    contactMessages,
     auditLogs,
     activityData,
-    stats,
-    settings,
-    setSettings,
-    settingsLoading,
-    twoFactorSetup,
-    twoFactorToken,
-    is2FADialogOpen,
-    filteredUsers,
-    searchQuery,
-    setSearchQuery,
-    fetchUsers,
-    handleDeleteUser,
-    handleChangeRole,
-    handleUpdateStatus,
-    handleDeleteContactMessage,
-    handleUpdateSettings,
-    setTwoFactorToken,
-    setIs2FADialogOpen,
-    setup2FA,
-    verify2FA,
-  } = useAdminDashboard();
+    refresh,
+  } = useDashboardData();
 
   const setTab = (tab: string) => {
     router.push(`/admin/dashboard?tab=${tab}`);
   };
 
-  const handleUpdateUserByAdmin = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!selectedUserForEdit) return;
-
-    try {
-      const res = await fetch("/api/admin/users", {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          userId: selectedUserForEdit.id,
-          name: selectedUserForEdit.name,
-          ...((selectedUserForEdit as { bio?: string }).bio
-            ? { bio: (selectedUserForEdit as { bio?: string }).bio }
-            : {}),
-          ...((selectedUserForEdit as { location?: string }).location
-            ? {
-                location: (selectedUserForEdit as { location?: string })
-                  .location,
-              }
-            : {}),
-          ...((selectedUserForEdit as { phoneNumber?: string }).phoneNumber
-            ? {
-                phoneNumber: (selectedUserForEdit as { phoneNumber?: string })
-                  .phoneNumber,
-              }
-            : {}),
-          ...((selectedUserForEdit as { website?: string }).website
-            ? { website: (selectedUserForEdit as { website?: string }).website }
-            : {}),
-          ...((selectedUserForEdit as { designation?: string }).designation
-            ? {
-                designation: (selectedUserForEdit as { designation?: string })
-                  .designation,
-              }
-            : {}),
-          ...((selectedUserForEdit as { socialLinks?: Record<string, string> })
-            .socialLinks
-            ? {
-                socialLinks: (
-                  selectedUserForEdit as {
-                    socialLinks?: Record<string, string>;
-                  }
-                ).socialLinks,
-              }
-            : {}),
-        }),
-      });
-
-      if (res.ok) {
-        setUsers(
-          users.map((u) =>
-            u.id === selectedUserForEdit.id ? selectedUserForEdit : u,
-          ),
-        );
-        toast.success("User profile updated");
-        setIsEditUserDialogOpen(false);
-      }
-    } catch {
-      toast.error("Failed to update user");
-    }
-  };
+  if (loading) {
+    return (
+      <div className="space-y-6">
+        <PageHeader
+          title="Dashboard"
+          description="Analytics, orders, and business insights."
+        />
+        <DashboardSkeleton />
+      </div>
+    );
+  }
 
   return (
-    <div className="space-y-8">
-      <AdminHeader
-        searchQuery={searchQuery}
-        setSearchQuery={setSearchQuery}
-        fetchUsers={fetchUsers}
-        loading={loading}
-        setIsInviteDialogOpen={setIsInviteDialogOpen}
-      />
+    <div className="space-y-6">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <PageHeader
+          title="Dashboard"
+          description="Analytics, orders, and business insights."
+          className="mb-0"
+        />
+        <DateRangeSelector value={dateRange} onChange={setDateRange} />
+      </div>
 
-      <DashboardStats
-        activeUsers={stats?.activeUsers ?? 0}
-        totalAdmins={useMemo(() => users.filter((u) => u.role === "admin").length, [users])}
-        bannedUsers={0}
-      />
+      {stats && <KpiCards stats={stats} />}
 
       <Tabs
         value={activeTab}
@@ -158,93 +94,83 @@ function AdminDashboardContent() {
       >
         <AdminTabsList activeTab={activeTab} />
 
-        <InviteUserDialog
-          open={isInviteDialogOpen}
-          onOpenChange={setIsInviteDialogOpen}
-        />
+        <TabsContent value="overview" className="space-y-6">
+          <DashboardErrorBoundary fallbackTitle="Failed to load charts">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <RevenueChart data={salesData.map((d) => ({ date: d._id, revenue: d.revenue }))} />
+              <OrdersChart data={salesData.map((d) => ({ date: d._id, orders: Math.round(d.revenue / 100) }))} />
+            </div>
+          </DashboardErrorBoundary>
 
-        <AdminEditUserDialog
-          open={isEditUserDialogOpen}
-          onOpenChange={setIsEditUserDialogOpen}
-          selectedUserForEdit={selectedUserForEdit}
-          setSelectedUserForEdit={setSelectedUserForEdit}
-          handleUpdateUserByAdmin={handleUpdateUserByAdmin}
-        />
+          <SystemHealth />
 
-        <TabsContent value="overview">
-          <OverviewTabContent
-            activityData={activityData}
-            setup2FA={setup2FA}
-            auditLogs={auditLogs}
-            stats={stats}
-          />
+          <DashboardErrorBoundary fallbackTitle="Failed to load orders">
+            <RecentOrdersTable orders={recentOrders} />
+          </DashboardErrorBoundary>
 
-          <Admin2FADialog
-            open={is2FADialogOpen}
-            onOpenChange={setIs2FADialogOpen}
-            twoFactorSetup={twoFactorSetup}
-            twoFactorToken={twoFactorToken}
-            setTwoFactorToken={setTwoFactorToken}
-            verify2FA={verify2FA}
-          />
-        </TabsContent>
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <DashboardErrorBoundary fallbackTitle="Failed to load products">
+              <TopProductsCard products={topProducts} />
+            </DashboardErrorBoundary>
+            <DashboardErrorBoundary fallbackTitle="Failed to load stock alerts">
+              <LowStockAlert items={lowStockItems} />
+            </DashboardErrorBoundary>
+            <DashboardErrorBoundary fallbackTitle="Failed to load customers">
+              <RecentCustomers customers={users} />
+            </DashboardErrorBoundary>
+          </div>
 
-        <TabsContent value="users">
-          <UsersTabContent
-            filteredUsers={filteredUsers}
-            loading={loading}
-            onEdit={(user) => {
-              setSelectedUserForEdit(user);
-              setIsEditUserDialogOpen(true);
-            }}
-            onChangeRole={handleChangeRole}
-            onUpdateStatus={handleUpdateStatus}
-            onDelete={handleDeleteUser}
-            onClearSearch={() => setSearchQuery("")}
-          />
-        </TabsContent>
-
-        <TabsContent value="inquiries">
-          <InquiriesTabContent
-            contactMessages={contactMessages}
-            onDelete={handleDeleteContactMessage}
-            onViewFull={(msg) => {
-              setSelectedMessage(msg);
-              setIsMessageDialogOpen(true);
-            }}
-          />
-        </TabsContent>
-
-        <TabsContent value="audit">
-          <AuditTabContent auditLogs={auditLogs} />
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <DashboardErrorBoundary fallbackTitle="Failed to load activity">
+              <ActivityFeed logs={auditLogs} />
+            </DashboardErrorBoundary>
+            <DashboardErrorBoundary fallbackTitle="Failed to load user activity">
+              <div className="rounded-xl border border-border/60 bg-card p-6">
+                <h3 className="text-sm font-semibold text-foreground mb-4">User Activity</h3>
+                <div className="space-y-2">
+                  {activityData.slice(-7).map((day, i) => (
+                    <div key={i} className="flex items-center justify-between">
+                      <span className="text-xs text-muted-foreground">{day.date}</span>
+                      <div className="flex items-center gap-2">
+                        <div className="w-32 h-2 bg-muted/50 rounded-full overflow-hidden">
+                          <div
+                            className="h-full bg-primary rounded-full"
+                            style={{ width: `${Math.min((day.count / Math.max(...activityData.map((d) => d.count), 1)) * 100, 100)}%` }}
+                          />
+                        </div>
+                        <span className="text-xs font-medium text-foreground w-8 text-right">{day.count}</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </DashboardErrorBoundary>
+          </div>
         </TabsContent>
 
         <TabsContent value="analytics">
-          <AnalyticsTabContent />
+          <div className="rounded-xl border border-border/60 bg-card p-8 text-center">
+            <p className="text-sm text-muted-foreground">Analytics dashboard coming soon</p>
+          </div>
         </TabsContent>
 
         <TabsContent value="orders">
-          <OrdersTabContent />
+          <div className="rounded-xl border border-border/60 bg-card p-8 text-center">
+            <p className="text-sm text-muted-foreground">Orders management coming soon</p>
+          </div>
         </TabsContent>
 
-        <TabsContent value="marketing">
-          <MarketingTabContent />
+        <TabsContent value="users">
+          <div className="rounded-xl border border-border/60 bg-card p-8 text-center">
+            <p className="text-sm text-muted-foreground">User management coming soon</p>
+          </div>
         </TabsContent>
 
         <TabsContent value="settings">
-          <AdminSettings
-            settings={settings}
-            loading={settingsLoading}
-            onUpdate={handleUpdateSettings}
-            onChange={setSettings}
-          />
+          <div className="rounded-xl border border-border/60 bg-card p-8 text-center">
+            <p className="text-sm text-muted-foreground">Settings coming soon</p>
+          </div>
         </TabsContent>
-
-        <AdminMessageDialog
-          open={isMessageDialogOpen}
-          onOpenChange={setIsMessageDialogOpen}
-          selectedMessage={selectedMessage}
-        />
       </Tabs>
     </div>
   );
