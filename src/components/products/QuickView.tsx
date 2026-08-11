@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
+  DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { useCart } from "@/modules/cart/context/CartContext";
@@ -66,6 +67,7 @@ export function QuickView({ product, trigger }: QuickViewProps) {
         )}
       </DialogTrigger>
       <DialogContent className="max-w-4xl p-0 overflow-hidden bg-background border-border/40 rounded-[32px] sm:rounded-[40px] shadow-2xl">
+        <DialogTitle className="sr-only">{product.name}</DialogTitle>
         <div className="grid grid-cols-1 md:grid-cols-2 h-full max-h-[90vh] overflow-y-auto no-scrollbar">
           <QuickViewGallery
             product={product}
