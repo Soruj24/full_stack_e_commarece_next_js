@@ -32,7 +32,12 @@ const ProductRecommendations = dynamic(() => import("@/components/products/Produ
 const RecentlyViewedProducts = dynamic(() => import("@/components/products/RecentlyViewedProducts").then(mod => ({ default: mod.RecentlyViewedProducts })));
 
 export default async function HomePage() {
-  const session = await auth();
+  let session = null;
+  try {
+    session = await auth();
+  } catch {
+    // JWT decode error (stale/corrupted cookie) — treat as unauthenticated
+  }
   const saleEndTime = new Date();
   saleEndTime.setHours(saleEndTime.getHours() + 24);
 
