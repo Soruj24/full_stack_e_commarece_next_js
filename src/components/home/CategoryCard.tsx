@@ -18,10 +18,10 @@ export function CategoryCard({ category }: CategoryCardProps) {
     >
       <Link href={category.href} className="block group">
         <motion.div
-          whileHover={{ y: -4 }}
-          whileTap={{ scale: 0.98 }}
-          transition={{ type: "spring", stiffness: 400, damping: 25 }}
-          className="relative overflow-hidden rounded-xl p-4 text-center cursor-pointer border border-border/40 bg-card hover:border-border/70 hover:shadow-md transition-all duration-200"
+          whileHover={{ y: -3 }}
+          whileTap={{ scale: 0.985 }}
+          transition={{ type: "spring", stiffness: 420, damping: 28 }}
+          className="relative overflow-hidden rounded-2xl p-4 text-center cursor-pointer border border-border/50 bg-card/80 backdrop-blur-sm hover:border-border hover:shadow-[0_10px_30px_-14px_rgba(0,0,0,0.18)] transition-all duration-250"
         >
           <div
             className={`w-12 h-12 mx-auto rounded-xl bg-gradient-to-br ${category.gradient} flex items-center justify-center mb-3 group-hover:scale-105 transition-transform duration-200`}

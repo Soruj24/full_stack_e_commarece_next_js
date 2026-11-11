@@ -45,20 +45,35 @@ export function ProductCardImage({
 }: ProductCardImageProps) {
   const outOfStock = product.stock === 0;
   const lowStock = product.stock > 0 && product.stock <= 5;
+  const secondarySrc = product.images?.[1];
+  const showSecondary = Boolean(secondarySrc && secondarySrc !== imgSrc);
 
   return (
     <div className="relative aspect-square overflow-hidden bg-muted/30">
       {/* Product Image */}
-      <Link href={`/products/${product._id}`} onClick={handleViewProduct}>
+      <Link href={`/products/${product._id}`} onClick={handleViewProduct} className="block h-full w-full">
         <Image
           src={imgSrc}
           alt={product.name}
           fill
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           loading="lazy"
-          className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+          className={cn(
+            "object-cover transition-all duration-700 ease-out will-change-transform",
+            showSecondary ? "opacity-100 group-hover:opacity-0 group-hover:scale-105" : "group-hover:scale-105"
+          )}
           onError={() => setImgSrc(getFallbackImage(product.category?.slug))}
         />
+        {showSecondary && (
+          <Image
+            src={secondarySrc as string}
+            alt={`${product.name} alternate view`}
+            fill
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            loading="lazy"
+            className="object-cover opacity-0 scale-100 transition-all duration-700 ease-out group-hover:opacity-100 group-hover:scale-105"
+          />
+        )}
       </Link>
 
       {/* Gradient overlay on hover — desktop only */}

@@ -17,6 +17,7 @@ import { SearchProvider } from "@/modules/search/context/SearchContext";
 import { PriceHistoryProvider } from "@/modules/products/context/PriceHistoryContext";
 import { QuickViewProvider } from "@/modules/products/context/QuickViewContext";
 import NotificationWrapper from "@/components/common/NotificationWrapper";
+import { StoreProvider } from "@/store/StoreProvider";
 
 const CSRF_COOKIE = "csrf-token";
 const CSRF_HEADER = "x-csrf-token";
@@ -42,35 +43,37 @@ export default function Providers({ children }: { children: ReactNode }) {
 
   return (
     <SessionProvider>
-      <SettingsProvider>
-        <CartProvider>
-          <WishlistProvider>
-            <RecentlyViewedProvider>
-              <CompareProvider>
-                <StockProvider>
-                  <GuestCheckoutProvider>
-                    <OrderTrackingProvider>
-                      <SaveForLaterProvider>
-                        <BundleProvider>
-                          <SearchProvider>
-                            <PriceHistoryProvider>
-                              <NotificationWrapper>
-                              <QuickViewProvider>
-                                {children}
-                              </QuickViewProvider>
-                            </NotificationWrapper>
-                            </PriceHistoryProvider>
-                          </SearchProvider>
-                        </BundleProvider>
-                      </SaveForLaterProvider>
-                    </OrderTrackingProvider>
-                  </GuestCheckoutProvider>
-                </StockProvider>
-              </CompareProvider>
-            </RecentlyViewedProvider>
-          </WishlistProvider>
-        </CartProvider>
-      </SettingsProvider>
+      <StoreProvider>
+        <SettingsProvider>
+          <CartProvider>
+            <WishlistProvider>
+              <RecentlyViewedProvider>
+                <CompareProvider>
+                  <StockProvider>
+                    <GuestCheckoutProvider>
+                      <OrderTrackingProvider>
+                        <SaveForLaterProvider>
+                          <BundleProvider>
+                            <SearchProvider>
+                              <PriceHistoryProvider>
+                                <NotificationWrapper>
+                                  <QuickViewProvider>
+                                    {children}
+                                  </QuickViewProvider>
+                                </NotificationWrapper>
+                              </PriceHistoryProvider>
+                            </SearchProvider>
+                          </BundleProvider>
+                        </SaveForLaterProvider>
+                      </OrderTrackingProvider>
+                    </GuestCheckoutProvider>
+                  </StockProvider>
+                </CompareProvider>
+              </RecentlyViewedProvider>
+            </WishlistProvider>
+          </CartProvider>
+        </SettingsProvider>
+      </StoreProvider>
     </SessionProvider>
   );
 }

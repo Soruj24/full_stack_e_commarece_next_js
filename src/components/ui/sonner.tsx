@@ -19,22 +19,22 @@ const Toaster = ({ ...props }: ToasterProps) => {
       className="toaster group"
       toastOptions={{
         classNames: {
-          toast: "group-[.toaster]:bg-background group-[.toaster]:border-border group-[.toaster]:shadow-xl group-[.toaster]:rounded-xl group-[.toaster]:border group-[.toaster]:p-4",
-          title: "group-[.toaster]:text-foreground font-semibold text-sm",
-          description: "group-[.toaster]:text-muted-foreground text-xs",
-          actionButton: "group-[.toaster]:bg-primary group-[.toaster]:text-primary-foreground rounded-lg font-semibold text-sm",
+          toast: "group-[.toaster]:bg-card/95 group-[.toaster]:backdrop-blur-xl group-[.toaster]:border-border/70 group-[.toaster]:shadow-[0_12px_40px_-12px_rgba(0,0,0,0.18)] group-[.toaster]:rounded-2xl group-[.toaster]:border group-[.toaster]:p-4",
+          title: "group-[.toaster]:text-foreground font-semibold text-sm tracking-tight",
+          description: "group-[.toaster]:text-muted-foreground text-xs leading-relaxed",
+          actionButton: "group-[.toaster]:bg-primary group-[.toaster]:text-primary-foreground rounded-lg font-medium text-sm",
           cancelButton: "group-[.toaster]:bg-muted group-[.toaster]:text-muted-foreground rounded-lg text-sm",
-          success: "group-[.toaster]:border-green-500/20",
-          error: "group-[.toaster]:border-red-500/20",
-          warning: "group-[.toaster]:border-orange-500/20",
-          info: "group-[.toaster]:border-blue-500/20",
+          success: "group-[.toaster]:border-success/25",
+          error: "group-[.toaster]:border-destructive/25",
+          warning: "group-[.toaster]:border-warning/30",
+          info: "group-[.toaster]:border-primary/20",
         },
       }}
       icons={{
-        success: <CircleCheckIcon className="size-5 text-green-500" />,
-        info: <InfoIcon className="size-5 text-blue-500" />,
-        warning: <TriangleAlertIcon className="size-5 text-orange-500" />,
-        error: <OctagonXIcon className="size-5 text-red-500" />,
+        success: <CircleCheckIcon className="size-5 text-success" />,
+        info: <InfoIcon className="size-5 text-primary" />,
+        warning: <TriangleAlertIcon className="size-5 text-warning" />,
+        error: <OctagonXIcon className="size-5 text-destructive" />,
         loading: <Loader2Icon className="size-5 animate-spin text-primary" />,
       }}
       style={

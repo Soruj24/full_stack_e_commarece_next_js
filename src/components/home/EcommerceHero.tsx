@@ -9,13 +9,12 @@ export function EcommerceHero() {
   const shouldReduceMotion = useReducedMotion();
 
   return (
-    <section className="relative min-h-[90vh] flex items-center overflow-hidden bg-background" aria-label="Welcome banner">
-      {/* Subtle radial gradient background */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_-20%,var(--color-primary)/0.06,transparent)]" />
+    <section className="relative min-h-[92vh] flex items-center overflow-hidden bg-background" aria-label="Welcome banner">
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_45%_at_50%_-10%,color-mix(in_oklab,var(--primary)_10%,transparent),transparent)]" />
+      <div className="absolute inset-0 bg-[linear-gradient(to_bottom,transparent,transparent,rgba(0,0,0,0.02))] dark:bg-[linear-gradient(to_bottom,transparent,transparent,rgba(255,255,255,0.02))]" />
 
-      {/* Content */}
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 py-24 sm:py-32">
-        <div className="grid lg:grid-cols-2 gap-16 lg:gap-20 items-center">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 py-20 sm:py-28 lg:py-32">
+        <div className="grid lg:grid-cols-2 gap-14 lg:gap-20 items-center">
           <HeroContent />
           <HeroVisual />
         </div>
